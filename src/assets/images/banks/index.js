@@ -1,0 +1,9 @@
+export const bca = require('./bca.jpg');
+export const bni = require('./bni.jpg');
+export const bri = require('./bri.jpg');
+export const cimb = require('./cimb.jpg');
+export const danamon = require('./danamon.jpg');
+export const hana = require('./hana.jpg');
+export const mandiri = require('./mandiri.jpg');
+export const nologo = require('./nologo.jpg');
+export const permata = require('./permata.jpg');

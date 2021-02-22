@@ -1,0 +1,15 @@
+export const marketing = require('./marketing.png');
+export const astronaut = require('./astronaut.png');
+export const problem_solving = require('./problem_solving.png');
+export const time = require('./time.png');
+export const adventure = require('./adventure.png');
+export const loading = require('./loading.png');
+export const shopping = require('./shopping.png');
+export const bug_fixed = require('./bug_fixed.png');
+export const authentication = require('./authentication.png');
+export const search_engine = require('./search_engine.png');
+export const network = require('./network.png');
+export const not_found = require('./not_found.png');
+export const clean_inbox = require('./clean_inbox.png');
+export const card_payment = require('./card_payment.png');
+export const online_shopping = require('./online_shopping.png');

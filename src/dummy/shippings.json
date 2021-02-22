@@ -1,0 +1,12 @@
+[
+    {
+        "shipping_id": "1",
+        "shipping_name": "Rumah",
+        "shipping_address": "Jl. Pinangsia Timur 2N, Tamansari, Jakarta Barat",
+    },
+    {
+        "shipping_id": "2",
+        "shipping_name": "Kantor",
+        "shipping_address": "Jl. Pinangsia Timur 2N, Tamansari, Jakarta Barat",
+    }
+]

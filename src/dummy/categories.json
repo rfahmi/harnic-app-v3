@@ -1,0 +1,32 @@
+[
+    {
+        "cat_id": 1,
+        "cat_pic":
+          "https://assets.harnicid.com/categories/poster/square/0_grocery2.png"
+      },
+      {
+        "cat_id": 2,
+        "cat_pic":
+          "https://assets.harnicid.com/categories/poster/square/beauty7.png"
+      },
+      {
+        "cat_id": 3,
+        "cat_pic":
+          "https://assets.harnicid.com/categories/poster/square/household.png"
+      },
+      {
+        "cat_id": 4,
+        "cat_pic":
+          "https://assets.harnicid.com/categories/poster/square/0_kitchen.png"
+      },
+      {
+        "cat_id": 5,
+        "cat_pic":
+          "https://assets.harnicid.com/categories/poster/square/0_electrical.png"
+      },
+      {
+        "cat_id": 6,
+        "cat_pic":
+          "https://assets.harnicid.com/categories/poster/square/0_fashion2.jpg"
+      }
+]

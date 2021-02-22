@@ -1,0 +1,30 @@
+[
+    {
+        "item_id": "1",
+        "online_name": "Lorem ipsum dolor sit amet sic mundus creatus est",
+        "sellprice": 100000,
+        "picture":
+          "https://assets.harnicid.com/products/webp/12bce35cce4ea3590de39bc297211e48.jpg.webp"
+      },
+      {
+        "item_id": "2",
+        "online_name": "Lorem ipsum dolor sit amet sic mundus creatus est",
+        "sellprice": 100000,
+        "picture":
+          "https://assets.harnicid.com/products/webp/12bce35cce4ea3590de39bc297211e48.jpg.webp"
+      },
+      {
+        "item_id": "3",
+        "online_name": "Lorem ipsum dolor sit amet sic mundus creatus est",
+        "sellprice": 100000,
+        "picture":
+          "https://assets.harnicid.com/products/webp/12bce35cce4ea3590de39bc297211e48.jpg.webp"
+      },
+      {
+        "item_id": "4",
+        "online_name": "Lorem ipsum dolor sit amet sic mundus creatus est",
+        "sellprice": 100000,
+        "picture":
+          "https://assets.harnicid.com/products/webp/12bce35cce4ea3590de39bc297211e48.jpg.webp"
+      }
+]

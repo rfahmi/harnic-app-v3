@@ -1,0 +1,16 @@
+[
+    {
+        "card_id": "1",
+        "card_holder": "Fahmi",
+        "card_num": "1234123412341234",
+        "card_cvc": "123",
+        "card_exp": "11/21"
+    },
+    {
+        "card_id": "2",
+        "card_holder": "Fahmi",
+        "card_num": "1234123412341234",
+        "card_cvc": "123",
+        "card_exp": "11/21"
+    }
+]

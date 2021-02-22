@@ -1,0 +1,214 @@
+import AsyncStorage from '@react-native-community/async-storage';
+import {useNavigation} from '@react-navigation/native';
+import qs from 'qs';
+import React, {memo, useState} from 'react';
+import {Text, View} from 'react-native';
+import {Button} from 'react-native-paper';
+import {RNToasty} from 'react-native-toasty';
+import {api} from '../configs/api';
+import {colors} from '../constants/colors';
+import {currencyFormat} from '../utils/formatter';
+
+const FooterCheckout = ({
+  product,
+  shipping,
+  expedition,
+  type,
+  time,
+  voucher,
+  note,
+  disabled,
+}) => {
+  const [loading, setLoading] = useState(false);
+  const navigation = useNavigation();
+  const delivery_fee = type ? type.fee : 0;
+  const discount_value = voucher ? voucher.DiscValue : 0;
+  const total = product + delivery_fee - discount_value;
+
+  const _handleCheckout = async () => {
+    setLoading(true);
+    const api_token = await AsyncStorage.getItem('api_token');
+    const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
+
+    await api
+      .post(
+        '/user/' + user_data.user_id + '/transaction',
+        qs.stringify({
+          shipping_id: shipping ? shipping.shipping_id : 0,
+          expedition_id: expedition ? expedition.id : 0,
+          type_id: type ? type.id : 0,
+          time_id: time ? time.id : null,
+          vc_code: voucher ? voucher.code : null,
+          note: note,
+        }),
+        {
+          headers: {
+            Authorization: 'Bearer ' + api_token,
+          },
+        },
+      )
+      .then((res) => {
+        setLoading(false);
+        if (res.data.success) {
+          navigation.replace('Transaction', {
+            screen: 'Payment',
+            params: {
+              screen: 'Payment',
+              params: {
+                trx: res.data.data,
+                // fromStack: false
+              },
+            },
+          });
+          RNToasty.Success({
+            title: res.data.message,
+            position: 'bottom',
+          });
+        } else {
+          RNToasty.Error({
+            title: res.data.message,
+            position: 'bottom',
+          });
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        RNToasty.Error({
+          title: err.message,
+          position: 'center',
+        });
+      });
+  };
+
+  return (
+    <View
+      style={{
+        zIndex: 1,
+        borderTopColor: '#ccc',
+        borderTopWidth: 0.5,
+        backgroundColor: '#fff',
+        padding: 16,
+      }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          borderColor: '#aaa',
+          borderBottomWidth: 0.5,
+          borderStyle: 'dashed',
+          paddingVertical: 8,
+        }}>
+        <Text style={{color: 'black', fontSize: 14}}>Total Barang</Text>
+        <Text style={{fontSize: 14, fontWeight: 'bold', color: '#333'}}>
+          Rp{currencyFormat(product)}
+        </Text>
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          borderColor: '#aaa',
+          borderBottomWidth: 0.5,
+          borderStyle: 'dashed',
+          paddingVertical: 8,
+        }}>
+        <Text style={{color: 'black', fontSize: 14}}>Ongkir</Text>
+        <Text
+          style={{
+            fontSize: 14,
+            fontWeight: 'bold',
+            color: delivery_fee ? '#333' : 'green',
+          }}>
+          {delivery_fee ? `Rp${currencyFormat(delivery_fee)}` : 'Gratis'}
+        </Text>
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          borderColor: '#aaa',
+          borderBottomWidth: 0.5,
+          borderStyle: 'dashed',
+          paddingVertical: 8,
+        }}>
+        <Text style={{color: 'black', fontSize: 14}}>Diskon</Text>
+        <Text style={{fontSize: 14, fontWeight: 'bold', color: '#333'}}>
+          Rp{currencyFormat(discount_value)}
+        </Text>
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          borderColor: '#aaa',
+          borderBottomWidth: 0.5,
+          borderStyle: 'dashed',
+          paddingVertical: 8,
+        }}>
+        <Text style={{color: 'black', fontSize: 12}}>TOTAL</Text>
+        <Text style={{fontSize: 16, fontWeight: 'bold', color: 'orange'}}>
+          Rp{currencyFormat(total)}
+        </Text>
+      </View>
+
+      {/* <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+        <View style={{flex: 1}}>
+          <View style={{marginBottom: 4}}>
+            <Text style={{color: 'black', fontSize: 10}}>Total Barang</Text>
+            <Text style={{fontSize: 14, fontWeight: 'bold', color: '#333'}}>
+              Rp{currencyFormat(product)}
+            </Text>
+          </View>
+          <View style={{marginBottom: 4}}>
+            <Text style={{color: 'black', fontSize: 10}}>Ongkir</Text>
+            <Text
+              style={{
+                fontSize: 14,
+                fontWeight: 'bold',
+                color: delivery_fee ? '#333' : 'green',
+              }}>
+              {delivery_fee ? `Rp${currencyFormat(delivery_fee)}` : 'Gratis'}
+            </Text>
+          </View>
+          <View style={{marginBottom: 4}}>
+            <Text style={{color: 'black', fontSize: 10}}>Diskon</Text>
+            <Text style={{fontSize: 14, fontWeight: 'bold', color: '#333'}}>
+              Rp{currencyFormat(discount_value)}
+            </Text>
+          </View>
+        </View>
+        <View
+          style={{
+            justifyContent: 'space-between',
+          }}>
+          <View style={{marginBottom: 8}}>
+            <Text style={{color: 'black', fontSize: 12}}>TOTAL</Text>
+            <Text style={{fontSize: 16, fontWeight: 'bold', color: 'orange'}}>
+              Rp{currencyFormat(total)}
+            </Text>
+          </View>
+        </View>
+      </View> */}
+      <Button
+        disabled={disabled || loading}
+        onPress={_handleCheckout}
+        style={{width: '100%', marginVertical: 10, zIndex: 0}}
+        labelStyle={{fontWeight: 'bold', fontSize: 15, lineHeight: 26}}
+        color={colors.green}
+        mode="contained">
+        {loading ? 'Loading...' : 'Selesaikan Pembayaran'}
+      </Button>
+    </View>
+  );
+};
+
+export default memo(FooterCheckout);
