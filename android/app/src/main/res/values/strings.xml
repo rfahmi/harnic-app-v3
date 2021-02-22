@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">harnicid</string>
+  <string name="app_name">HARNIC ID</string>
+  <string name="default_notification_channel_id">general</string>
 </resources>
