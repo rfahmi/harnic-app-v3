@@ -1,5 +1,5 @@
 import React, {memo, useState} from 'react';
-import {Text, View} from 'react-native';
+import {Platform, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import * as Progress from 'react-native-progress';
 import {useSelector} from 'react-redux';
@@ -73,7 +73,7 @@ const ProductCard = ({
             borderTopRightRadius: 4,
           }}
           source={{
-            uri: item.picture,
+            uri: Platform.OS === 'ios' ? item.picture_ios : item.picture,
             priority: FastImage.priority.normal,
           }}
           resizeMode={FastImage.resizeMode.contain}

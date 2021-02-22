@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import React, {memo, useEffect, useState} from 'react';
-import {FlatList, RefreshControl, Text, View} from 'react-native';
+import {FlatList, Platform, RefreshControl, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Divider, List} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
@@ -159,7 +159,10 @@ const TransactionList = ({user, status}) => {
                 {item.first_item && (
                   <FastImage
                     source={{
-                      uri: item.first_item.picture,
+                      uri:
+                        Platform.OS === 'ios'
+                          ? item.first_item.picture_ios
+                          : item.first_item.picture,
                     }}
                     style={{flex: 1, backgroundColor: '#eee', borderRadius: 1}}
                   />

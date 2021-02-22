@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View} from 'react-native';
+import {Platform, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Divider, IconButton, List} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -93,7 +93,9 @@ const CartItem = ({item, edit}) => {
                 elevation: 1,
               }}>
               <FastImage
-                source={{uri: data.picture}}
+                source={{
+                  uri: Platform.OS === 'ios' ? data.picture_ios : data.picture,
+                }}
                 style={{flex: 1, backgroundColor: '#eee', borderRadius: 1}}
               />
             </View>

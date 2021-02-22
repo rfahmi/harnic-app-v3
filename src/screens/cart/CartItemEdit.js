@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useRef, useState} from 'react';
-import {Text, View, TextInput as TextInputRN} from 'react-native';
+import {Text, View, TextInput as TextInputRN, Platform} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Button, IconButton, List, TextInput} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
@@ -99,7 +99,9 @@ const CartItemEdit = ({item, closeModal}) => {
                 elevation: 1,
               }}>
               <FastImage
-                source={{uri: item.picture}}
+                source={{
+                  uri: Platform.OS === 'ios' ? item.picture_ios : item.picture,
+                }}
                 style={{flex: 1, backgroundColor: '#eee', borderRadius: 1}}
               />
             </View>

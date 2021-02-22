@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {memo} from 'react';
-import {Dimensions, FlatList, TouchableOpacity} from 'react-native';
+import {Dimensions, FlatList, Platform, TouchableOpacity} from 'react-native';
 import BannerItem from '../../../components/BannerItem';
 
 const BannerGrid = ({data}) => {
@@ -45,7 +45,11 @@ const BannerGrid = ({data}) => {
           }
         }}>
         <BannerItem
-          image={item.banner_url}
+          image={
+            Platform.OS === 'ios' && item.banner_url_ios
+              ? item.banner_url_ios
+              : item.banner_url
+          }
           style={{width: Dimensions.get('window').width / data.param1}}
         />
       </TouchableOpacity>

@@ -1,5 +1,5 @@
 import React, {memo} from 'react';
-import {Text, View} from 'react-native';
+import {Platform, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import CornerLabel from '../components/CornerLabel';
 import {currencyFormat} from '../utils/formatter';
@@ -36,7 +36,7 @@ const ProductCardHorizontal = ({item, style}) => {
             borderBottomLeftRadius: 4,
           }}
           source={{
-            uri: item.picture,
+            uri: Platform.OS === 'ios' ? item.picture_ios : item.picture,
             priority: FastImage.priority.normal,
           }}
           resizeMode={FastImage.resizeMode.contain}

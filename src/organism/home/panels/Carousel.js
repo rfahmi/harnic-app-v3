@@ -1,6 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {memo} from 'react';
-import {Dimensions, FlatList, TouchableOpacity, View} from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  Platform,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 const Carousel = ({data}) => {
@@ -60,7 +66,10 @@ const Carousel = ({data}) => {
               flex: 1,
             }}
             source={{
-              uri: item.banner_url,
+              uri:
+                Platform.OS === 'ios' && item.banner_url_ios
+                  ? item.banner_url_ios
+                  : item.banner_url,
               priority: FastImage.priority.normal,
             }}
             resizeMode={FastImage.resizeMode.cover}

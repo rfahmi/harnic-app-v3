@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {memo} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Platform, Text, TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 const BannerBasic = ({data}) => {
@@ -51,7 +51,10 @@ const BannerBasic = ({data}) => {
             flex: 1,
           }}
           source={{
-            uri: data.image,
+            uri:
+              Platform.OS === 'ios' && data.image_ios
+                ? data.image_ios
+                : data.image,
             priority: FastImage.priority.normal,
           }}
           resizeMode={FastImage.resizeMode.cover}

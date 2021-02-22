@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {Platform, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Button, Divider, List} from 'react-native-paper';
 import {useSelector} from 'react-redux';
@@ -33,7 +33,9 @@ const ShopListItem = ({item, deleteShoppingList}) => {
               elevation: 1,
             }}>
             <FastImage
-              source={{uri: item.picture}}
+              source={{
+                uri: Platform.OS === 'ios' ? item.picture_ios : item.picture,
+              }}
               style={{flex: 1, backgroundColor: '#eee', borderRadius: 1}}
             />
           </View>

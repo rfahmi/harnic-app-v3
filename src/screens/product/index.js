@@ -11,12 +11,21 @@ import {
   Text,
   TouchableOpacity,
   View,
-  SafeAreaView
+  SafeAreaView,
+  Platform,
 } from 'react-native';
 import {Modalize} from 'react-native-modalize';
-import {Divider, List, Title} from 'react-native-paper';
+import {
+  Divider,
+  IconButton,
+  List,
+  Title,
+  Button,
+  TextInput,
+} from 'react-native-paper';
+import {RNToasty} from 'react-native-toasty';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import FooterBuy from '../../components/FooterBuy';
 import HeaderBackTransparent from '../../components/HeaderBackTransparent';
 import Separator from '../../components/Separator';
@@ -26,12 +35,23 @@ import ProductPictures from '../../organism/product/ProductPictures';
 import SimilarProducts from '../../organism/product/SimilarProducts';
 import ProductSkeleton from '../../organism/skeleton/ProductSkeleton';
 import {currencyFormat} from '../../utils/formatter';
+import {isLogin} from '../../utils/auth';
+import {addCart} from '../../utils/cart';
+import {setCart} from '../../configs/redux/action/cartActions';
+import FastImage from 'react-native-fast-image';
+import VariantProducts from '../../organism/product/VariantProducts';
 
 const Product = ({navigation, route}) => {
+  const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const {itemid} = route.params;
   const WINDOW_HEIGHT = Dimensions.get('window').height;
   const [data, setData] = useState(null);
+
+  //Add Cart
+  const cartModal = useRef(null);
+  const [addQty, setAddQty] = useState(1);
+  const [addNote, setAddNote] = useState(null);
 
   const scroll = useRef(new Animated.Value(0)).current;
   const [descExpand, setDescExpand] = useState(false);
@@ -71,6 +91,23 @@ const Product = ({navigation, route}) => {
     descExpand ? setDescExpand(false) : setDescExpand(true);
   };
 
+  const _handleAddCart = () => {
+    isLogin().then((login) => {
+      if (login) {
+        addCart(itemid, addQty, addNote, true).then((d) => {
+          d && dispatch(setCart(d));
+          cartModal.current?.close();
+        });
+      } else {
+        navigation.navigate('Auth');
+        RNToasty.Error({
+          title: 'Login Untuk Belanja',
+          position: 'center',
+        });
+      }
+    });
+  };
+
   return (
     <>
       <StatusBar
@@ -78,6 +115,184 @@ const Product = ({navigation, route}) => {
         barStyle="dark-content"
         backgroundColor="rgba(0,0,0,0.1)"
       />
+      <Modalize
+        ref={cartModal}
+        modalHeight={WINDOW_HEIGHT * 0.5}
+        modalStyle={{flex: 1, paddingHorizontal: 16}}>
+        <ScrollView style={{paddingVertical: 16}}>
+          <Title>Tambah ke keranjang</Title>
+          <List.Item
+            // style={{height: 200}}
+            title={data && data.online_name}
+            titleStyle={{fontSize: 12}}
+            titleNumberOfLines={2}
+            description={
+              <View>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    paddingTop: 8,
+                  }}>
+                  <View
+                    style={{
+                      flex: 1,
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        fontWeight: 'bold',
+                        color: 'orange',
+                      }}>
+                      Rp
+                      {data &&
+                        currencyFormat(data[auth.priceType] || data.sellprice)}
+                    </Text>
+                  </View>
+                  {data && data.is_discount ? (
+                    <View
+                      style={{
+                        flex: 1,
+                        borderRadius: 2,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: '#e63757',
+                        paddingVertical: 2,
+                        paddingHorizontal: 4,
+                        marginLeft: 8,
+                      }}>
+                      <Text style={{fontSize: 8, color: '#fff'}}>
+                        No Discount
+                      </Text>
+                    </View>
+                  ) : (
+                    <View />
+                  )}
+                </View>
+                <Text
+                  style={{
+                    fontSize: 11,
+                    marginTop: 8,
+                  }}>
+                  Subtotal: Rp{data && currencyFormat(data.sellprice * addQty)}
+                </Text>
+              </View>
+            }
+            left={() => (
+              <View style={{justifyContent: 'center'}}>
+                <View
+                  style={{
+                    width: 72,
+                    aspectRatio: 1 / 1,
+                    elevation: 1,
+                  }}>
+                  {data && (
+                    <FastImage
+                      source={{
+                        uri:
+                          Platform.OS === 'ios'
+                            ? data.picture_ios
+                            : data.picture,
+                      }}
+                      style={{
+                        flex: 1,
+                        backgroundColor: '#eee',
+                        borderRadius: 1,
+                      }}
+                    />
+                  )}
+                </View>
+              </View>
+            )}
+            right={() => (
+              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                  }}>
+                  <IconButton
+                    onPress={() => setAddQty(addQty - 1)}
+                    disabled={addQty < 2}
+                    color={colors.primary}
+                    icon="minus-circle"
+                  />
+                  <Text>{addQty}</Text>
+                  {data && (
+                    <IconButton
+                      onPress={() => setAddQty(addQty + 1)}
+                      disabled={
+                        addQty >= data.max_order || addQty >= data.stock
+                      }
+                      color={colors.primary}
+                      icon="plus-circle"
+                    />
+                  )}
+                </View>
+                {data && data.max_order < 9999 && (
+                  <View
+                    style={{
+                      borderRadius: 2,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: '#e63757',
+                      paddingVertical: 4,
+                      paddingHorizontal: 8,
+                      marginLeft: 8,
+                    }}>
+                    <Text style={{fontSize: 8, color: '#fff'}}>
+                      Batas beli {data.max_order}
+                    </Text>
+                  </View>
+                )}
+                {data && data.stock < 10 && (
+                  <View
+                    style={{
+                      borderRadius: 2,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: '#555',
+                      paddingVertical: 4,
+                      paddingHorizontal: 8,
+                      margin: 2,
+                    }}>
+                    <Text style={{fontSize: 8, color: '#fff'}}>
+                      Stock {data.stock}
+                    </Text>
+                  </View>
+                )}
+              </View>
+            )}
+          />
+          <View>
+            <TextInput
+              style={{
+                backgroundColor: '#FEF4C5',
+                borderRadius: 10,
+                flex: 1,
+                borderColor: 'transparent',
+              }}
+              label="Catatan Produk"
+              value={addNote}
+              multiline
+              mode="outlined"
+              numberOfLines={3}
+              placeholder="Catatan untuk produk ini (opsional)"
+              onChangeText={(e) => setAddNote(e)}
+            />
+          </View>
+          {data && data.variants && <VariantProducts items={data.variants} />}
+        </ScrollView>
+        <Button
+          onPress={_handleAddCart}
+          style={{margin: 4, flex: 1, marginVertical: 10}}
+          labelStyle={{fontWeight: 'bold', fontSize: 15, lineHeight: 26}}
+          color={colors.primary}
+          mode="contained">
+          Tambah Keranjang
+        </Button>
+      </Modalize>
       <Modalize ref={ongkir} modalHeight={WINDOW_HEIGHT * 0.5}>
         <ScrollView style={{padding: 16}}>
           <Title>Pengiriman</Title>
@@ -209,7 +424,11 @@ const Product = ({navigation, route}) => {
               )}
               {data ? (
                 <ProductPictures
-                  pictures={data.media}
+                  pictures={
+                    Platform.OS === 'ios' && data.media_ios
+                      ? data.media_ios
+                      : data.media
+                  }
                   parentScrollView={scrollRef.current}
                 />
               ) : (
@@ -424,7 +643,12 @@ const Product = ({navigation, route}) => {
             {data && <SimilarProducts category={data.cat_id} />}
           </Animated.ScrollView>
           <SafeAreaView>
-          {data.stock > 0 && <FooterBuy item={data} />}
+            {data.stock > 0 && (
+              <FooterBuy
+                item={data}
+                openModal={() => cartModal.current?.open()}
+              />
+            )}
           </SafeAreaView>
         </>
       )}

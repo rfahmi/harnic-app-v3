@@ -6,6 +6,7 @@ import React, {memo, useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Dimensions,
+  Platform,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -547,7 +548,12 @@ const TransactionView = ({navigation, route}) => {
                             elevation: 1,
                           }}>
                           <FastImage
-                            source={{uri: item.picture}}
+                            source={{
+                              uri:
+                                Platform.OS === 'ios'
+                                  ? item.picture_ios
+                                  : item.picture,
+                            }}
                             style={{
                               flex: 1,
                               backgroundColor: '#eee',
