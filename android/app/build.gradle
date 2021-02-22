@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.harnicid"
+        applicationId "id.harnic.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true

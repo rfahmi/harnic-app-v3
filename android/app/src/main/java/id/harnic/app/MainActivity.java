@@ -1,4 +1,4 @@
-package com.harnicid;
+package id.harnic.app;
 
 import com.facebook.react.ReactActivity;
 
