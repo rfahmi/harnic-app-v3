@@ -49,10 +49,12 @@ const UserNotification = ({navigation, route}) => {
         }
       })
       .catch((err) => {
-        RNToasty.Error({
-          title: err.message,
-          position: 'center',
-        });
+        setHasMore(false);
+        console.log(err.message);
+        // RNToasty.Error({
+        //   title: err.message,
+        //   position: 'center',
+        // });
       });
   };
 

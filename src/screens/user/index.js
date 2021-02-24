@@ -10,7 +10,7 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Platform
+  Platform,
 } from 'react-native';
 import {Modalize} from 'react-native-modalize';
 import {
@@ -33,11 +33,12 @@ import {setAuth} from '../../configs/redux/action/authActions';
 import {colors} from '../../constants/colors';
 import {deleteFcm} from '../../utils/fcm';
 import HTML from 'react-native-render-html';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 const User = ({navigation}) => {
   const dispatch = useDispatch();
-  const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? getStatusBarHeight() : StatusBar.currentHeight;
+  const STATUSBAR_HEIGHT =
+    Platform.OS === 'ios' ? getStatusBarHeight() : StatusBar.currentHeight;
   const modalizeRef = useRef(null);
   const auth = useSelector((state) => state.auth);
   const isFocused = useIsFocused();
@@ -448,7 +449,7 @@ const User = ({navigation}) => {
               width: Dimensions.get('window').width,
               height: Dimensions.get('window').width * 0.5,
             }}
-            resizeMode="center"
+            resizeMode="contain"
             source={authentication}
           />
           <Title>Anda Belum Log In</Title>

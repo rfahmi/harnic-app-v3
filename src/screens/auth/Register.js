@@ -249,9 +249,12 @@ const Register = ({navigation}) => {
             barStyle="dark-content"
           />
 
-          <View style={{height: 150}} />
-          <Logo />
-          <Header>Daftar sekarang, dapatkan penawaran terbaik</Header>
+          <View
+            style={{paddingTop: '20%', marginBottom: 16, alignItems: 'center'}}>
+            <Logo />
+
+            <Header>Daftar sekarang, dapatkan penawaran terbaik</Header>
+          </View>
           <SwitchButton
             onValueChange={(val) => setMode(val)} // this is necessary for this component
             text1="Nomor HP" // optional: first text in switch button --- default ON
@@ -503,7 +506,7 @@ const Register = ({navigation}) => {
       </Modalize>
       <Modalize
         ref={modalOTP}
-        modalHeight={WINDOW_HEIGHT * 0.5}
+        modalHeight={WINDOW_HEIGHT * 0.7}
         modalStyle={{flex: 1, zIndex: 3}}>
         <View style={{flex: 1, padding: 16}}>
           <Text

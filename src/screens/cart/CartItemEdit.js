@@ -49,24 +49,18 @@ const CartItemEdit = ({item, closeModal}) => {
                 flexDirection: 'row',
                 paddingTop: 8,
               }}>
-              <View
+              <Text
                 style={{
-                  flex: 1,
+                  fontSize: 14,
+                  fontWeight: 'bold',
+                  color: 'orange',
                 }}>
-                <Text
-                  style={{
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                    color: 'orange',
-                  }}>
-                  Rp
-                  {item && currencyFormat(item.price)}
-                </Text>
-              </View>
+                Rp
+                {item && currencyFormat(item.price)}
+              </Text>
               {item.is_discount ? (
                 <View
                   style={{
-                    flex: 1,
                     borderRadius: 2,
                     justifyContent: 'center',
                     alignItems: 'center',

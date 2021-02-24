@@ -161,8 +161,8 @@ const Home = ({navigation}) => {
             style={{
               position: 'absolute',
               margin: 16,
-              right: 100,
-              left: 100,
+              right: '20%',
+              left: '20%',
               bottom: 0,
               backgroundColor: '#1100BB',
             }}

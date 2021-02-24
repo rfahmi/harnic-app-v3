@@ -67,7 +67,7 @@ const CartItem = ({item, edit}) => {
               }}>
               Subtotal: Rp{currencyFormat(data.subtotal)}
             </Text>
-            {data.note && (
+            {data.note ? (
               <View
                 style={{
                   width: 200,
@@ -81,6 +81,8 @@ const CartItem = ({item, edit}) => {
                   Catatan: {data.note}
                 </Text>
               </View>
+            ) : (
+              <View />
             )}
           </View>
         }

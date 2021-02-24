@@ -31,8 +31,14 @@ const HomeIcons = () => {
           />
         </View>
       </View>
-      <View style={{flexDirection: 'row', paddingHorizontal: 16}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          paddingHorizontal: 16,
+          width: '65%',
+        }}>
         <TouchableOpacity
+          style={{flex: 1}}
           onPress={() =>
             navigation.push('Search', {
               screen: 'SearchWebView',
@@ -53,6 +59,7 @@ const HomeIcons = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
+          style={{flex: 1}}
           onPress={() =>
             navigation.push('Search', {
               screen: 'SearchWebView',
@@ -72,6 +79,7 @@ const HomeIcons = () => {
           />
         </TouchableOpacity>
         <TouchableOpacity
+          style={{flex: 1}}
           onPress={() => navigation.navigate('App', {screen: 'Shoplist'})}>
           <Avatar.Image
             source={require('../../../assets/images/shopplist.png')}

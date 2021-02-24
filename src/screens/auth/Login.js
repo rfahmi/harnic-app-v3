@@ -213,10 +213,13 @@ const Login = ({navigation}) => {
             backgroundColor="transparent"
             barStyle="dark-content"
           />
-          <View style={{height: 150}} />
-          <Logo />
+          {/* <View style={{height: '30%',backgroundColor:'yellow',width:100}} /> */}
+          <View
+            style={{paddingTop: '20%', marginBottom: 16, alignItems: 'center'}}>
+            <Logo />
 
-          <Header>Selamat datang kembali</Header>
+            <Header>Selamat datang kembali</Header>
+          </View>
           <SwitchButton
             onValueChange={(val) => setMode(val)} // this is necessary for this component
             text1="Nomor HP" // optional: first text in switch button --- default ON
@@ -233,6 +236,7 @@ const Login = ({navigation}) => {
             fontColor="#b1b1b1" // optional: text font color --- default #b1b1b1
             activeFontColor="#fff" // optional: active font color --- default #fff
           />
+
           {mode === 1 ? (
             <>
               <TextInput
