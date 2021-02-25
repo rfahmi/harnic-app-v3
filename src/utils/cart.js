@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import qs from 'qs';
 import {RNToasty} from 'react-native-toasty';
-import {api} from '../configs/api';
+import {api, app_version} from '../configs/api';
 
 export const addCart = async (item_id, qty, note, toast) => {
   const api_token = await AsyncStorage.getItem('api_token');
@@ -10,7 +10,7 @@ export const addCart = async (item_id, qty, note, toast) => {
   const result = await api
     .post(
       '/user/' + user_data.user_id + '/cart',
-      qs.stringify({item_id, qty, note, app_version: 30000}),
+      qs.stringify({item_id, qty, note, app_version}),
       {
         headers: {
           Authorization: 'Bearer ' + api_token,

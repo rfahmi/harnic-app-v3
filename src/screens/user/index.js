@@ -28,7 +28,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {authentication} from '../../assets/images';
 import FocusAwareStatusBar from '../../components/FocusAwareStatusBar';
 import Separator from '../../components/Separator';
-import {api} from '../../configs/api';
+import {api, app_version_name} from '../../configs/api';
 import {setAuth} from '../../configs/redux/action/authActions';
 import {colors} from '../../constants/colors';
 import {deleteFcm} from '../../utils/fcm';
@@ -411,7 +411,7 @@ const User = ({navigation}) => {
             </View>
             <View style={{flex: 1, alignItems: 'center', height: 50}}>
               <Text style={{color: colors.gray, fontSize: 12}}>
-                Versi 3.0.0
+                Versi {app_version_name}
               </Text>
               <Text style={{color: colors.gray, fontSize: 12}}>
                 {'\u00A9'} PT. Harnic Online Store

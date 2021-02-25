@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {Image, StatusBar, Text, View} from 'react-native';
 import Logo from '../../components/Logo';
+import {app_version_name} from '../../configs/api';
 import {colors} from '../../constants/colors';
 
 const Splash = ({navigation}) => {
@@ -51,7 +52,9 @@ const Splash = ({navigation}) => {
             right: 0,
             alignItems: 'center',
           }}>
-          <Text style={{color: colors.gray, fontSize: 12}}>Versi 3.0.0</Text>
+          <Text style={{color: colors.gray, fontSize: 12}}>
+            Versi {app_version_name}
+          </Text>
           <Text style={{color: colors.gray, fontSize: 12}}>
             {'\u00A9'} PT. Harnic Online Store
           </Text>
