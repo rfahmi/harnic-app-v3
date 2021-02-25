@@ -9,7 +9,7 @@ const CheckoutStack = () => {
       <Stack.Screen
         name="Checkout"
         component={Checkout}
-        options={{title: 'Pilih Pengiriman'}}
+        options={{title: 'Pilih Pengiriman', headerBackTitle: 'Keranjang'}}
       />
     </Stack.Navigator>
   );

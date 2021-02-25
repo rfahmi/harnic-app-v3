@@ -191,7 +191,7 @@ const User = ({navigation}) => {
                     size={22}
                     name="clock-check-outline"
                   />
-                  <Text style={{fontSize: 10}}>Baru</Text>
+                  <Text style={{fontSize: 9}}>Baru</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() =>
@@ -215,7 +215,7 @@ const User = ({navigation}) => {
                     size={22}
                     name="package-variant-closed"
                   />
-                  <Text style={{fontSize: 10}}>Disiapkan</Text>
+                  <Text style={{fontSize: 9}}>Disiapkan</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() =>
@@ -239,7 +239,7 @@ const User = ({navigation}) => {
                     size={22}
                     name="truck-fast-outline"
                   />
-                  <Text style={{fontSize: 10}}>Dikirim</Text>
+                  <Text style={{fontSize: 9}}>Dikirim</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() =>
@@ -259,7 +259,7 @@ const User = ({navigation}) => {
                     padding: 6,
                   }}>
                   <Icon color={colors.grayDark} size={22} name="check" />
-                  <Text style={{fontSize: 10}}>Diterima</Text>
+                  <Text style={{fontSize: 9}}>Diterima</Text>
                 </TouchableOpacity>
               </Surface>
               <View

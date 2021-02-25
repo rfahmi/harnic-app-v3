@@ -1,5 +1,12 @@
 import React, {useRef, useState, useEffect} from 'react';
-import {ScrollView, View, Text, Dimensions} from 'react-native';
+import {
+  ScrollView,
+  View,
+  Text,
+  Dimensions,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import {Card} from '@paraboly/react-native-card';
 import {colors} from '../../constants/colors';
 import FooterCheckout from '../../components/FooterCheckout';
@@ -17,7 +24,7 @@ const Checkout = ({navigation, route}) => {
   const sheet_type = useRef(null);
   const sheet_time = useRef(null);
   const sheet_voucher = useRef(null);
-  const MODAL_HEIGHT = Dimensions.get('window').height * 0.5;
+  const MODAL_HEIGHT = Dimensions.get('window').height * 0.7;
 
   const [typedVoucher, setTypedVoucher] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -236,7 +243,8 @@ const Checkout = ({navigation, route}) => {
       })
       .then((res) => {
         setLoading(false);
-        if (res.data.success) {
+        console.log(res.data);
+        if (res.data.data && res.data.success) {
           if (res.data.data.DiscValue > 0) {
             setSelectedVoucher(res.data.data);
           } else {
@@ -248,10 +256,17 @@ const Checkout = ({navigation, route}) => {
           }
         } else {
           setSelectedVoucher(null);
-          RNToasty.Error({
-            title: res.data.message,
-            position: 'center',
-          });
+          if (res.data.success) {
+            RNToasty.Error({
+              title: 'Kode tidak dikenal',
+              position: 'center',
+            });
+          } else {
+            RNToasty.Error({
+              title: res.data.message,
+              position: 'center',
+            });
+          }
         }
       })
       .catch((err) => {
@@ -271,6 +286,192 @@ const Checkout = ({navigation, route}) => {
 
   return (
     <>
+      <ScrollView>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <Card
+            title="Alamat"
+            textContainerNumberOfLines={3}
+            description={
+              loading1 ? (
+                <Skeleton
+                  loaderStyle={{
+                    width: 200,
+                    height: 16,
+                    marginVertical: 4,
+                    backgroundColor: '#ddd',
+                  }}
+                  direction="column"
+                  numberOfItems={1}
+                />
+              ) : selectedShipping ? (
+                <Text style={{lineHeight: 0, fontSize: 12}}>
+                  {selectedShipping.shipping_address +
+                    ', ' +
+                    selectedShipping.subdis_name +
+                    ', ' +
+                    selectedShipping.dis_name +
+                    ', ' +
+                    selectedShipping.city_name +
+                    ', ' +
+                    selectedShipping.prov_name +
+                    ' ' +
+                    selectedShipping.zip_code}
+                </Text>
+              ) : (
+                'Pilih alamat'
+              )
+            }
+            line
+            iconType="MaterialCommunityIcons"
+            iconName="map-marker"
+            iconBackgroundColor={colors.primary}
+            onPress={() => {
+              sheet_shipping.current?.open();
+            }}
+            topRightText={
+              selectedShipping && selectedShipping.default ? 'Default' : ''
+            }
+            style={{marginHorizontal: 16, marginVertical: 12}}
+          />
+          <Card
+            title="Jenis Pengiriman"
+            description={
+              loading3 || loading2 ? (
+                <Skeleton
+                  loaderStyle={{
+                    width: 200,
+                    height: 16,
+                    marginVertical: 4,
+                    backgroundColor: '#ddd',
+                  }}
+                  direction="column"
+                  numberOfItems={1}
+                />
+              ) : selectedType ? (
+                `${selectedExpedition.label} / ${selectedType.label}`
+              ) : (
+                'Pilih Jenis Pengiriman'
+              )
+            }
+            iconType="MaterialCommunityIcons"
+            iconName="package"
+            iconBackgroundColor={colors.primary}
+            onPress={() => {
+              sheet_type.current?.open();
+            }}
+            style={{marginHorizontal: 16, marginBottom: 12}}
+          />
+          {time && (
+            <Card
+              title="Jam Terima Paket"
+              description={
+                loading4 ? (
+                  <Skeleton
+                    loaderStyle={{
+                      width: 200,
+                      height: 16,
+                      marginVertical: 4,
+                      backgroundColor: '#ddd',
+                    }}
+                    direction="column"
+                    numberOfItems={1}
+                  />
+                ) : selectedTime ? (
+                  `${selectedTime.day}${'\n'}${selectedTime.start} - ${
+                    selectedTime.end
+                  }`
+                ) : (
+                  <Text style={{color: 'red', fontWeight: 'bold'}}>
+                    Pilih Jam Terima Paket!
+                  </Text>
+                )
+              }
+              iconType="MaterialCommunityIcons"
+              iconName="clock"
+              iconBackgroundColor="orange"
+              onPress={() => {
+                sheet_time.current?.open();
+              }}
+              style={{
+                marginHorizontal: 16,
+                marginBottom: 12,
+              }}
+            />
+          )}
+          <View style={{alignItems: 'center', marginVertical: 24}}>
+            <Text
+              style={{
+                color: colors.grayDark,
+                fontSize: 18,
+                fontWeight: 'bold',
+              }}>
+              Lebih Murah Pakai Voucher
+            </Text>
+            <Text style={{color: colors.grayDark, fontSize: 11}}>
+              Gunakan voucher anda disini
+            </Text>
+          </View>
+          <Card
+            title="Kode Voucher"
+            description={
+              selectedVoucher
+                ? selectedVoucher.code.toUpperCase()
+                : 'Pilih Diskon Anda'
+            }
+            iconType="MaterialCommunityIcons"
+            iconName="ticket-percent"
+            iconBackgroundColor="green"
+            onPress={() => {
+              sheet_voucher.current?.open();
+            }}
+            style={{marginHorizontal: 16, marginBottom: 12}}
+          />
+          <View style={{alignItems: 'center', marginVertical: 16}}>
+            <Text
+              style={{
+                color: colors.grayDark,
+                fontSize: 18,
+                fontWeight: 'bold',
+              }}>
+              Biar Abang Kurir Gak Bingung
+            </Text>
+            <Text style={{color: colors.grayDark, fontSize: 11}}>
+              Tulis patokan alamat anda disini
+            </Text>
+          </View>
+          <View style={{margin: 16}}>
+            <TextInput
+              style={{
+                backgroundColor: '#FEF4C5',
+                borderRadius: 10,
+                flex: 1,
+                borderColor: 'transparent',
+              }}
+              label="Catatan Pengiriman"
+              value={note}
+              multiline
+              mode="outlined"
+              numberOfLines={3}
+              placeholder="Beri kami deskripsi tempat anda, patokan alamat dll (opsional)"
+              onChangeText={(e) => setNote(e)}
+            />
+          </View>
+          <FooterCheckout
+            product={total_item}
+            shipping={selectedShipping}
+            expedition={selectedExpedition}
+            type={selectedType}
+            time={selectedTime}
+            voucher={selectedVoucher}
+            note={note}
+            disabled={
+              loading ||
+              (selectedType && selectedType.has_time && !selectedTime)
+            }
+          />
+        </KeyboardAvoidingView>
+      </ScrollView>
       <Modalize ref={sheet_shipping} modalHeight={MODAL_HEIGHT}>
         <ScrollView style={{padding: 16}}>
           <Title>Alamat Kirim</Title>
@@ -365,8 +566,8 @@ const Checkout = ({navigation, route}) => {
       <Modalize
         ref={sheet_voucher}
         modalHeight={MODAL_HEIGHT}
-        modalStyle={{flex: 1}}>
-        <ScrollView style={{padding: 16}}>
+        modalStyle={{flex: 1, zIndex: 3}}>
+        <View style={{padding: 16}}>
           <Title>Kode Voucher</Title>
           <View>
             <TextInput
@@ -383,6 +584,7 @@ const Checkout = ({navigation, route}) => {
                 top: 10,
                 zIndex: 3,
               }}
+              disabled={!typedVoucher}
               color={colors.white}
               onPress={() => {
                 applyVoucher(typedVoucher);
@@ -408,182 +610,8 @@ const Checkout = ({navigation, route}) => {
                 </View>
               );
             })}
-        </ScrollView>
+        </View>
       </Modalize>
-      <ScrollView>
-        <Card
-          title="Alamat"
-          textContainerNumberOfLines={3}
-          description={
-            loading1 ? (
-              <Skeleton
-                loaderStyle={{
-                  width: 200,
-                  height: 16,
-                  marginVertical: 4,
-                  backgroundColor: '#ddd',
-                }}
-                direction="column"
-                numberOfItems={1}
-              />
-            ) : selectedShipping ? (
-              <Text style={{lineHeight: 0, fontSize: 12}}>
-                {selectedShipping.shipping_address +
-                  ', ' +
-                  selectedShipping.subdis_name +
-                  ', ' +
-                  selectedShipping.dis_name +
-                  ', ' +
-                  selectedShipping.city_name +
-                  ', ' +
-                  selectedShipping.prov_name +
-                  ' ' +
-                  selectedShipping.zip_code}
-              </Text>
-            ) : (
-              'Pilih alamat'
-            )
-          }
-          line
-          iconType="MaterialCommunityIcons"
-          iconName="map-marker"
-          iconBackgroundColor={colors.primary}
-          onPress={() => {
-            sheet_shipping.current?.open();
-          }}
-          topRightText={
-            selectedShipping && selectedShipping.default ? 'Default' : ''
-          }
-          style={{marginHorizontal: 16, marginVertical: 12}}
-        />
-        <Card
-          title="Jenis Pengiriman"
-          description={
-            loading3 || loading2 ? (
-              <Skeleton
-                loaderStyle={{
-                  width: 200,
-                  height: 16,
-                  marginVertical: 4,
-                  backgroundColor: '#ddd',
-                }}
-                direction="column"
-                numberOfItems={1}
-              />
-            ) : selectedType ? (
-              `${selectedExpedition.label} / ${selectedType.label}`
-            ) : (
-              'Pilih Jenis Pengiriman'
-            )
-          }
-          iconType="MaterialCommunityIcons"
-          iconName="package"
-          iconBackgroundColor={colors.primary}
-          onPress={() => {
-            sheet_type.current?.open();
-          }}
-          style={{marginHorizontal: 16, marginBottom: 12}}
-        />
-        {time && (
-          <Card
-            title="Jam Terima Paket"
-            description={
-              loading4 ? (
-                <Skeleton
-                  loaderStyle={{
-                    width: 200,
-                    height: 16,
-                    marginVertical: 4,
-                    backgroundColor: '#ddd',
-                  }}
-                  direction="column"
-                  numberOfItems={1}
-                />
-              ) : selectedTime ? (
-                `${selectedTime.day}${'\n'}${selectedTime.start} - ${
-                  selectedTime.end
-                }`
-              ) : (
-                <Text style={{color: 'red', fontWeight: 'bold'}}>
-                  Pilih Jam Terima Paket!
-                </Text>
-              )
-            }
-            iconType="MaterialCommunityIcons"
-            iconName="clock"
-            iconBackgroundColor="orange"
-            onPress={() => {
-              sheet_time.current?.open();
-            }}
-            style={{
-              marginHorizontal: 16,
-              marginBottom: 12,
-            }}
-          />
-        )}
-        <View style={{alignItems: 'center', marginVertical: 24}}>
-          <Text
-            style={{color: colors.grayDark, fontSize: 18, fontWeight: 'bold'}}>
-            Lebih Murah Pakai Voucher
-          </Text>
-          <Text style={{color: colors.grayDark, fontSize: 11}}>
-            Gunakan voucher anda disini
-          </Text>
-        </View>
-        <Card
-          title="Kode Voucher"
-          description={
-            selectedVoucher
-              ? selectedVoucher.code.toUpperCase()
-              : 'Pilih Diskon Anda'
-          }
-          iconType="MaterialCommunityIcons"
-          iconName="ticket-percent"
-          iconBackgroundColor="green"
-          onPress={() => {
-            sheet_voucher.current?.open();
-          }}
-          style={{marginHorizontal: 16, marginBottom: 12}}
-        />
-        <View style={{alignItems: 'center', marginVertical: 16}}>
-          <Text
-            style={{color: colors.grayDark, fontSize: 18, fontWeight: 'bold'}}>
-            Biar Abang Kurir Gak Bingung
-          </Text>
-          <Text style={{color: colors.grayDark, fontSize: 11}}>
-            Tulis patokan alamat anda disini
-          </Text>
-        </View>
-        <View style={{margin: 16}}>
-          <TextInput
-            style={{
-              backgroundColor: '#FEF4C5',
-              borderRadius: 10,
-              flex: 1,
-              borderColor: 'transparent',
-            }}
-            label="Catatan Pengiriman"
-            value={note}
-            multiline
-            mode="outlined"
-            numberOfLines={3}
-            placeholder="Beri kami deskripsi tempat anda, patokan alamat dll (opsional)"
-            onChangeText={(e) => setNote(e)}
-          />
-        </View>
-        <FooterCheckout
-          product={total_item}
-          shipping={selectedShipping}
-          expedition={selectedExpedition}
-          type={selectedType}
-          time={selectedTime}
-          voucher={selectedVoucher}
-          note={note}
-          disabled={
-            loading || (selectedType && selectedType.has_time && !selectedTime)
-          }
-        />
-      </ScrollView>
     </>
   );
 };
