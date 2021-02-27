@@ -58,7 +58,7 @@ const ProductCardBuyButton = ({id, containerStyle, maxOrder, stock = 999}) => {
         const newQty = Number(qty) - 1;
         if (newQty > 0) {
           setQty(newQty);
-          updateCart(id, newQty, false).then((d) => {
+          updateCart(id, newQty, null, false).then((d) => {
             d && dispatch(setCart(d));
           });
           setAdded(true);
@@ -83,7 +83,7 @@ const ProductCardBuyButton = ({id, containerStyle, maxOrder, stock = 999}) => {
       if (res) {
         const newQty = Number(qty) + 1;
         setQty(newQty);
-        updateCart(id, newQty, false);
+        updateCart(id, newQty, null, false);
         setAdded(true);
       } else {
         navigation.navigate('Auth');

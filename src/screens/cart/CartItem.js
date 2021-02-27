@@ -15,11 +15,11 @@ const CartItem = ({item, edit}) => {
 
   const minCart = () => {
     const newQty = Number(data.qty) - 1;
-    return updateCart(data.itemmst, newQty, false);
+    return updateCart(data.itemmst, newQty, null, false);
   };
   const plusCart = () => {
     const newQty = Number(data.qty) + 1;
-    return updateCart(data.itemmst, newQty, false);
+    return updateCart(data.itemmst, newQty, null, false);
   };
 
   useEffect(() => {

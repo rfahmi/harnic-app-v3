@@ -46,14 +46,14 @@ export const addCart = async (item_id, qty, note, toast) => {
   return result;
 };
 
-export const updateCart = async (item_id, qty, toast) => {
+export const updateCart = async (item_id, qty, note, toast) => {
   const api_token = await AsyncStorage.getItem('api_token');
   const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
 
   const result = await api
     .put(
       '/user/' + user_data.user_id + '/cart/' + item_id,
-      qs.stringify({qty}),
+      qs.stringify({qty, note}),
       {
         headers: {
           Authorization: 'Bearer ' + api_token,
