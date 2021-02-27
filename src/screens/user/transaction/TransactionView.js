@@ -533,7 +533,7 @@ const TransactionView = ({navigation, route}) => {
                           style={{
                             fontSize: 18,
                             fontWeight: 'bold',
-                            color: colors.primary,
+                            color: item.qty > 0 ? colors.primary : colors.red,
                           }}>
                           x {item.qty}
                         </Text>

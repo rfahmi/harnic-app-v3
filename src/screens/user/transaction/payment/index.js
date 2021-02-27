@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React, {memo, useEffect, useState} from 'react';
-import {View} from 'react-native';
+import {View, Alert} from 'react-native';
 import {Divider, List} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
 import HeaderBack from '../../../../components/HeaderBack';
@@ -10,6 +10,7 @@ import ListSkeleton from '../../../../organism/skeleton/ListSkeleton';
 const Payment = ({navigation, route}) => {
   const {trx} = route.params;
   const [data, setData] = useState(null);
+
   const getData = async () => {
     const api_token = await AsyncStorage.getItem('api_token');
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
@@ -42,6 +43,33 @@ const Payment = ({navigation, route}) => {
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(
+    () =>
+      navigation.addListener('beforeRemove', (e) => {
+        if (e.data.action.type !== 'GO_BACK') {
+          // If we don't have unsaved changes, then we don't need to do anything
+          return;
+        }
+        // Prevent default behavior of leaving the screen
+        e.preventDefault();
+
+        // Prompt the user before leaving the screen
+        Alert.alert(
+          'Keluar halaman ini?',
+          'Transaksi ini belum dibayar, anda dapat melanjutkan pembayaran nanti melalui menu User > Transaksi Baru',
+          [
+            {
+              text: 'Keluar',
+              style: 'destructive',
+              onPress: () => navigation.dispatch(e.data.action),
+            },
+            {text: 'Lanjut Bayar', style: 'cancel', onPress: () => {}},
+          ],
+        );
+      }),
+    [navigation],
+  );
 
   return (
     <View style={{backgroundColor: '#fff'}}>
