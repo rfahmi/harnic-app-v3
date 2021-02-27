@@ -117,12 +117,12 @@ const ProductCardBuyButton = ({id, containerStyle, maxOrder, stock = 999}) => {
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'row',
-            height: 28,
+            height: 38,
           }}>
           <IconButton
             onPress={minCart}
             icon="minus-circle"
-            size={22}
+            size={26}
             color={colors.green}
           />
           <Text>{qty}</Text>
@@ -131,7 +131,7 @@ const ProductCardBuyButton = ({id, containerStyle, maxOrder, stock = 999}) => {
               qty < maxOrder ? (stock > qty ? plusCart : toastStock) : toastMax
             }
             icon="plus-circle"
-            size={22}
+            size={26}
             color={colors.green}
           />
         </View>

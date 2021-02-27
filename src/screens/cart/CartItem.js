@@ -68,19 +68,15 @@ const CartItem = ({item, edit}) => {
               Subtotal: Rp{currencyFormat(data.subtotal)}
             </Text>
             {data.note ? (
-              <View
+              <Text
                 style={{
-                  width: 200,
-                  padding: 3,
-                  borderRadius: 2,
+                  fontSize: 10,
+                  color: '#393836',
                   backgroundColor: '#FEF4C5',
-                }}>
-                <Text
-                  style={{fontSize: 10, color: '#393836'}}
-                  ellipsizeMode="clip">
-                  Catatan: {data.note}
-                </Text>
-              </View>
+                }}
+                ellipsizeMode="clip">
+                Catatan: {data.note}
+              </Text>
             ) : (
               <View />
             )}

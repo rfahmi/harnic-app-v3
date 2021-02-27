@@ -399,11 +399,11 @@ const User = ({navigation}) => {
                 color={colors.red}
                 style={{borderRadius: 30, elevation: 0}}
                 labelStyle={{fontWeight: 'bold', fontSize: 15, lineHeight: 26}}
-                onPress={() => {
-                  deleteFcm().then(() => {
+                onPress={async () => {
+                  await navigation.navigate('Auth');
+                  await deleteFcm().then(() => {
                     dispatch(setAuth(false));
                     AsyncStorage.clear();
-                    navigation.navigate('Auth');
                   });
                 }}>
                 Log Out

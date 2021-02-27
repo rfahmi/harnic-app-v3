@@ -50,6 +50,7 @@ const Product = ({navigation, route}) => {
 
   //Add Cart
   const cartModal = useRef(null);
+  const [loading, setLoading] = useState(false);
   const [addQty, setAddQty] = useState(1);
   const [addNote, setAddNote] = useState(null);
 
@@ -92,13 +93,16 @@ const Product = ({navigation, route}) => {
   };
 
   const _handleAddCart = () => {
+    setLoading(true);
     isLogin().then((login) => {
       if (login) {
         addCart(itemid, addQty, addNote, true).then((d) => {
-          d && dispatch(setCart(d));
           cartModal.current?.close();
+          d && dispatch(setCart(d));
         });
+        setLoading(false);
       } else {
+        setLoading(false);
         navigation.navigate('Auth');
         RNToasty.Error({
           title: 'Login Untuk Belanja',
@@ -289,6 +293,7 @@ const Product = ({navigation, route}) => {
           style={{margin: 4, flex: 1, marginVertical: 10}}
           labelStyle={{fontWeight: 'bold', fontSize: 15, lineHeight: 26}}
           color={colors.primary}
+          loading={loading && <ActivityIndicator size="small" />}
           mode="contained">
           Tambah Keranjang
         </Button>

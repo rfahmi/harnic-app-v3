@@ -255,7 +255,7 @@ const Login = ({navigation}) => {
                 mode="contained"
                 disabled={!showSendAgain || loading}
                 onPress={_onLoginPhonePressed}>
-                {showSendAgain ? 'Login' : 'Coba Lagi Nanti'}
+                {showSendAgain ? 'Log in' : 'Coba Lagi Nanti'}
               </Button>
             </>
           ) : (
@@ -296,7 +296,7 @@ const Login = ({navigation}) => {
                 loading={loading && <ActivityIndicator size="small" />}
                 mode="contained"
                 onPress={_onLoginPressed}>
-                Login
+                Log in
               </Button>
             </>
           )}
@@ -307,61 +307,76 @@ const Login = ({navigation}) => {
               <Text style={styles.link}>Daftar disini</Text>
             </TouchableOpacity>
           </View>
+          {/* <TouchableOpacity onPress={() => modalOTP.current?.open()}>
+            <Text style={styles.link}>Open OTP</Text>
+          </TouchableOpacity> */}
         </Background>
       </ScrollView>
       <Modalize
         ref={modalOTP}
         modalHeight={WINDOW_HEIGHT * 0.5}
         modalStyle={{flex: 1, zIndex: 3}}>
-        <View style={{flex: 1, padding: 16}}>
-          <Text
+        {loading ? (
+          <View
             style={{
-              marginTop: 16,
-              fontWeight: 'bold',
-              fontSize: 24,
-              width: WINDOW_WIDTH * 0.6,
+              height: WINDOW_HEIGHT * 0.5,
+              justifyContent: 'center',
+              alignItems: 'center',
             }}>
-            Masukkan Kode OTP
-          </Text>
-          <Text>
-            Kami mengirimkan SMS berisi kode OTP ke nomor {phone.value}
-          </Text>
-          <View style={{alignItems: 'center'}}>
-            <OTPInputView
-              style={{width: '70%', height: 200}}
-              pinCount={4}
-              autoFocusOnLoad
-              codeInputFieldStyle={styles.underlineStyleBase}
-              codeInputHighlightStyle={styles.underlineStyleHighLighted}
-              onCodeFilled={(code) => {
-                _onOtpSubmit(code);
-              }}
-            />
-            {showSendAgain ? (
-              <Button
-                mode="contained"
-                onPress={_onLoginPhonePressed}
-                disabled={!showSendAgain}>
-                Kirim Ulang
-              </Button>
-            ) : (
-              <>
-                <Text style={{fontSize: 11, color: '#555', marginVertical: 8}}>
-                  Kirim ulang setelah:
-                </Text>
-                <CountDown
-                  until={waitingTime}
-                  timetoShow={['M', 'S']}
-                  digitStyle={{backgroundColor: '#ddd'}}
-                  digitTxtStyle={{color: '#555'}}
-                  timeLabelStyle={{color: '#ddd'}}
-                  size={12}
-                  onFinish={() => setShowSendAgain(true)}
-                />
-              </>
-            )}
+            <ActivityIndicator size="large" color={colors.primary} />
           </View>
-        </View>
+        ) : (
+          <View style={{flex: 1, padding: 16}}>
+            <Text
+              style={{
+                marginTop: 16,
+                fontWeight: 'bold',
+                fontSize: 24,
+                width: WINDOW_WIDTH * 0.6,
+              }}>
+              Masukkan Kode OTP
+            </Text>
+            <Text>
+              Kami mengirimkan SMS berisi kode OTP ke nomor {phone.value}
+            </Text>
+            <View style={{alignItems: 'center'}}>
+              <OTPInputView
+                style={{width: '70%', height: 200}}
+                pinCount={4}
+                autoFocusOnLoad
+                codeInputFieldStyle={styles.underlineStyleBase}
+                codeInputHighlightStyle={styles.underlineStyleHighLighted}
+                onCodeFilled={(code) => {
+                  _onOtpSubmit(code);
+                }}
+              />
+              {showSendAgain ? (
+                <Button
+                  mode="contained"
+                  onPress={_onLoginPhonePressed}
+                  disabled={!showSendAgain}>
+                  Kirim Ulang
+                </Button>
+              ) : (
+                <>
+                  <Text
+                    style={{fontSize: 11, color: '#555', marginVertical: 8}}>
+                    Kirim ulang setelah:
+                  </Text>
+                  <CountDown
+                    until={waitingTime}
+                    timetoShow={['M', 'S']}
+                    digitStyle={{backgroundColor: '#ddd'}}
+                    digitTxtStyle={{color: '#555'}}
+                    timeLabelStyle={{color: '#ddd'}}
+                    size={12}
+                    onFinish={() => setShowSendAgain(true)}
+                  />
+                </>
+              )}
+            </View>
+          </View>
+        )}
       </Modalize>
     </>
   );

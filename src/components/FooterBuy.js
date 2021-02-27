@@ -1,16 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useRef, useState} from 'react';
-import {Dimensions, Platform, ScrollView, Text, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
-import {Modalize} from 'react-native-modalize';
-import {
-  Appbar,
-  Button,
-  IconButton,
-  List,
-  TextInput,
-  Title,
-} from 'react-native-paper';
+import React, {useState} from 'react';
+import {ActivityIndicator, View} from 'react-native';
+import {Appbar, Button, IconButton} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
 import {useDispatch} from 'react-redux';
 import {setCart} from '../configs/redux/action/cartActions';
@@ -19,6 +10,7 @@ import {isLogin} from '../utils/auth';
 import {addCart} from '../utils/cart';
 
 const FooterBuy = ({item, openModal}) => {
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const _handleChat = () => {
@@ -28,13 +20,16 @@ const FooterBuy = ({item, openModal}) => {
     });
   };
   const _handleBuy = () => {
+    setLoading(true);
     isLogin().then((login) => {
       if (login) {
         addCart(item.itemid, 1, '', true).then((d) => {
-          d && dispatch(setCart(d));
           navigation.navigate('App', {screen: 'Cart'});
+          d && dispatch(setCart(d));
         });
+        setLoading(false);
       } else {
+        setLoading(false);
         navigation.navigate('Auth');
         RNToasty.Error({
           title: 'Login Untuk Belanja',
@@ -43,7 +38,6 @@ const FooterBuy = ({item, openModal}) => {
       }
     });
   };
-  
 
   return (
     <>
@@ -71,6 +65,7 @@ const FooterBuy = ({item, openModal}) => {
             onPress={_handleBuy}
             style={{margin: 4, flex: 1}}
             labelStyle={{fontSize: 10}}
+            loading={loading && <ActivityIndicator size="small" />}
             color={colors.primary}
             mode="contained">
             Langsung Beli
