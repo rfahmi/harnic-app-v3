@@ -1,12 +1,12 @@
 import React, {memo, useState} from 'react';
 import {Platform, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import * as Progress from 'react-native-progress';
 import {useSelector} from 'react-redux';
-import CornerLabel from './CornerLabel';
-import StarRating from './StarRating';
 import {currencyFormat} from '../utils/formatter';
+import CornerLabel from './CornerLabel';
+import PowerBar from './PowerBar';
 import ProductCardBuyButton from './ProductCardBuyButton';
+import StarRating from './StarRating';
 
 const ProductCardTall = ({
   item,
@@ -113,12 +113,10 @@ const ProductCardTall = ({
         {progressBar && (
           <View style={{marginBottom: 4, height: 12}}>
             {item && item.max_stock ? (
-              <Progress.Bar
-                animated={false}
-                progress={0.3}
+              <PowerBar
                 width={cardWidth}
-                color="orange"
-                unfilledColor="#eee"
+                current={item.stock}
+                max={item.max_stock}
               />
             ) : null}
           </View>

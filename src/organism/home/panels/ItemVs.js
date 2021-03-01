@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {memo} from 'react';
-import {Dimensions, FlatList, Text, TouchableOpacity, View} from 'react-native';
+import {Dimensions, Text, TouchableOpacity, View} from 'react-native';
 import ProductCard from '../../../components/ProductCard';
 import ProductCardHorizontal from '../../../components/ProductCardHorizontal';
 import ProductCardTall from '../../../components/ProductCardTall';
@@ -21,7 +21,7 @@ const ItemVs = ({data}) => {
           <ProductCardHorizontal
             item={item}
             style={{
-              width: Dimensions.get('window').width / data.param1 - 32,
+              width: Dimensions.get('window').width / 2 - 32,
               margin: 4,
             }}
           />
@@ -29,7 +29,7 @@ const ItemVs = ({data}) => {
           <ProductCardTall
             item={item}
             style={{
-              width: Dimensions.get('window').width / data.param1 - 32,
+              width: Dimensions.get('window').width / 2 - 32,
               margin: 4,
             }}
           />
@@ -37,7 +37,7 @@ const ItemVs = ({data}) => {
           <ProductCard
             item={item}
             style={{
-              width: Dimensions.get('window').width / data.param1 - 32,
+              width: Dimensions.get('window').width / 2 - 32,
               margin: 4,
             }}
           />

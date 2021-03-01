@@ -29,7 +29,7 @@ const Home = ({navigation}) => {
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
     const append_url = user_data ? '?user_id=' + user_data.user_id : '';
     const result = await api
-      .get('/configs' + append_url)
+      .get('/configs/debug' + append_url)
       .then((res) => {
         if (res.data.success) {
           return res.data.data;
