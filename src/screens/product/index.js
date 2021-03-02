@@ -153,7 +153,7 @@ const Product = ({navigation, route}) => {
                         currencyFormat(data[auth.priceType] || data.sellprice)}
                     </Text>
                   </View>
-                  {data && data.is_discount ? (
+                  {data && data.is_discount === 0 ? (
                     <View
                       style={{
                         flex: 1,

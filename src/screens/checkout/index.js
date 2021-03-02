@@ -11,12 +11,20 @@ import {Card} from '@paraboly/react-native-card';
 import {colors} from '../../constants/colors';
 import FooterCheckout from '../../components/FooterCheckout';
 import {Modalize} from 'react-native-modalize';
-import {Divider, IconButton, List, TextInput, Title} from 'react-native-paper';
+import {
+  Button,
+  Divider,
+  IconButton,
+  List,
+  TextInput,
+  Title,
+} from 'react-native-paper';
 import AsyncStorage from '@react-native-community/async-storage';
 import {RNToasty} from 'react-native-toasty';
 import {api} from '../../configs/api';
 import {currencyFormat} from '../../utils/formatter';
 import {Skeleton} from 'react-native-animated-skeleton';
+import {useFocusEffect} from '@react-navigation/native';
 
 const Checkout = ({navigation, route}) => {
   const {total_item} = route.params;
@@ -50,6 +58,7 @@ const Checkout = ({navigation, route}) => {
     setLoading1(true);
     const api_token = await AsyncStorage.getItem('api_token');
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
+
     await api
       .get('/user/' + user_data.user_id + '/shipping', {
         headers: {
@@ -95,7 +104,6 @@ const Checkout = ({navigation, route}) => {
         setLoading2(false);
         if (res.data.success) {
           setSelectedExpedition(res.data.data[0]);
-          console.log('expedition ', res.data.data[0]);
           getType(shipping_id, res.data.data[0].id);
         } else {
           RNToasty.Error({
@@ -119,7 +127,6 @@ const Checkout = ({navigation, route}) => {
     setLoading3(true);
     const api_token = await AsyncStorage.getItem('api_token');
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
-    console.log('type called', selectedExpedition);
     await api
       .get(
         `/user/${user_data.user_id}/shipping/${shipping_id}/expedition/${expedition_id}/type`,
@@ -135,7 +142,6 @@ const Checkout = ({navigation, route}) => {
         if (res.data.success) {
           setType(res.data.data);
           setSelectedType(res.data.data[0]);
-          console.log('type', res.data.data[0]);
           if (res.data.data[0].has_time) {
             getTime(shipping_id, expedition_id, res.data.data[0].id);
           } else {
@@ -180,7 +186,6 @@ const Checkout = ({navigation, route}) => {
         if (res.data.success) {
           setTime(res.data.data);
           // setSelectedTime(res.data.data[0]);
-          console.log('time', res.data.data[0]);
         } else {
           setTime(null);
           setSelectedTime(null);
@@ -214,7 +219,6 @@ const Checkout = ({navigation, route}) => {
         setLoading(false);
         if (res.data.success) {
           setVouchers(res.data.data);
-          console.log(res.data.data);
         } else {
           RNToasty.Error({
             title: res.data.message,
@@ -243,7 +247,6 @@ const Checkout = ({navigation, route}) => {
       })
       .then((res) => {
         setLoading(false);
-        console.log(res.data);
         if (res.data.data && res.data.success) {
           if (res.data.data.DiscValue > 0) {
             setSelectedVoucher(res.data.data);
@@ -279,61 +282,80 @@ const Checkout = ({navigation, route}) => {
       });
   };
 
-  useEffect(() => {
-    getShipping();
-    getVoucher();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log('focus');
+      getShipping();
+      getVoucher();
+    }, []),
+  );
 
   return (
     <>
       <ScrollView>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <Card
-            title="Alamat"
-            textContainerNumberOfLines={3}
-            description={
-              loading1 ? (
-                <Skeleton
-                  loaderStyle={{
-                    width: 200,
-                    height: 16,
-                    marginVertical: 4,
-                    backgroundColor: '#ddd',
-                  }}
-                  direction="column"
-                  numberOfItems={1}
-                />
-              ) : selectedShipping ? (
-                <Text style={{lineHeight: 0, fontSize: 12}}>
-                  {selectedShipping.shipping_address +
-                    ', ' +
-                    selectedShipping.subdis_name +
-                    ', ' +
-                    selectedShipping.dis_name +
-                    ', ' +
-                    selectedShipping.city_name +
-                    ', ' +
-                    selectedShipping.prov_name +
-                    ' ' +
-                    selectedShipping.zip_code}
-                </Text>
-              ) : (
-                'Pilih alamat'
-              )
-            }
-            line
-            iconType="MaterialCommunityIcons"
-            iconName="map-marker"
-            iconBackgroundColor={colors.primary}
-            onPress={() => {
-              sheet_shipping.current?.open();
-            }}
-            topRightText={
-              selectedShipping && selectedShipping.default ? 'Default' : ''
-            }
-            style={{marginHorizontal: 16, marginVertical: 12}}
-          />
+          <View style={{position: 'relative'}}>
+            <Button
+              mode="contained"
+              onPress={async () => {
+                const user_data = JSON.parse(
+                  await AsyncStorage.getItem('user_data'),
+                );
+                navigation.push('UserShipping', {
+                  screen: 'UserShippingAdd',
+                  params: {user_id: user_data.user_id},
+                });
+              }}
+              labelStyle={{fontSize: 9}}
+              style={{position: 'absolute', zIndex: 3, bottom: 20, right: 20}}
+              uppercase={false}>
+              + Tambah
+            </Button>
+            <Card
+              title="Alamat"
+              textContainerNumberOfLines={3}
+              description={
+                loading1 ? (
+                  <Skeleton
+                    loaderStyle={{
+                      width: 200,
+                      height: 16,
+                      marginVertical: 4,
+                      backgroundColor: '#ddd',
+                    }}
+                    direction="column"
+                    numberOfItems={1}
+                  />
+                ) : selectedShipping ? (
+                  selectedShipping.shipping_address +
+                  ', ' +
+                  selectedShipping.subdis_name +
+                  ', ' +
+                  selectedShipping.dis_name +
+                  ', ' +
+                  selectedShipping.city_name +
+                  ', ' +
+                  selectedShipping.prov_name +
+                  ' ' +
+                  selectedShipping.zip_code
+                ) : (
+                  'Pilih alamat'
+                )
+              }
+              line
+              iconType="MaterialCommunityIcons"
+              iconName="map-marker"
+              iconBackgroundColor={colors.primary}
+              onPress={() => {
+                sheet_shipping.current?.open();
+              }}
+              topRightText={
+                selectedShipping && selectedShipping.default ? 'Default' : ''
+              }
+              style={{marginHorizontal: 16, marginVertical: 12}}
+            />
+          </View>
           <Card
             title="Jenis Pengiriman"
             description={
@@ -601,7 +623,6 @@ const Checkout = ({navigation, route}) => {
                     title={item.vc_code.toUpperCase()}
                     description={item.vc_name}
                     onPress={() => {
-                      console.log(item);
                       applyVoucher(item.vc_code);
                       sheet_voucher.current?.close();
                     }}

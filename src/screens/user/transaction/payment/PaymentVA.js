@@ -16,6 +16,7 @@ import {
 import CountDown from 'react-native-countdown-component';
 import {Modalize} from 'react-native-modalize';
 import {Button, Card, Dialog, Paragraph, Title} from 'react-native-paper';
+import HTML from 'react-native-render-html';
 import {RNToasty} from 'react-native-toasty';
 import * as assets from '../../../../assets/images/banks';
 import HeaderBack from '../../../../components/HeaderBack';
@@ -45,9 +46,6 @@ const PaymentVA = ({trx}) => {
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
 
     modal.current?.open();
-    console.log(
-      `/user/${user_data.user_id}/transaction/${trx.trxno}/payment/va/${bank_code}`,
-    );
     await api
       .post(
         `/user/${user_data.user_id}/transaction/${trx.trxno}/payment/va/${bank_code}`,
@@ -60,6 +58,7 @@ const PaymentVA = ({trx}) => {
       )
       .then((res) => {
         setLoading(false);
+        // console.log(res.data.data);
         if (res.data.success) {
           getDuration(res.data.data.expired_time);
           setPayment(res.data.data);
@@ -181,13 +180,13 @@ const PaymentVA = ({trx}) => {
         onClose={() =>
           navigation.replace('TransactionView', {trxno: trx.trxno})
         }
-        modalHeight={WINDOW_HEIGHT * 0.7}
+        modalHeight={WINDOW_HEIGHT * 0.8}
         modalStyle={{padding: 16}}>
         {payment ? (
           <>
             <ScrollView
               style={{
-                height: WINDOW_HEIGHT * 0.7 - 100,
+                height: WINDOW_HEIGHT * 0.8 - 100,
               }}>
               <Title>Selesaikan Pembayaran</Title>
               <View
@@ -289,6 +288,18 @@ const PaymentVA = ({trx}) => {
                   </TouchableOpacity>
                 </View>
               </Card>
+              {payment && payment.va_bank && (
+                <>
+                  <Title style={{marginHorizontal: 16, marginVertical: 8}}>
+                    Mobile Banking
+                  </Title>
+                  <HTML source={{html: payment.va_bank.guide_mobile}} />
+                  <Title style={{marginHorizontal: 16, marginVertical: 8}}>
+                    ATM
+                  </Title>
+                  <HTML source={{html: payment.va_bank.guide_atm}} />
+                </>
+              )}
             </ScrollView>
             <Button
               onPress={() =>

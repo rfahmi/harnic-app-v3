@@ -158,7 +158,7 @@ const User = ({navigation}) => {
                 </TouchableOpacity>
               </View>
             </View>
-            <Separator />
+            <Separator color="#1100BB" />
             <List.Section>
               <List.Subheader>Pesanan</List.Subheader>
               <Surface
@@ -288,7 +288,7 @@ const User = ({navigation}) => {
                 </Button>
               </View>
             </List.Section>
-            <Separator />
+            <Separator color="#1100BB" />
             <List.Section>
               <List.Subheader>Pengaturan</List.Subheader>
               <List.Item
@@ -359,7 +359,7 @@ const User = ({navigation}) => {
               left={() => <List.Icon icon="check" />}
             /> */}
             </List.Section>
-            <Separator />
+            <Separator color="#1100BB" />
             <List.Section>
               <List.Subheader>Informasi Lainnya</List.Subheader>
               <List.Item

@@ -157,9 +157,36 @@ const PaymentTF = ({trx}) => {
           <Text style={{textAlign: 'center'}}>
             Masukkan kode berikut di berita untuk verifikasi cepat
           </Text>
-          <Text style={{textAlign: 'center', fontSize: 24, fontWeight: 'bold'}}>
-            {trx.trxno}
-          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Text
+              style={{textAlign: 'center', fontSize: 24, fontWeight: 'bold'}}>
+              {trx.trxno}
+            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                Clipboard.setString(trx.trxno);
+                RNToasty.Show({
+                  title: 'Disalin ke papan klip',
+                  position: 'center',
+                });
+              }}
+              style={{
+                backgroundColor: colors.gray,
+                paddingHorizontal: 16,
+                paddingVertical: 4,
+                borderRadius: 20,
+                marginLeft: 8,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text style={{color: colors.white}}>Salin</Text>
+            </TouchableOpacity>
+          </View>
         </Card>
       </ScrollView>
       <View style={{margin: 16, zIndex: 1}}>

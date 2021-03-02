@@ -5,7 +5,7 @@ import CornerLabel from '../components/CornerLabel';
 import {currencyFormat} from '../utils/formatter';
 import ProductCardBuyButton from './ProductCardBuyButton';
 
-const ProductCardHorizontal = ({item, style}) => {
+const ProductCardHorizontalWeight = ({item, style}) => {
   return (
     <View
       style={[
@@ -69,8 +69,22 @@ const ProductCardHorizontal = ({item, style}) => {
           }}
         />
       </View>
+      {item.weight && (
+        <View
+          style={{
+            backgroundColor: '#1100BB',
+            aspectRatio: 1 / 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text style={{fontSize: 32, fontWeight: 'bold', color: '#fff'}}>
+            {item.weight}
+          </Text>
+          <Text style={{fontSize: 16, color: '#fff'}}>KG</Text>
+        </View>
+      )}
     </View>
   );
 };
 
-export default memo(ProductCardHorizontal);
+export default memo(ProductCardHorizontalWeight);

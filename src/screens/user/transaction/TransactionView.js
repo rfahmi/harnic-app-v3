@@ -206,6 +206,7 @@ const TransactionView = ({navigation, route}) => {
 
   const getPaymentStatus = () => {
     if (data) {
+      console.log('PAYMENT STATUS', data);
       getDuration(data.expired_time);
       switch (data.payment_method_code) {
         case 1:

@@ -43,7 +43,7 @@ const CartItem = ({item, edit}) => {
                 }}>
                 Rp{currencyFormat(data.price)}
               </Text>
-              {data.is_discount ? (
+              {data.is_discount === 0 ? (
                 <View
                   style={{
                     borderRadius: 2,

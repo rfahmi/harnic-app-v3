@@ -3,6 +3,7 @@ import React, {memo} from 'react';
 import {Dimensions, FlatList, TouchableOpacity, View} from 'react-native';
 import ProductCard from '../../../components/ProductCard';
 import ProductCardHorizontal from '../../../components/ProductCardHorizontal';
+import ProductCardHorizontalWeight from '../../../components/ProductCardHorizontalWeight';
 import ProductCardTall from '../../../components/ProductCardTall';
 
 const ItemGrid = ({data}) => {
@@ -21,6 +22,14 @@ const ItemGrid = ({data}) => {
         }>
         {data.card_type === 'HORIZONTAL' ? (
           <ProductCardHorizontal
+            item={item}
+            style={{
+              width: Dimensions.get('window').width / data.param1 - 12,
+              margin: 4,
+            }}
+          />
+        ) : data.card_type === 'HORIZONTAL_WEIGHT' ? (
+          <ProductCardHorizontalWeight
             item={item}
             style={{
               width: Dimensions.get('window').width / data.param1 - 12,

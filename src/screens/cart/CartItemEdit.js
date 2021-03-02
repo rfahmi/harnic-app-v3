@@ -58,7 +58,7 @@ const CartItemEdit = ({item, closeModal}) => {
                 Rp
                 {item && currencyFormat(item.price)}
               </Text>
-              {item.is_discount ? (
+              {item.is_discount === 0 ? (
                 <View
                   style={{
                     borderRadius: 2,

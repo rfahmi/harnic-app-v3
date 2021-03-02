@@ -49,7 +49,6 @@ const Banners = ({banners, parentScrollView}) => {
                   navigation.push('HomePage', {name: b.param});
                   break;
                 default:
-                  alert('Action Unknown');
                   break;
               }
             }}
