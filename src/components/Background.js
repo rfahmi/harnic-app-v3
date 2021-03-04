@@ -1,19 +1,12 @@
 import React, {memo} from 'react';
-import {
-  ImageBackground,
-  StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
+import {ImageBackground, KeyboardAvoidingView, StyleSheet} from 'react-native';
 
 const Background = ({children}) => (
   <ImageBackground
     source={require('../assets/images/background_dot.png')}
     resizeMode="repeat"
     style={styles.background}>
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}>
+    <KeyboardAvoidingView behavior="padding" style={styles.container}>
       {children}
     </KeyboardAvoidingView>
   </ImageBackground>
