@@ -132,12 +132,15 @@ const CartItemEdit = ({item, closeModal}) => {
               />
               <IconButton
                 onPress={() => setQty(qty + 1)}
-                disabled={qty >= item.max_order || qty >= item.stock}
+                disabled={
+                  item.max_order > 0 &&
+                  (qty >= item.max_order || qty >= item.stock)
+                }
                 color={colors.primary}
                 icon="plus-circle"
               />
             </View>
-            {item.max_order < 999 && (
+            {item.max_order < 999 && item.max_order > 0 && (
               <View
                 style={{
                   borderRadius: 2,

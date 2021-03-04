@@ -116,7 +116,10 @@ const CartItem = ({item, edit}) => {
               <Text>{data.qty}</Text>
               <IconButton
                 onPress={() => plusCart().then((e) => dispatch(setCart(e)))}
-                disabled={data.qty >= data.max_order || data.qty >= data.stock}
+                disabled={
+                  data.max_order > 0 &&
+                  (data.qty >= data.max_order || data.qty >= data.stock)
+                }
                 color={colors.primary}
                 icon="plus-circle"
               />

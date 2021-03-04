@@ -1,15 +1,15 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {StatusBar, View} from 'react-native';
+import {StatusBar, View, Platform} from 'react-native';
 import {IconButton, Title} from 'react-native-paper';
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 const ScreenTitle = ({title, search}) => {
   const navigation = useNavigation();
   const _handleSearch = () => navigation.push('Search', {key: Date.now()});
-  const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? getStatusBarHeight() : StatusBar.currentHeight;
-
+  const STATUSBAR_HEIGHT =
+    Platform.OS === 'ios' ? getStatusBarHeight() : StatusBar.currentHeight;
 
   return (
     <>

@@ -293,8 +293,7 @@ const Checkout = ({navigation, route}) => {
   return (
     <>
       <ScrollView>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <KeyboardAvoidingView behavior="padding">
           <View style={{position: 'relative'}}>
             <Button
               mode="contained"
