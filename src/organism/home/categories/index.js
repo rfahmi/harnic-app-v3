@@ -10,11 +10,15 @@ const Categories = ({categories}) => {
       <TouchableOpacity
         onPress={() => {
           if (item.custom_page2_url) {
-            const name = item.custom_page2_url.replace(
-              'https://page.harnic.id/url/',
-              '',
-            );
-            navigation.push('HomePage', {name});
+            if (!item.custom_page2_url === '#') {
+              alert('Coming Soon!');
+            } else {
+              const name = item.custom_page2_url.replace(
+                'https://page.harnic.id/url/',
+                '',
+              );
+              navigation.push('HomePage', {name});
+            }
           } else {
             navigation.push('Search', {
               screen: 'SearchResult',

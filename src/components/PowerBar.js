@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import * as Progress from 'react-native-progress';
 
 const PowerBar = ({width, current, max}) => {
@@ -14,4 +14,4 @@ const PowerBar = ({width, current, max}) => {
   );
 };
 
-export default PowerBar;
+export default memo(PowerBar);

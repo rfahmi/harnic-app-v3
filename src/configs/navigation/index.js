@@ -8,6 +8,7 @@ import CheckoutStack from './checkout';
 import TransactionStack from './app/user/Transaction';
 import UserShippingStack from './app/user/UserShipping';
 import HomePage from '../../screens/home/HomePage';
+import HomePanel from '../../screens/home/HomePanel';
 import {Platform} from 'react-native';
 
 const Stack = createStackNavigator();
@@ -22,6 +23,7 @@ const RootStack = () => {
       <Stack.Screen name="Auth" component={AuthStack} />
       <Stack.Screen name="Search" component={SearchStack} />
       <Stack.Screen name="HomePage" component={HomePage} />
+      <Stack.Screen name="HomePanel" component={HomePanel} />
       <Stack.Screen name="Checkout" component={CheckoutStack} />
       <Stack.Screen name="Transaction" component={TransactionStack} />
       <Stack.Screen name="UserShipping" component={UserShippingStack} />

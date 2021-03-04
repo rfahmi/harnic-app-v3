@@ -9,7 +9,7 @@ const ItemSlideBasic = ({data}) => {
   const navigation = useNavigation();
 
   const keyExtractor = (item, index) => {
-    return `ItemSlideBasic${data.component_id}-${item.itemid}-${Math.random(3)}`;
+    return `ItemSlide${data.panel_id}-${data.component_id}-${item.itemid}-${index}`;
   };
   const _renderItems = ({item, index}) => {
     return (

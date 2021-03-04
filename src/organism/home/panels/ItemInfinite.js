@@ -95,9 +95,7 @@ const ItemInfinite = ({data}) => {
   };
 
   const keyExtractor = (item, index) => {
-    return `ItemInfinite${data.component_id}-${
-      item.itemid
-    }-${Date.now()}${Math.random(3)}`;
+    return `ItemInfinite${data.panel_id}-${data.component_id}-${item.itemid}-${index}`;
   };
   const _renderItems = ({item, index}) => {
     return (

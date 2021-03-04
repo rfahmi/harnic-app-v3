@@ -508,7 +508,7 @@ const Register = ({navigation}) => {
         ref={modalOTP}
         modalHeight={WINDOW_HEIGHT * 0.7}
         modalStyle={{flex: 1, zIndex: 3}}>
-        {!loading ? (
+        {loading ? (
           <View
             style={{
               height: WINDOW_HEIGHT * 0.7,

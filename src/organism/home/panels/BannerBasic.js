@@ -37,6 +37,9 @@ const BannerBasic = ({data}) => {
             case 'page':
               navigation.push('HomePage', {name: data.api});
               break;
+            case 'panel':
+              navigation.push('HomePanel', {name: data.api});
+              break;
             default:
               break;
           }

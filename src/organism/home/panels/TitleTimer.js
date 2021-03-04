@@ -1,32 +1,36 @@
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import moment from 'moment';
-import React, {memo, useEffect, useState} from 'react';
+import React, {memo, useCallback, useState} from 'react';
 import {Text, View} from 'react-native';
 import CountDown from 'react-native-countdown-component';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const TitleTimer = ({data}) => {
   const [totalDuration, setTotalDuration] = useState(0);
-  useEffect(() => {
-    // Coundown timer for a given expiry date-time
-    let date = moment().utcOffset('+07:00').format('YYYY-MM-DD HH:mm:ss');
 
-    // Getting the current date-time
-    // You can set your own date-time
-    let expirydate = data.param2;
+  useFocusEffect(
+    useCallback(() => {
+      console.log('count timer');
+      // Coundown timer for a given expiry date-time
+      let date = moment().utcOffset('+07:00').format('YYYY-MM-DD HH:mm:ss');
 
-    let diffr = moment.duration(moment(expirydate).diff(moment(date)));
-    // Difference of the expiry date-time
-    var hours = Number(diffr.asHours());
-    var minutes = Number(diffr.minutes());
-    var seconds = Number(diffr.seconds());
+      // Getting the current date-time
+      // You can set your own date-time
+      let expirydate = data.param2;
 
-    // Converting in seconds
-    var d = hours * 60 * 60 + minutes * 60 + seconds;
+      let diffr = moment.duration(moment(expirydate).diff(moment(date)));
+      // Difference of the expiry date-time
+      var hours = Number(diffr.asHours());
+      var minutes = Number(diffr.minutes());
+      var seconds = Number(diffr.seconds());
 
-    // Settign up the duration of countdown
-    setTotalDuration(d);
-  }, []);
+      // Converting in seconds
+      var d = hours * 60 * 60 + minutes * 60 + seconds;
+
+      // Settign up the duration of countdown
+      setTotalDuration(d);
+    }, []),
+  );
 
   const navigation = useNavigation();
   return (

@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {memo} from 'react';
-import {Dimensions, FlatList, TouchableOpacity, View} from 'react-native';
+import {Dimensions, FlatList, Text, TouchableOpacity, View} from 'react-native';
 import ProductCard from '../../../components/ProductCard';
 import ProductCardHorizontal from '../../../components/ProductCardHorizontal';
 import ProductCardHorizontalWeight from '../../../components/ProductCardHorizontalWeight';
@@ -9,7 +9,7 @@ import ProductCardTall from '../../../components/ProductCardTall';
 const ItemGrid = ({data}) => {
   const navigation = useNavigation();
   const keyExtractor = (item, index) => {
-    return `ItemGrid${data.component_id}-${item.itemid}-${Math.random(3)}`;
+    return `ItemGrid${data.panel_id}-${data.component_id}-${item.itemid}-${index}`;
   };
   const _renderItems = ({item, index}) => {
     return (
