@@ -307,7 +307,7 @@ const Checkout = ({navigation, route}) => {
                 });
               }}
               labelStyle={{fontSize: 9}}
-              style={{position: 'absolute', zIndex: 3, bottom: 20, right: 20}}
+              style={{position: 'absolute', zIndex: 3, bottom: 20, right: 22}}
               uppercase={false}>
               + Tambah
             </Button>
