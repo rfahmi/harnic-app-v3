@@ -15,6 +15,14 @@ const Developer = ({navigation}) => {
           })
         }
       />
+      <List.Item
+        title="Goto Test Page"
+        onPress={() =>
+          navigation.navigate('HomePage', {
+            name: 'test',
+          })
+        }
+      />
     </View>
   );
 };
