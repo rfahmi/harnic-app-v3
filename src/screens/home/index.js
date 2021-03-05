@@ -1,5 +1,5 @@
 import {useScrollToTop} from '@react-navigation/native';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useCallback} from 'react';
 import {Animated, Image, RefreshControl, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {api} from '../../configs/api';
@@ -28,9 +28,9 @@ const Home = ({navigation}) => {
   const getConfig = async () => {
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
     let append_url = user_data ? '?user_id=' + user_data.user_id : '';
-    if (__DEV__) {
-      append_url = '/debug' + append_url;
-    }
+    // if (__DEV__) {
+    //   append_url = '/debug' + append_url;
+    // }
     const result = await api
       .get('/configs' + append_url)
       .then((res) => {
@@ -83,12 +83,12 @@ const Home = ({navigation}) => {
       </View>
     );
   };
-  const _renderPanel = ({item, index}) => {
+  const _renderPanel = useCallback(({item, index}) => {
     return <Panels data={item} />;
-  };
+  }, []);
 
   const keyExtractor = (item, index) => {
-    return String(`Panel${item.component_id}-${index}-${Date.now()}`);
+    return `Panel${item.component_id}-${index}`;
   };
 
   return (

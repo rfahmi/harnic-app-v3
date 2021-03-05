@@ -1,4 +1,4 @@
-import React, {lazy, Suspense} from 'react';
+import React, {memo, lazy, Suspense} from 'react';
 import {View} from 'react-native';
 import {Skeleton} from 'react-native-animated-skeleton';
 import Title from './Title';
@@ -53,4 +53,4 @@ const Panels = ({data}) => {
   );
 };
 
-export default Panels;
+export default memo(Panels);

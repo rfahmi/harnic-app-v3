@@ -391,6 +391,16 @@ const User = ({navigation}) => {
                 left={() => <List.Icon icon="shield-alert-outline" />}
                 onPress={() => getInfo('kebijakan-privasi')}
               />
+              {data && data.is_developer === 1 && (
+                <>
+                  <Divider />
+                  <List.Item
+                    title="Developer Menu"
+                    left={() => <List.Icon icon="lightbulb-outline" />}
+                    onPress={() => navigation.navigate('Developer')}
+                  />
+                </>
+              )}
             </List.Section>
             <View style={{marginVertical: 16}} />
             <View style={{margin: 16}}>

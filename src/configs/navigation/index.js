@@ -1,15 +1,16 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import Splash from '../../screens/splash';
-import AppStack from './app';
-import AuthStack from './auth';
-import SearchStack from './search';
-import CheckoutStack from './checkout';
-import TransactionStack from './app/user/Transaction';
-import UserShippingStack from './app/user/UserShipping';
+import {Platform} from 'react-native';
+import Developer from '../../screens/developer';
 import HomePage from '../../screens/home/HomePage';
 import HomePanel from '../../screens/home/HomePanel';
-import {Platform} from 'react-native';
+import Splash from '../../screens/splash';
+import AppStack from './app';
+import TransactionStack from './app/user/Transaction';
+import UserShippingStack from './app/user/UserShipping';
+import AuthStack from './auth';
+import CheckoutStack from './checkout';
+import SearchStack from './search';
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,7 @@ const RootStack = () => {
       <Stack.Screen name="Checkout" component={CheckoutStack} />
       <Stack.Screen name="Transaction" component={TransactionStack} />
       <Stack.Screen name="UserShipping" component={UserShippingStack} />
+      <Stack.Screen name="Developer" component={Developer} />
     </Stack.Navigator>
   );
 };

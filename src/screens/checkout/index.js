@@ -312,7 +312,14 @@ const Checkout = ({navigation, route}) => {
               + Tambah
             </Button>
             <Card
-              title="Alamat"
+              title={
+                selectedShipping
+                  ? selectedShipping.shipping_name +
+                    ' (' +
+                    selectedShipping.pic_name +
+                    ')'
+                  : 'Pilih Alamat'
+              }
               textContainerNumberOfLines={3}
               description={
                 loading1 ? (
@@ -502,7 +509,7 @@ const Checkout = ({navigation, route}) => {
                 <View key={`addr${index}`}>
                   <List.Item
                     left={() => <List.Icon icon="map-marker-outline" />}
-                    title={item.shipping_name}
+                    title={`${item.shipping_name} (${item.pic_name})`}
                     description={
                       item.shipping_address +
                       ', ' +
