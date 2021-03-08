@@ -2,6 +2,8 @@ import React, {useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Dimensions,
+  KeyboardAvoidingView,
+  SafeAreaView,
   ScrollView,
   Text,
   View,
@@ -370,68 +372,72 @@ const AddShipping = ({navigation, route}) => {
             openModal();
           }}
         />
-        <TextInput
-          label="Nama Penerima"
-          mode="outlined"
-          placeholder="Nama Penerima"
-          returnKeyType="next"
-          value={data.pic_name}
-          onChangeText={(text) =>
-            setData({
-              ...data,
-              pic_name: text,
-            })
-          }
-          autoCapitalize="none"
-          style={{marginBottom: 8, marginHorizontal: 16}}
-        />
-        <TextInput
-          label="Nomor HP Penerima"
-          mode="outlined"
-          placeholder="Nomor HP Penerima"
-          returnKeyType="next"
-          value={data.pic_phone}
-          onChangeText={(text) =>
-            setData({
-              ...data,
-              pic_phone: text,
-            })
-          }
-          keyboardType="numeric"
-          autoCapitalize="none"
-          style={{marginBottom: 8, marginHorizontal: 16}}
-        />
-        <TextInput
-          label="Detail Alamat"
-          mode="outlined"
-          placeholder="Nama jalan, Gang, RT/RW"
-          returnKeyType="next"
-          value={data.shipping_address}
-          multiline
-          numberOfLines={4}
-          onChangeText={(text) =>
-            setData({
-              ...data,
-              shipping_address: text,
-            })
-          }
-          autoCapitalize="none"
-          style={{marginBottom: 8, marginHorizontal: 16}}
-        />
+        <KeyboardAvoidingView behavior="padding">
+          <TextInput
+            label="Nama Penerima"
+            mode="outlined"
+            placeholder="Nama Penerima"
+            returnKeyType="next"
+            value={data.pic_name}
+            onChangeText={(text) =>
+              setData({
+                ...data,
+                pic_name: text,
+              })
+            }
+            autoCapitalize="none"
+            style={{marginBottom: 8, marginHorizontal: 16}}
+          />
+          <TextInput
+            label="Nomor HP Penerima"
+            mode="outlined"
+            placeholder="Nomor HP Penerima"
+            returnKeyType="next"
+            value={data.pic_phone}
+            onChangeText={(text) =>
+              setData({
+                ...data,
+                pic_phone: text,
+              })
+            }
+            keyboardType="numeric"
+            autoCapitalize="none"
+            style={{marginBottom: 8, marginHorizontal: 16}}
+          />
+          <TextInput
+            label="Detail Alamat"
+            mode="outlined"
+            placeholder="Nama jalan, Gang, RT/RW"
+            returnKeyType="next"
+            value={data.shipping_address}
+            multiline
+            numberOfLines={4}
+            onChangeText={(text) =>
+              setData({
+                ...data,
+                shipping_address: text,
+              })
+            }
+            autoCapitalize="none"
+            style={{marginBottom: 8, marginHorizontal: 16}}
+          />
+        </KeyboardAvoidingView>
       </ScrollView>
-      <View style={{marginHorizontal: 16, zIndex: 1}}>
-        <Button
-          disabled={
-            !data.zip_code ||
-            !data.shipping_address ||
-            !data.pic_phone ||
-            !data.pic_name
-          }
-          mode="contained"
-          onPress={() => createShipping()}>
-          Simpan
-        </Button>
-      </View>
+      <SafeAreaView>
+        <View style={{marginHorizontal: 16, zIndex: 1}}>
+          <Button
+            disabled={
+              !data.zip_code ||
+              !data.shipping_address ||
+              !data.pic_phone ||
+              !data.pic_name
+            }
+            mode="contained"
+            onPress={() => createShipping()}>
+            Simpan
+          </Button>
+        </View>
+      </SafeAreaView>
     </>
   );
 };

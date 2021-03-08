@@ -53,13 +53,19 @@ const ItemVs = ({data}) => {
         justifyContent: 'center',
         padding: 8,
       }}>
-      <Item item={data.items[0]} />
-      <View style={{alignItems: 'center', justifyContent: 'center', width: 36}}>
-        <Text style={{color: data.color1, fontSize: 22, fontWeight: 'bold'}}>
-          VS
-        </Text>
-      </View>
-      <Item item={data.items[1]} />
+      {data.items.length > 1 && (
+        <>
+          <Item item={data.items[0]} />
+          <View
+            style={{alignItems: 'center', justifyContent: 'center', width: 36}}>
+            <Text
+              style={{color: data.color1, fontSize: 22, fontWeight: 'bold'}}>
+              VS
+            </Text>
+          </View>
+          <Item item={data.items[1]} />
+        </>
+      )}
     </View>
   );
 };
