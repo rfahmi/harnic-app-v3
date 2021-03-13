@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React, {memo, useEffect, useState} from 'react';
-import {View, Alert} from 'react-native';
+import {View, Alert, Text} from 'react-native';
 import {Divider, List} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
 import HeaderBack from '../../../../components/HeaderBack';
@@ -14,9 +14,10 @@ const Payment = ({navigation, route}) => {
   const getData = async () => {
     const api_token = await AsyncStorage.getItem('api_token');
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
+    let append_url = user_data && user_data.is_developer === 1 ? '/all' : '';
     await api
       .get(
-        `/user/${user_data.user_id}/transaction/${trx.trxno}/payment/method`,
+        `/user/${user_data.user_id}/transaction/${trx.trxno}/payment/method${append_url}`,
         {
           headers: {
             Authorization: 'Bearer ' + api_token,
@@ -84,6 +85,28 @@ const Payment = ({navigation, route}) => {
               onPress={() =>
                 navigation.replace('Pay', {code: i.payment_code, trx})
               }
+              right={() => (
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  {Number(i.is_new) === 1 ? (
+                    <View
+                      style={{
+                        backgroundColor: 'orange',
+                        paddingHorizontal: 6,
+                        paddingVertical: 2,
+                        borderRadius: 2,
+                      }}>
+                      <Text style={{color: '#fff', fontSize: 9}}>New</Text>
+                    </View>
+                  ) : (
+                    <View />
+                  )}
+                </View>
+              )}
             />
             <Divider />
           </React.Fragment>

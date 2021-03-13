@@ -161,19 +161,32 @@ const PaymentVA = ({trx}) => {
       <Dialog visible={alert} onDismiss={() => setAlert(false)}>
         <Dialog.Title>Perhatian!</Dialog.Title>
         <Dialog.Content>
-          <Paragraph>{`Anda memilih pembayaran virtual account dengan menggunakan Bank ${
-            bankSelected && bankSelected.bank_name
-          }, metode pembayaran dengan virtual account tidak dapat diubah setelah lanjut`}</Paragraph>
+          {loading ? (
+            <View
+              style={{
+                // height: WINDOW_HEIGHT * 0.5,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <ActivityIndicator size="large" color={colors.primary} />
+            </View>
+          ) : (
+            <Paragraph>{`Anda memilih pembayaran virtual account dengan menggunakan Bank ${
+              bankSelected && bankSelected.bank_name
+            }, metode pembayaran dengan virtual account tidak dapat diubah setelah lanjut`}</Paragraph>
+          )}
         </Dialog.Content>
-        <Dialog.Actions>
-          <Button onPress={() => setAlert(false)} color={colors.red}>
-            Batal
-          </Button>
-          <Button
-            onPress={() => _confirm(bankSelected && bankSelected.bank_code)}>
-            Lanjutkan
-          </Button>
-        </Dialog.Actions>
+        {!loading && (
+          <Dialog.Actions>
+            <Button onPress={() => setAlert(false)} color={colors.red}>
+              Batal
+            </Button>
+            <Button
+              onPress={() => _confirm(bankSelected && bankSelected.bank_code)}>
+              Lanjutkan
+            </Button>
+          </Dialog.Actions>
+        )}
       </Dialog>
       <Modalize
         ref={modal}

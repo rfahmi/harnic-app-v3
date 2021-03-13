@@ -1,15 +1,15 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import {useNavigation} from '@react-navigation/native';
-import React, {memo, useEffect, useRef, useState} from 'react';
+import qs from 'qs';
+import React, {memo, useRef, useState} from 'react';
+import {ActivityIndicator, ScrollView, Text, View} from 'react-native';
+import {CreditCardInput} from 'react-native-credit-card-input';
+import {Button, Checkbox} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
+import {FacebookWebView} from '../../../../components/FacebookWebView';
 import HeaderBack from '../../../../components/HeaderBack';
 import {api} from '../../../../configs/api';
-import {CreditCardInput} from 'react-native-credit-card-input';
-import {FacebookWebView} from '../../../../components/FacebookWebView';
-import qs from 'qs';
-import {ActivityIndicator, ScrollView, Text, View} from 'react-native';
 import {colors} from '../../../../constants/colors';
-import {Button, Checkbox} from 'react-native-paper';
 import Empty from '../../../../organism/empty';
 
 const PaymentCC = ({trx}) => {

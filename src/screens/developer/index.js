@@ -1,9 +1,17 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
-import {List} from 'react-native-paper';
+import {List, TextInput} from 'react-native-paper';
 import HeaderBack from '../../components/HeaderBack';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Developer = ({navigation}) => {
+  const [fcm, setFcm] = useState(null);
+  useEffect(() => {
+    const getFcm = async () => {
+      setFcm(await AsyncStorage.getItem('fcm_token'));
+    };
+    getFcm();
+  }, []);
   return (
     <View>
       <HeaderBack search={false} title="Developer" />
@@ -23,6 +31,7 @@ const Developer = ({navigation}) => {
           })
         }
       />
+      <TextInput value={fcm} mode="outlined" selectTextOnFocus />
     </View>
   );
 };

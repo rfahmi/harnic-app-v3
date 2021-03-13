@@ -29,6 +29,29 @@ const ProductCardHorizontal = ({item, style}) => {
         </CornerLabel>
       )}
       <View style={{aspectRatio: 1 / 1}}>
+        {item.stock < 1 && (
+          <View
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              bottom: 0,
+              right: 0,
+              backgroundColor: 'rgba(0,0,0,0.5)',
+              zIndex: 2,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Text
+              style={{
+                color: 'rgba(255,255,255,0.6)',
+                fontSize: 18,
+                fontWeight: 'bold',
+              }}>
+              HABIS
+            </Text>
+          </View>
+        )}
         <FastImage
           style={{
             flex: 1,

@@ -7,3 +7,5 @@ export const hana = require('./hana.jpg');
 export const mandiri = require('./mandiri.jpg');
 export const nologo = require('./nologo.jpg');
 export const permata = require('./permata.jpg');
+export const ovo = require('./ovo.jpg');
+export const dana = require('./dana.jpg');

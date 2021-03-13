@@ -5,6 +5,7 @@ import PaymentCOD from './PaymentCOD';
 import PaymentTF from './PaymentTF';
 import PaymentVA from './PaymentVA';
 import PaymentCC from './PaymentCC';
+import PaymentDW from './PaymentDW';
 const Pay = ({navigation, route}) => {
   const {code, trx} = route.params;
   return (
@@ -17,6 +18,8 @@ const Pay = ({navigation, route}) => {
         <PaymentVA trx={trx} />
       ) : code === 'cc' ? (
         <PaymentCC trx={trx} />
+      ) : code === 'dw' ? (
+        <PaymentDW trx={trx} />
       ) : (
         <>
           <HeaderBack title="Not Supported" search={false} />
