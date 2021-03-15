@@ -2,9 +2,9 @@ import React, {memo} from 'react';
 import {View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-const BannerItem = ({image, style}) => {
+const BannerItem = ({image, style, aspect = 1}) => {
   return (
-    <View style={[{aspectRatio: 1 / 1, backgroundColor: '#fff'}, style]}>
+    <View style={[{aspectRatio: aspect / 1, backgroundColor: '#fff'}, style]}>
       <FastImage
         style={{
           flex: 1,

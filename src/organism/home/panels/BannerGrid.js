@@ -50,7 +50,11 @@ const BannerGrid = ({data}) => {
               ? item.banner_url_ios
               : item.banner_url
           }
-          style={{width: Dimensions.get('window').width / data.param1}}
+          aspect={data.param2 || 1}
+          style={{
+            width: Dimensions.get('window').width / data.param1 - 4,
+            margin: 2,
+          }}
         />
       </TouchableOpacity>
     );
@@ -58,6 +62,7 @@ const BannerGrid = ({data}) => {
   return (
     <FlatList
       data={data.items}
+      style={{backgroundColor: '#fff'}}
       renderItem={_renderItems}
       numColumns={data.param1}
       horizontal={false}
