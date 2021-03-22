@@ -47,8 +47,6 @@ const PaymentDW = ({trx}) => {
         },
       )
       .then((res) => {
-        setAlert(false);
-        setLoading(false);
         if (res.data.success) {
           console.log(res.data.data);
           setPaymentUrl(res.data.data);
@@ -60,6 +58,8 @@ const PaymentDW = ({trx}) => {
             position: 'bottom',
           });
         }
+        setAlert(false);
+        setLoading(false);
       })
       .catch((err) => {
         console.log('catch');
@@ -157,15 +157,13 @@ const PaymentDW = ({trx}) => {
           </Dialog.Actions>
         )}
       </Dialog>
-      {paymentUrl && (
-        <FacebookWebView
-          ref={webviewModal}
-          uri={paymentUrl}
-          onClose={() =>
-            navigation.replace('TransactionView', {trxno: trx.trxno})
-          }
-        />
-      )}
+      <FacebookWebView
+        ref={webviewModal}
+        uri={paymentUrl}
+        onClose={() =>
+          navigation.replace('TransactionView', {trxno: trx.trxno})
+        }
+      />
     </>
   );
 };

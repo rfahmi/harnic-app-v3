@@ -162,15 +162,13 @@ const PaymentCC = ({trx}) => {
           </>
         )}
       </ScrollView>
-      {paymentUrl && (
-        <FacebookWebView
-          ref={webviewModal}
-          uri={paymentUrl}
-          onClose={() =>
-            navigation.replace('TransactionView', {trxno: trx.trxno})
-          }
-        />
-      )}
+      <FacebookWebView
+        ref={webviewModal}
+        uri={paymentUrl}
+        onClose={() =>
+          navigation.replace('TransactionView', {trxno: trx.trxno})
+        }
+      />
     </>
   );
 };

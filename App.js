@@ -11,7 +11,8 @@ import {store} from './src/configs/redux';
 import {colors} from './src/constants/colors';
 import {saveFcm} from './src/utils/fcm';
 import * as RootNavigation from './src/utils/RootNavigation';
-
+import {enableScreens} from 'react-native-screens';
+enableScreens();
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: async function (token) {

@@ -83,9 +83,9 @@ const Search = ({navigation}) => {
             <List.Subheader style={{backgroundColor: '#888', color: 'white'}}>
               Kata Kunci
             </List.Subheader>
-            {suggestions.map((r) => (
+            {suggestions.map((r, index) => (
               <List.Item
-                key={r.id}
+                key={`Keyword${index}`}
                 onPress={() =>
                   navigation.push('SearchResult', {
                     keyword: r.val,
@@ -107,7 +107,7 @@ const Search = ({navigation}) => {
             </List.Subheader>
             {suggestionsCategory.map((r) => (
               <List.Item
-                key={r.id}
+                key={`Cat${r.id}`}
                 onPress={() =>
                   navigation.push('SearchResult', {
                     category: r.id,
@@ -129,7 +129,7 @@ const Search = ({navigation}) => {
             </List.Subheader>
             {suggestionsBrand.map((r) => (
               <List.Item
-                key={r.id}
+                key={`Brand${r.id}`}
                 onPress={() =>
                   navigation.push('SearchResult', {
                     brand: r.id,

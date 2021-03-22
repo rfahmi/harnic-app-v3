@@ -2,20 +2,21 @@ import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {
   Animated,
+  Dimensions,
+  Platform,
   StatusBar,
+  Text,
   TouchableOpacity,
   View,
-  Text,
-  Dimensions,
-  Platform
 } from 'react-native';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CartCounter from './CartCounter';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 const HeaderBackTransparent = ({headerOpacity, visibility}) => {
   const navigation = useNavigation();
-  const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? getStatusBarHeight() : StatusBar.currentHeight;
+  const STATUSBAR_HEIGHT =
+    Platform.OS === 'ios' ? getStatusBarHeight() : StatusBar.currentHeight;
   const _goBack = () => navigation.goBack();
 
   const _handleSearch = () => navigation.push('Search', {key: Date.now()});

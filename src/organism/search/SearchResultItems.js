@@ -196,14 +196,16 @@ const SearchResultItems = ({keyword, category, tabLabel, brand}) => {
               filterBrand.map((i) => {
                 return (
                   <Chip
+                    key={`BrandChip${i.id}`}
                     style={{margin: 4}}
-                    onPress={() =>
+                    onPress={() => {
                       navigation.push('SearchResult', {
                         keyword,
                         category,
                         brand: i.id,
-                      })
-                    }>
+                      });
+                      modalizeRef.current?.close();
+                    }}>
                     {i.name}
                   </Chip>
                 );

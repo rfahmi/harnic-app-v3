@@ -57,6 +57,7 @@ const SearchResult = ({navigation, route}) => {
           {data.map((i) => {
             return (
               <SearchResultItems
+                key={`CatTab${i.id}`}
                 tabLabel={i.name}
                 category={i.id}
                 keyword={keyword}
@@ -69,6 +70,7 @@ const SearchResult = ({navigation, route}) => {
         data.map((i) => {
           return (
             <SearchResultItems
+              key={`CatTab${i.id}`}
               tabLabel={i.name}
               category={i.id}
               keyword={keyword}
