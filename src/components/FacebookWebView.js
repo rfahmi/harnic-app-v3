@@ -160,6 +160,7 @@ export const FacebookWebView = forwardRef((_, ref) => {
   };
 
   const handleLayout = ({layout}) => {
+    console.log(layout.height);
     setLayoutHeight(layout.height);
   };
 
@@ -230,7 +231,7 @@ export const FacebookWebView = forwardRef((_, ref) => {
       onClose={() => _.onClose && _.onClose()}
       ref={combinedRef}
       HeaderComponent={renderHeader}
-      scrollViewProps={{showsVerticalScrollIndicator: false}}
+      scrollViewProps={{showsVerticalScrollIndicator: true}}
       onLayout={handleLayout}>
       {/* {console.log(destination)} */}
       <RNWebView
@@ -245,7 +246,7 @@ export const FacebookWebView = forwardRef((_, ref) => {
         showsVerticalScrollIndicator={false}
         scrollEnabled={!isAndroid}
         containerStyle={{paddingBottom: 10}}
-        style={{height}}
+        style={{height: layoutHeight}}
       />
     </Modalize>
   );

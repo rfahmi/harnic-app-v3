@@ -1,11 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import {View} from 'react-native';
-import {List, TextInput} from 'react-native-paper';
-import HeaderBack from '../../components/HeaderBack';
 import AsyncStorage from '@react-native-community/async-storage';
+import React, {useEffect, useRef, useState} from 'react';
+import {Text, TouchableOpacity, View} from 'react-native';
+import {List, TextInput} from 'react-native-paper';
+import {FacebookWebView} from '../../components/FacebookWebView';
+import HeaderBack from '../../components/HeaderBack';
 
 const Developer = ({navigation}) => {
+  const webviewModal = useRef(null);
   const [fcm, setFcm] = useState(null);
+  const [webviewUrl, setWebviewUrl] = useState('https://harnic.id');
   useEffect(() => {
     const getFcm = async () => {
       setFcm(await AsyncStorage.getItem('fcm_token'));
@@ -13,26 +16,78 @@ const Developer = ({navigation}) => {
     getFcm();
   }, []);
   return (
-    <View>
+    <>
       <HeaderBack search={false} title="Developer" />
-      <List.Item
-        title="Goto Test Panel"
-        onPress={() =>
-          navigation.navigate('HomePanel', {
-            name: 2,
-          })
-        }
+      <FacebookWebView
+        ref={webviewModal}
+        uri={webviewUrl}
+        onClose={() => console.log('closed')}
       />
-      <List.Item
-        title="Goto Test Page"
-        onPress={() =>
-          navigation.navigate('HomePage', {
-            name: 'test',
-          })
-        }
-      />
-      <TextInput value={fcm} mode="outlined" selectTextOnFocus />
-    </View>
+      <View style={{padding: 16}}>
+        <List.Item
+          title="Goto Test Panel"
+          onPress={() =>
+            navigation.navigate('HomePanel', {
+              name: 2,
+            })
+          }
+        />
+        <List.Item
+          title="Goto Test Page"
+          onPress={() =>
+            navigation.navigate('HomePage', {
+              name: 'test',
+            })
+          }
+        />
+        <Text>Your FCM Token</Text>
+        <TextInput
+          style={{marginTop: 4}}
+          value={fcm}
+          mode="outlined"
+          selectTextOnFocus
+        />
+        <Text>Test Webview</Text>
+        <TextInput
+          style={{marginVertical: 4}}
+          value={webviewUrl}
+          onChangeText={(e) => setWebviewUrl(e)}
+          mode="outlined"
+          returnKeyLabel="Go"
+          selectTextOnFocus
+        />
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#1100BB',
+            padding: 16,
+            margin: 4,
+            color: '#fff',
+            borderRadius: 8,
+          }}
+          onPress={() => webviewModal.current?.open()}>
+          <Text>Open PopUp Webview</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#1100BB',
+            padding: 16,
+            margin: 4,
+            color: '#fff',
+            borderRadius: 8,
+          }}
+          onPress={() =>
+            navigation.push('Search', {
+              screen: 'SearchWebView',
+              params: {
+                title: 'Webview Test',
+                url: webviewUrl,
+              },
+            })
+          }>
+          <Text>Open Normal Webview</Text>
+        </TouchableOpacity>
+      </View>
+    </>
   );
 };
 
