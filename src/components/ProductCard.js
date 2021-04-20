@@ -95,19 +95,26 @@ const ProductCard = ({
                 color: 'orange',
                 marginBottom: 2,
               }}>
-              Rp{item && currencyFormat(item[auth.priceType] || item.sellprice)}
+              {/* Rp{item && currencyFormat(item[auth.priceType] || item.sellprice)} */}
+              {item && item.is_promo
+                ? item.sellprice
+                : currencyFormat(item[auth.priceType] || item.sellprice)}
             </Text>
-            {item.sellprice2 > 0 && (
-              <Text
-                style={{
-                  fontSize: 10,
-                  color: '#555',
-                  marginBottom: 4,
-                  textDecorationLine: 'line-through',
-                }}>
-                Rp{item && currencyFormat(item.sellprice2)}
-              </Text>
-            )}
+            <Text
+              style={{
+                fontSize: 10,
+                color: '#555',
+                marginBottom: 4,
+                textDecorationLine: 'line-through',
+              }}>
+              Rp
+              {item &&
+                currencyFormat(
+                  auth.priceType !== 'sellprice' && !item.is_promo
+                    ? item.sellprice
+                    : item.sellprice2,
+                )}
+            </Text>
           </View>
         )}
         {progressBar && (

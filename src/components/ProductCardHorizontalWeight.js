@@ -1,11 +1,13 @@
 import React, {memo} from 'react';
 import {Platform, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import {useSelector} from 'react-redux';
 import CornerLabel from '../components/CornerLabel';
 import {currencyFormat} from '../utils/formatter';
 import ProductCardBuyButton from './ProductCardBuyButton';
 
 const ProductCardHorizontalWeight = ({item, style}) => {
+  const auth = useSelector((state) => state.auth);
   return (
     <View
       style={[
@@ -79,7 +81,10 @@ const ProductCardHorizontalWeight = ({item, style}) => {
             color: 'orange',
             marginTop: 8,
           }}>
-          Rp{currencyFormat(item.sellprice || 0)}
+          Rp
+          {item && item.is_promo
+            ? item.sellprice
+            : currencyFormat(item[auth.priceType] || item.sellprice)}
         </Text>
         <ProductCardBuyButton
           id={item.itemid}

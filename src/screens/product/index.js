@@ -476,42 +476,71 @@ const Product = ({navigation, route}) => {
                     color: 'orange',
                   }}>
                   Rp
-                  {data &&
-                    currencyFormat(data[auth.priceType] || data.sellprice)}
+                  {data && data.is_promo
+                    ? data.sellprice
+                    : currencyFormat(data[auth.priceType] || data.sellprice)}
                 </Text>
               </View>
-              {data && data.sellprice2 > 0 && (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginBottom: 8,
-                  }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginBottom: 8,
+                }}>
+                {auth.priceType !== 'sellprice' && !data.is_promo && (
                   <View
                     style={{
                       backgroundColor: 'orange',
-                      // width: 26,
-                      // aspectRatio: 1 / 1,
                       padding: 4,
                       alignItems: 'center',
                       justifyContent: 'center',
                       borderRadius: 2,
+                      marginRight: 4,
                     }}>
                     <Text style={{fontSize: 10, color: '#fff'}}>
-                      {data.discount} OFF
+                      SPECIAL PRICE
                     </Text>
                   </View>
-                  <Text
+                )}
+                {data && data.sellprice2 > 0 && (
+                  <View
                     style={{
-                      marginLeft: 8,
-                      fontSize: 12,
-                      color: '#666',
-                      textDecorationLine: 'line-through',
+                      flexDirection: 'row',
+                      alignItems: 'center',
                     }}>
-                    {data && 'Rp' + currencyFormat(data.sellprice2)}
-                  </Text>
-                </View>
-              )}
+                    <View
+                      style={{
+                        backgroundColor: 'orange',
+                        // width: 26,
+                        // aspectRatio: 1 / 1,
+                        padding: 4,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: 2,
+                      }}>
+                      <Text style={{fontSize: 10, color: '#fff'}}>
+                        {data.discount} OFF
+                      </Text>
+                    </View>
+                    <Text
+                      style={{
+                        marginLeft: 8,
+                        fontSize: 12,
+                        color: '#666',
+                        textDecorationLine: 'line-through',
+                      }}>
+                      {/* {data && 'Rp' + currencyFormat(data.sellprice2)} */}
+                      Rp
+                      {data &&
+                        currencyFormat(
+                          auth.priceType !== 'sellprice' && !data.is_promo
+                            ? data.sellprice
+                            : data.sellprice2,
+                        )}
+                    </Text>
+                  </View>
+                )}
+              </View>
 
               <Text style={{fontSize: 12, color: '#555'}} numberOfLines={2}>
                 {data && data.BrandName.toUpperCase()}
