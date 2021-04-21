@@ -83,7 +83,7 @@ const ProductCardHorizontal = ({item, style}) => {
           }}>
           Rp
           {item && item.is_promo
-            ? item.sellprice
+            ? currencyFormat(item.sellprice)
             : currencyFormat(item[auth.priceType] || item.sellprice)}
         </Text>
         <ProductCardBuyButton

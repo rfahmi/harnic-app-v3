@@ -97,24 +97,25 @@ const ProductCardTall = ({
               }}>
               Rp
               {item && item.is_promo
-                ? item.sellprice
+                ? currencyFormat(item.sellprice)
                 : currencyFormat(item[auth.priceType] || item.sellprice)}
             </Text>
-            <Text
-              style={{
-                fontSize: 10,
-                color: '#555',
-                marginBottom: 4,
-                textDecorationLine: 'line-through',
-              }}>
-              Rp
-              {item &&
-                currencyFormat(
+            {item && item.sellprice2 > 0 && (
+              <Text
+                style={{
+                  fontSize: 10,
+                  color: '#555',
+                  marginBottom: 4,
+                  textDecorationLine: 'line-through',
+                }}>
+                Rp
+                {currencyFormat(
                   auth.priceType !== 'sellprice' && !item.is_promo
                     ? item.sellprice
                     : item.sellprice2,
                 )}
-            </Text>
+              </Text>
+            )}
           </View>
         )}
         {progressBar && (
