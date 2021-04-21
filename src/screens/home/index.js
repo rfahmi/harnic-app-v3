@@ -3,7 +3,7 @@ import React, {useEffect, useRef, useState, useCallback} from 'react';
 import {Animated, Image, RefreshControl, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {api} from '../../configs/api';
-import {setAuth} from '../../configs/redux/action/authActions';
+import {setAuth, setPriceType} from '../../configs/redux/action/authActions';
 import Banners from '../../organism/home/banners';
 import Categories from '../../organism/home/categories';
 import HomeIcons from '../../organism/home/icons';
@@ -48,9 +48,16 @@ const Home = ({navigation}) => {
   const _handleRefresh = () => {
     setConfig(null);
     setRefreshing(true);
-    isLogin().then((r) =>
-      r ? dispatch(setAuth(true)) : dispatch(setAuth(false)),
-    );
+    isLogin().then(async (r) => {
+      const d = JSON.parse(await AsyncStorage.getItem('user_data'));
+      if (r) {
+        dispatch(setAuth(true));
+        dispatch(setPriceType(d.price_type));
+      } else {
+        dispatch(setAuth(false));
+        dispatch(setPriceType('sellprice'));
+      }
+    });
     getConfig().then((d) => {
       setConfig(d);
       dispatch(setCart(d.cart));
@@ -68,9 +75,16 @@ const Home = ({navigation}) => {
         dispatch(setSuggestion(d.keywords));
       }
     });
-    isLogin().then((r) =>
-      r ? dispatch(setAuth(true)) : dispatch(setAuth(false)),
-    );
+    isLogin().then(async (r) => {
+      const d = JSON.parse(await AsyncStorage.getItem('user_data'));
+      if (r) {
+        dispatch(setAuth(true));
+        dispatch(setPriceType(d.price_type));
+      } else {
+        dispatch(setAuth(false));
+        dispatch(setPriceType('sellprice'));
+      }
+    });
     return () => (isSubscribed = false);
   }, []);
 
