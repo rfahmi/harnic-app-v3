@@ -477,7 +477,7 @@ const Product = ({navigation, route}) => {
                   }}>
                   Rp
                   {data && data.is_promo
-                    ? data.sellprice
+                    ? currencyFormat(data.sellprice)
                     : currencyFormat(data[auth.priceType] || data.sellprice)}
                 </Text>
               </View>
