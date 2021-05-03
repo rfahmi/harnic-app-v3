@@ -110,7 +110,9 @@ const ProductCardTall = ({
                 }}>
                 Rp
                 {currencyFormat(
-                  auth.priceType !== 'sellprice' && !item.is_promo
+                  auth.priceType !== 'sellprice' &&
+                    !item.is_promo &&
+                    item[auth.priceType] > 0
                     ? item.sellprice
                     : item.sellprice2,
                 )}
