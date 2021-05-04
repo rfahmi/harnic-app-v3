@@ -18,11 +18,12 @@ const Carousel = ({data}) => {
     return (
       <TouchableOpacity
         onPress={() => {
+          console.log(item);
           if (item.action) {
             switch (item.action) {
               case 'category':
                 navigation.push('Search', {
-                  screen: 'SearcResult',
+                  screen: 'SearchResult',
                   params: {
                     category: item.param,
                   },
@@ -30,7 +31,7 @@ const Carousel = ({data}) => {
                 break;
               case 'brand':
                 navigation.push('Search', {
-                  screen: 'SearcResult',
+                  screen: 'SearchResult',
                   params: {
                     brand: item.param,
                   },
