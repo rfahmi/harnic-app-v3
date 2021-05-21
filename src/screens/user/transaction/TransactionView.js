@@ -104,6 +104,47 @@ const TransactionView = ({navigation, route}) => {
       });
   };
 
+  const receive = async () => {
+    setLoading(true);
+    const api_token = await AsyncStorage.getItem('api_token');
+    const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
+
+    await api
+      .post(
+        `/user/${user_data.user_id}/transaction/${data.trxno}/receive`,
+        {},
+        {
+          headers: {
+            Authorization: 'Bearer ' + api_token,
+          },
+        },
+      )
+      .then((res) => {
+        setLoading(false);
+        if (res.data.success) {
+          getData();
+          RNToasty.Success({
+            title: res.data.message,
+            position: 'bottom',
+          });
+        } else {
+          setLoading(false);
+          RNToasty.Error({
+            title: res.data.message,
+            position: 'bottom',
+          });
+        }
+      })
+      .catch((e) => {
+        setLoading(false);
+
+        RNToasty.Error({
+          title: e.message,
+          position: 'center',
+        });
+      });
+  };
+
   const review = async () => {
     setLoading(true);
     const api_token = await AsyncStorage.getItem('api_token');
@@ -779,7 +820,7 @@ const TransactionView = ({navigation, route}) => {
                 disabled={loading}
                 mode="contained"
                 onPress={() => {
-                  // trxReceived(data.trxno);
+                  receive();
                 }}>
                 {loading ? <ActivityIndicator /> : 'KONFIRMASI TERIMA'}
               </Button>
