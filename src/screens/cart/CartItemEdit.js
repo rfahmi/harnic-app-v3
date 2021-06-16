@@ -119,12 +119,15 @@ const CartItemEdit = ({item, closeModal}) => {
                 icon="minus-circle"
               />
               <TextInputRN
-                value={String(qty)}
+                value={String(qty || 0)}
                 mode="flat"
+                keyboardType="numeric"
                 style={{
                   textAlign: 'center',
                   fontSize: 18,
                   fontWeight: 'bold',
+                  borderBottomColor: '#aaa',
+                  borderBottomWidth: 1,
                 }}
                 onChangeText={(e) =>
                   setQty(Number(e) > item.stock ? item.stock : Number(e))
