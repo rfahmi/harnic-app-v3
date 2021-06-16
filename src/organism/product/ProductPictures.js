@@ -1,41 +1,59 @@
 import React, {memo, useState} from 'react';
 import {
   Dimensions,
+  FlatList,
   Modal,
-  TouchableOpacity,
-  StatusBar,
   Platform,
+  StatusBar,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Carousel from 'react-native-smart-carousel';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ProductPictures = ({pictures, parentScrollView}) => {
   const [modal, setModal] = useState(false);
   const [selected, setSelected] = useState(null);
   const STATUSBAR_HEIGHT =
     Platform.OS === 'ios' ? getStatusBarHeight() : StatusBar.currentHeight;
-  const picture = (id) => {
-    const idx = pictures.findIndex((x) => x.id === id);
-    return pictures[idx];
-  };
   const HEADER_MAX_HEIGHT = Dimensions.get('window').width;
   return (
     <>
-      <Carousel
-        parentScrollViewRef={parentScrollView}
+      <FlatList
+        parentScrollView={parentScrollView}
         data={pictures}
-        autoPlay={false}
-        height={HEADER_MAX_HEIGHT}
-        navigation={true}
-        navigationColor={'#ffffff'}
-        navigationType={'dot'}
-        onPress={(e) => {
-          const b = picture(e);
-          setSelected(b.imagePath);
-          setModal(true);
-        }}
+        style={{marginVertical: 8}}
+        showsHorizontalScrollIndicator={false}
+        disableScrollViewPanResponder
+        snapToInterval={HEADER_MAX_HEIGHT}
+        snapToAlignment="center"
+        renderItem={({item}) => (
+          <TouchableWithoutFeedback
+            style={{
+              width: HEADER_MAX_HEIGHT,
+              height: HEADER_MAX_HEIGHT,
+            }}
+            onPress={() => {
+              setSelected(item.imagePath);
+              setModal(true);
+            }}>
+            <FastImage
+              style={{
+                flex: 1,
+                width: HEADER_MAX_HEIGHT,
+                height: HEADER_MAX_HEIGHT,
+              }}
+              source={{
+                uri: item.imagePath,
+                priority: FastImage.priority.normal,
+              }}
+              resizeMode={FastImage.resizeMode.cover}
+            />
+          </TouchableWithoutFeedback>
+        )}
+        horizontal
       />
       <Modal
         visible={modal}

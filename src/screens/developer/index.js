@@ -58,7 +58,7 @@ const Developer = ({navigation}) => {
         />
         <TouchableOpacity
           style={{
-            backgroundColor: '#1100BB',
+            backgroundColor: '#aaa',
             padding: 16,
             margin: 4,
             color: '#fff',
@@ -69,7 +69,7 @@ const Developer = ({navigation}) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={{
-            backgroundColor: '#1100BB',
+            backgroundColor: '#aaa',
             padding: 16,
             margin: 4,
             color: '#fff',
@@ -85,6 +85,22 @@ const Developer = ({navigation}) => {
             })
           }>
           <Text>Open Normal Webview</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#aaa',
+            padding: 16,
+            margin: 4,
+            color: '#fff',
+            borderRadius: 8,
+          }}
+          onPress={() =>
+            navigation.push('Search', {
+              screen: 'Product',
+              params: {itemid: 1},
+            })
+          }>
+          <Text>Open Product ID:1</Text>
         </TouchableOpacity>
       </View>
     </>
