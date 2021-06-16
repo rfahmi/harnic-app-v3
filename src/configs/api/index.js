@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const app_version = 124;
-export const app_version_name = '3.2.4';
+export const app_version = 125;
+export const app_version_name = '3.2.5';
 
 export const api = axios.create({
   baseURL: 'https://apiv3.harnic.id/v3',
