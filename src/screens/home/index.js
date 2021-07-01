@@ -93,7 +93,10 @@ const Home = ({navigation}) => {
       <View style={{alignItems: 'center'}}>
         <Banners banners={config.banners} parentScrollView={refList.current} />
         <HomeIcons />
-        <Categories categories={config.categories} />
+        <Categories
+          categories={config.categories}
+          size={config.category_size || 4}
+        />
       </View>
     );
   };

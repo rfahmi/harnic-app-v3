@@ -3,7 +3,7 @@ import React, {memo} from 'react';
 import {Dimensions, FlatList, View, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-const Categories = ({categories}) => {
+const Categories = ({categories, size = 3}) => {
   const navigation = useNavigation();
   const _renderItems = ({item}) => {
     return (
@@ -30,7 +30,7 @@ const Categories = ({categories}) => {
         }}>
         <View
           style={{
-            width: (Dimensions.get('window').width - 16) / 3,
+            width: (Dimensions.get('window').width - 16) / size,
             aspectRatio: 1 / 1,
             borderWidth: 2,
             borderColor: 'transparent',
@@ -60,7 +60,7 @@ const Categories = ({categories}) => {
       data={categories}
       style={{marginVertical: 8}}
       renderItem={_renderItems}
-      numColumns={3}
+      numColumns={size}
       horizontal={false}
       keyExtractor={keyExtractor}
     />
