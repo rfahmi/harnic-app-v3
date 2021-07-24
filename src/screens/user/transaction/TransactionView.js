@@ -654,6 +654,23 @@ const TransactionView = ({navigation, route}) => {
               />
               <Divider />
               <List.Item
+                title="Alamat"
+                right={() => (
+                  <View
+                    style={{
+                      flex: 1,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      paddingRight: 16,
+                    }}>
+                    <Text style={{fontSize: 12, textAlign: 'right'}}>
+                      {data.shipping.full_address}
+                    </Text>
+                  </View>
+                )}
+              />
+              <Divider />
+              <List.Item
                 title="Ekspedisi"
                 right={() => (
                   <View
