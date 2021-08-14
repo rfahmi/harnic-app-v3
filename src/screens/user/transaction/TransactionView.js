@@ -30,6 +30,7 @@ const TransactionView = ({navigation, route}) => {
   const {trxno} = route.params;
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
+  const unfulfilled = data && data?.items.filter((a) => a.qty < a.qorder);
   const [payment, setPayment] = useState(null);
   const payment_modal = useRef(null);
   const [totalDuration, setTotalDuration] = useState(0);
@@ -519,9 +520,34 @@ const TransactionView = ({navigation, route}) => {
             <View style={{paddingHorizontal: 16}}>
               <Title>Belanjaan Anda</Title>
             </View>
+            {unfulfilled.length > 0 && (
+              <View
+                style={{
+                  padding: 8,
+                  margin: 8,
+                  borderRadius: 8,
+                  backgroundColor: '#FFFF88',
+                }}>
+                <Text style={{fontSize: 12, color: '#333', marginBottom: 4}}>
+                  Ada {unfulfilled.length} Produk tidak terpenuhi!
+                </Text>
+              </View>
+            )}
             {data &&
               data.items.map((item) => (
                 <View key={`TrxItem${item.itemid}`}>
+                  {item.qty === 0 && (
+                    <View
+                      style={{
+                        position: 'absolute',
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: '#000',
+                        opacity: 0.3,
+                        zIndex: 9,
+                      }}
+                    />
+                  )}
                   <List.Item
                     onPress={() =>
                       navigation.push('Search', {
@@ -579,6 +605,22 @@ const TransactionView = ({navigation, route}) => {
                           }}>
                           x {item.qty}
                         </Text>
+                        {item.qty < item.qorder && (
+                          <View
+                            style={
+                              {
+                                // backgroundColor: '#555',
+                              }
+                            }>
+                            <Text
+                              style={{
+                                fontSize: 9,
+                                color: '#333',
+                              }}>
+                              Kurang {item.qorder - item.qty} pcs
+                            </Text>
+                          </View>
+                        )}
                       </View>
                     )}
                     left={() => (

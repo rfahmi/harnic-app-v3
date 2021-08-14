@@ -7,17 +7,19 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Platform
+  Platform,
 } from 'react-native';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {IconButton} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FocusAwareStatusBar from '../../../components/FocusAwareStatusBar';
 import {colors} from '../../../constants/colors';
+import AsyncStorage from '@react-native-community/async-storage';
 
-const HomeTopBar = ({headerOpacity, visibility}) => {
+const HomeTopBar = ({headerOpacity, visibility, auth}) => {
   const navigation = useNavigation();
-  const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? getStatusBarHeight() : StatusBar.currentHeight;
+  const STATUSBAR_HEIGHT =
+    Platform.OS === 'ios' ? getStatusBarHeight() : StatusBar.currentHeight;
 
   const HeaderContent = ({mode}) => {
     return (
@@ -60,12 +62,17 @@ const HomeTopBar = ({headerOpacity, visibility}) => {
           color={mode === 'light' ? colors.white : colors.grayDark}
           size={26}
           style={{zIndex: 1}}
-          onPress={() =>
-            navigation.navigate('User', {
-              screen: 'UserNotification',
-              params: {user_id: 6},
-            })
-          }
+          onPress={async () => {
+            const user_data = JSON.parse(
+              await AsyncStorage.getItem('user_data'),
+            );
+            auth.isLogin
+              ? navigation.navigate('User', {
+                  screen: 'UserNotification',
+                  params: {user_id: user_data.user_id},
+                })
+              : navigation.push('Auth');
+          }}
         />
       </>
     );

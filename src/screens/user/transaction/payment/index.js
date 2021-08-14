@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React, {memo, useEffect, useState} from 'react';
 import {View, Alert, Text} from 'react-native';
-import {Divider, List} from 'react-native-paper';
+import {Divider, List, Title} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
 import HeaderBack from '../../../../components/HeaderBack';
 import {api} from '../../../../configs/api';
@@ -10,6 +10,8 @@ import ListSkeleton from '../../../../organism/skeleton/ListSkeleton';
 const Payment = ({navigation, route}) => {
   const {trx} = route.params;
   const [data, setData] = useState(null);
+
+  const unfulfilled = trx && trx?.items.filter((a) => a.qty < a.qorder);
 
   const getData = async () => {
     const api_token = await AsyncStorage.getItem('api_token');
@@ -78,39 +80,60 @@ const Payment = ({navigation, route}) => {
       {!data ? (
         <ListSkeleton />
       ) : (
-        data.map((i) => (
-          <React.Fragment key={i.payment_code}>
-            <List.Item
-              title={i.payment_name}
-              onPress={() =>
-                navigation.replace('Pay', {code: i.payment_code, trx})
-              }
-              right={() => (
-                <View
-                  style={{
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  {Number(i.is_new) === 1 ? (
-                    <View
-                      style={{
-                        backgroundColor: 'orange',
-                        paddingHorizontal: 6,
-                        paddingVertical: 2,
-                        borderRadius: 2,
-                      }}>
-                      <Text style={{color: '#fff', fontSize: 9}}>New</Text>
-                    </View>
-                  ) : (
-                    <View />
-                  )}
-                </View>
-              )}
-            />
-            <Divider />
-          </React.Fragment>
-        ))
+        <>
+          {unfulfilled.length > 0 && (
+            <View
+              style={{
+                padding: 8,
+                margin: 16,
+                borderRadius: 8,
+                backgroundColor: '#FFFF88',
+              }}>
+              <Text
+                style={{fontWeight: 'bold', color: '#333', marginBottom: 4}}>
+                {unfulfilled.length} Produk tidak terpenuhi!
+              </Text>
+              {unfulfilled.map((u) => (
+                <Text style={{fontSize: 10, color: '#333'}}>
+                  {u.online_name} -- Kurang {u.qorder - u.qty} pcs
+                </Text>
+              ))}
+            </View>
+          )}
+          {data.map((i) => (
+            <React.Fragment key={i.payment_code}>
+              <List.Item
+                title={i.payment_name}
+                onPress={() =>
+                  navigation.replace('Pay', {code: i.payment_code, trx})
+                }
+                right={() => (
+                  <View
+                    style={{
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    {Number(i.is_new) === 1 ? (
+                      <View
+                        style={{
+                          backgroundColor: 'orange',
+                          paddingHorizontal: 6,
+                          paddingVertical: 2,
+                          borderRadius: 2,
+                        }}>
+                        <Text style={{color: '#fff', fontSize: 9}}>New</Text>
+                      </View>
+                    ) : (
+                      <View />
+                    )}
+                  </View>
+                )}
+              />
+              <Divider />
+            </React.Fragment>
+          ))}
+        </>
       )}
     </View>
   );

@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import qs from 'qs';
 import React, {memo, useState} from 'react';
-import {Text, View} from 'react-native';
+import {Alert, Text, View} from 'react-native';
 import {Button} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
 import {api} from '../configs/api';
@@ -200,12 +200,28 @@ const FooterCheckout = ({
       </View> */}
       <Button
         disabled={disabled || loading}
-        onPress={_handleCheckout}
+        onPress={() => {
+          Alert.alert(
+            'Yakin sudah semua?',
+            'Produk tidak dapat diubah dan keranjang akan dibersihkan setelah lanjut',
+            [
+              {
+                text: 'Batal',
+                style: 'destructive',
+                onPress: () => {},
+              },
+              {
+                text: 'Lanjut dan Bayar',
+                onPress: () => _handleCheckout(),
+              },
+            ],
+          );
+        }}
         style={{width: '100%', marginVertical: 10, zIndex: 0}}
         labelStyle={{fontWeight: 'bold', fontSize: 15, lineHeight: 26}}
         color={colors.green}
         mode="contained">
-        {loading ? 'Loading...' : 'Selesaikan Pembayaran'}
+        {loading ? 'Loading...' : 'Lanjutkan'}
       </Button>
     </View>
   );

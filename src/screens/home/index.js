@@ -111,6 +111,7 @@ const Home = ({navigation}) => {
   return (
     <>
       <TopBar
+        auth={auth}
         headerOpacity={scroll.interpolate({
           inputRange: [0, 300],
           outputRange: [1, 0],

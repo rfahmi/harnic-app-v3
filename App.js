@@ -27,9 +27,12 @@ PushNotification.configure({
 
     // process the notification
     notification.userInteraction &&
-      RootNavigation.navigate('App', {
-        screen: 'User',
-        params: {screen: 'UserNotification', params: {user_id: 6}},
+      AsyncStorage.getItem('user_data').then((e) => {
+        e = JSON.parse(e);
+        RootNavigation.navigate('App', {
+          screen: 'User',
+          params: {screen: 'UserNotification', params: {user_id: e.user_id}},
+        });
       });
 
     // (required) Called when a remote is received or opened, or local notification is opened
