@@ -10,6 +10,7 @@ import ListSkeleton from '../../../../organism/skeleton/ListSkeleton';
 const Payment = ({navigation, route}) => {
   const {trx} = route.params;
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const unfulfilled = trx && trx?.items.filter((a) => a.qty < a.qorder);
 
@@ -43,6 +44,30 @@ const Payment = ({navigation, route}) => {
         });
       });
   };
+
+  const rollbackTrx = async () => {
+    setLoading(true);
+    const api_token = await AsyncStorage.getItem('api_token');
+    const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
+    await api
+      .post(
+        `/user/${user_data.user_id}/transaction/${trx.trxno}/rollback`,
+        {},
+        {
+          headers: {
+            Authorization: 'Bearer ' + api_token,
+          },
+        },
+      )
+      .catch((err) => {
+        setLoading(false);
+
+        RNToasty.Error({
+          title: err.message,
+          position: 'center',
+        });
+      });
+  };
   useEffect(() => {
     getData();
   }, []);
@@ -50,8 +75,13 @@ const Payment = ({navigation, route}) => {
   useEffect(
     () =>
       navigation.addListener('beforeRemove', (e) => {
+        console.log(route.params.fromStack);
         if (e.data.action.type !== 'GO_BACK') {
-          // If we don't have unsaved changes, then we don't need to do anything
+          // If not go back action
+          return;
+        }
+        if (route.params.fromStack) {
+          // If navigate from transactionstack
           return;
         }
         // Prevent default behavior of leaving the screen
@@ -65,7 +95,10 @@ const Payment = ({navigation, route}) => {
             {
               text: 'Keluar',
               style: 'destructive',
-              onPress: () => navigation.dispatch(e.data.action),
+              onPress: () => {
+                rollbackTrx();
+                navigation.dispatch(e.data.action);
+              },
             },
             {text: 'Lanjut Bayar', style: 'cancel', onPress: () => {}},
           ],

@@ -29,7 +29,6 @@ const FooterCheckout = ({
     setLoading(true);
     const api_token = await AsyncStorage.getItem('api_token');
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
-
     await api
       .post(
         '/user/' + user_data.user_id + '/transaction',
@@ -56,7 +55,7 @@ const FooterCheckout = ({
               screen: 'Payment',
               params: {
                 trx: res.data.data,
-                // fromStack: false
+                fromStack: false,
               },
             },
           });
@@ -65,9 +64,12 @@ const FooterCheckout = ({
             position: 'bottom',
           });
         } else {
-          RNToasty.Error({
+          RNToasty.Warn({
             title: res.data.message,
             position: 'bottom',
+          });
+          navigation.replace('App', {
+            screen: 'Cart',
           });
         }
       })

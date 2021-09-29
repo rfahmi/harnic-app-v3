@@ -1,15 +1,15 @@
-import React, {useRef, useState, useEffect} from 'react';
+import {Card} from '@paraboly/react-native-card';
+import AsyncStorage from '@react-native-community/async-storage';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useRef, useState} from 'react';
 import {
-  ScrollView,
-  View,
-  Text,
   Dimensions,
   KeyboardAvoidingView,
-  Platform,
+  ScrollView,
+  Text,
+  View,
 } from 'react-native';
-import {Card} from '@paraboly/react-native-card';
-import {colors} from '../../constants/colors';
-import FooterCheckout from '../../components/FooterCheckout';
+import {Skeleton} from 'react-native-animated-skeleton';
 import {Modalize} from 'react-native-modalize';
 import {
   Button,
@@ -19,12 +19,11 @@ import {
   TextInput,
   Title,
 } from 'react-native-paper';
-import AsyncStorage from '@react-native-community/async-storage';
 import {RNToasty} from 'react-native-toasty';
+import FooterCheckout from '../../components/FooterCheckout';
 import {api} from '../../configs/api';
+import {colors} from '../../constants/colors';
 import {currencyFormat} from '../../utils/formatter';
-import {Skeleton} from 'react-native-animated-skeleton';
-import {useFocusEffect} from '@react-navigation/native';
 
 const Checkout = ({navigation, route}) => {
   const {total_item} = route.params;
@@ -293,7 +292,7 @@ const Checkout = ({navigation, route}) => {
   return (
     <>
       <ScrollView>
-        <KeyboardAvoidingView behavior="padding">
+        <KeyboardAvoidingView>
           <View style={{position: 'relative'}}>
             <Button
               mode="contained"
