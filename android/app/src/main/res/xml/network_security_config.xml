@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">45.130.231.156</domain>
+        <domain includeSubdomains="true">apiv3.harnicid.com</domain>
         <domain includeSubdomains="true">apiv3.harnic.id</domain>
         <domain includeSubdomains="true">assets.harnic.id</domain>
         <domain includeSubdomains="true">assets.harnicid.com</domain>
-    </domain-config>
-    <base-config cleartextTrafficPermitted="true">
         <trust-anchors>
             <certificates src="system" />
+            <certificates src="user" />
         </trust-anchors>
-    </base-config>
+    </domain-config>
 </network-security-config>
