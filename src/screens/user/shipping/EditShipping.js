@@ -1,25 +1,25 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Dimensions,
   KeyboardAvoidingView,
-  SafeAreaView,
+  Platform,
   ScrollView,
   Text,
   View,
 } from 'react-native';
-import {Divider, List, RadioButton, TextInput, Title} from 'react-native-paper';
+import { Divider, List, RadioButton, TextInput, Title } from 'react-native-paper';
 import Button from '../../../components/Button';
 import HeaderBack from '../../../components/HeaderBack';
-import {Modalize} from 'react-native-modalize';
-import {api} from '../../../configs/api';
-import {RNToasty} from 'react-native-toasty';
-import {colors} from '../../../constants/colors';
+import { Modalize } from 'react-native-modalize';
+import { api } from '../../../configs/api';
+import { RNToasty } from 'react-native-toasty';
+import { colors } from '../../../constants/colors';
 import qs from 'qs';
 import AsyncStorage from '@react-native-community/async-storage';
 
-const AddShipping = ({navigation, route}) => {
-  const {user_id, id} = route.params;
+const AddShipping = ({ navigation, route }) => {
+  const { user_id, id } = route.params;
   const [areasTitle, setAreasTitle] = useState(null);
   const [areas, setAreas] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -259,7 +259,7 @@ const AddShipping = ({navigation, route}) => {
       <Modalize
         ref={modalizeRef}
         modalHeight={Dimensions.get('window').height * 0.7}>
-        <ScrollView style={{padding: 16}}>
+        <ScrollView style={{ padding: 16 }}>
           <Title>{areasTitle}</Title>
           {areas ? (
             areas.map((d) => {
@@ -345,7 +345,7 @@ const AddShipping = ({navigation, route}) => {
               );
             })
           ) : (
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
               <ActivityIndicator size="large" color={colors.primary} />
             </View>
           )}
@@ -354,11 +354,11 @@ const AddShipping = ({navigation, route}) => {
       <HeaderBack title="Ubah Alamat" search={false} />
       {data ? (
         <>
-          <ScrollView style={{paddingHorizontal: 8, paddingBottom: 24}}>
+          <ScrollView style={{ paddingHorizontal: 8, paddingBottom: 24 }}>
             <List.Subheader>Jenis Tempat</List.Subheader>
             <RadioButton.Group
               onValueChange={(value) =>
-                setData({...data, shipping_name: value})
+                setData({ ...data, shipping_name: value })
               }
               value={data.shipping_name}>
               <RadioButton.Item label="Rumah" value="Rumah" />
@@ -369,7 +369,7 @@ const AddShipping = ({navigation, route}) => {
               title="Provinsi"
               description={
                 data.prov_name || (
-                  <Text style={{color: colors.red}}>Pilih Provinsi!</Text>
+                  <Text style={{ color: colors.red }}>Pilih Provinsi!</Text>
                 )
               }
               right={() => <List.Icon icon="chevron-down" />}
@@ -384,7 +384,7 @@ const AddShipping = ({navigation, route}) => {
               title="Kota/Kabupaten"
               description={
                 data.city_name || (
-                  <Text style={{color: colors.red}}>Pilih Kota/Kabupaten!</Text>
+                  <Text style={{ color: colors.red }}>Pilih Kota/Kabupaten!</Text>
                 )
               }
               right={() => <List.Icon icon="chevron-down" />}
@@ -399,7 +399,7 @@ const AddShipping = ({navigation, route}) => {
               title="Kecamatan"
               description={
                 data.dis_name || (
-                  <Text style={{color: colors.red}}>Pilih Kecamatan!</Text>
+                  <Text style={{ color: colors.red }}>Pilih Kecamatan!</Text>
                 )
               }
               right={() => <List.Icon icon="chevron-down" />}
@@ -414,7 +414,7 @@ const AddShipping = ({navigation, route}) => {
               title="Kelurahan/Desa"
               description={
                 data.subdis_name || (
-                  <Text style={{color: colors.red}}>Pilih Kelurahan/Desa!</Text>
+                  <Text style={{ color: colors.red }}>Pilih Kelurahan/Desa!</Text>
                 )
               }
               right={() => <List.Icon icon="chevron-down" />}
@@ -429,7 +429,7 @@ const AddShipping = ({navigation, route}) => {
               title="Kode Pos"
               description={
                 data.zip_code || (
-                  <Text style={{color: colors.red}}>Pilih Kode Pos!</Text>
+                  <Text style={{ color: colors.red }}>Pilih Kode Pos!</Text>
                 )
               }
               right={() => <List.Icon icon="chevron-down" />}
@@ -440,83 +440,84 @@ const AddShipping = ({navigation, route}) => {
                 openModal();
               }}
             />
-            <KeyboardAvoidingView behavior="padding">
-              <TextInput
-                label="Nama Penerima"
-                mode="outlined"
-                placeholder="Nama Penerima"
-                returnKeyType="next"
-                value={data.pic_name}
-                onChangeText={(text) =>
-                  setData({
-                    ...data,
-                    pic_name: text,
-                  })
-                }
-                autoCapitalize="none"
-                style={{marginBottom: 8, marginHorizontal: 16}}
-              />
-              <TextInput
-                label="Nomor HP Penerima"
-                mode="outlined"
-                placeholder="Nomor HP Penerima"
-                returnKeyType="next"
-                value={data.pic_phone}
-                onChangeText={(text) =>
-                  setData({
-                    ...data,
-                    pic_phone: text,
-                  })
-                }
-                keyboardType="numeric"
-                autoCapitalize="none"
-                style={{marginBottom: 8, marginHorizontal: 16}}
-              />
-              <TextInput
-                label="Detail Alamat"
-                mode="outlined"
-                placeholder="Nama jalan, Gang, RT/RW"
-                returnKeyType="next"
-                value={data.shipping_address}
-                multiline
-                numberOfLines={4}
-                onChangeText={(text) =>
-                  setData({
-                    ...data,
-                    shipping_address: text,
-                  })
-                }
-                autoCapitalize="none"
-                style={{marginBottom: 8, marginHorizontal: 16}}
-              />
+            <TextInput
+              label="Nama Penerima"
+              mode="outlined"
+              placeholder="Nama Penerima"
+              returnKeyType="next"
+              value={data.pic_name}
+              onChangeText={(text) =>
+                setData({
+                  ...data,
+                  pic_name: text,
+                })
+              }
+              autoCapitalize="none"
+              style={{ marginBottom: 8, marginHorizontal: 16 }}
+            />
+            <TextInput
+              label="Nomor HP Penerima"
+              mode="outlined"
+              placeholder="Nomor HP Penerima"
+              returnKeyType="next"
+              value={data.pic_phone}
+              onChangeText={(text) =>
+                setData({
+                  ...data,
+                  pic_phone: text,
+                })
+              }
+              keyboardType="numeric"
+              autoCapitalize="none"
+              style={{ marginBottom: 8, marginHorizontal: 16 }}
+            />
+            <TextInput
+              label="Detail Alamat"
+              mode="outlined"
+              placeholder="Nama jalan, Gang, RT/RW"
+              returnKeyType="next"
+              value={data.shipping_address}
+              multiline
+              numberOfLines={4}
+              onChangeText={(text) =>
+                setData({
+                  ...data,
+                  shipping_address: text,
+                })
+              }
+              autoCapitalize="none"
+              style={{ marginBottom: 8, marginHorizontal: 16 }}
+            />
+            <KeyboardAvoidingView
+              keyboardVerticalOffset={64}
+              behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+            >
+              <View style={{ marginHorizontal: 16, zIndex: 1 }}>
+                <Button
+                  disabled={
+                    !data.zip_code ||
+                    !data.shipping_address ||
+                    !data.pic_phone ||
+                    !data.pic_name
+                  }
+                  mode="contained"
+                  onPress={() => updateShipping()}>
+                  Ubah Alamat
+                </Button>
+              </View>
+              <View style={{ marginHorizontal: 16, zIndex: 1 }}>
+                <Button
+                  mode="contained"
+                  color={colors.red}
+                  onPress={() => deleteShipping()}>
+                  Hapus Alamat
+                </Button>
+              </View>
             </KeyboardAvoidingView>
           </ScrollView>
-          <SafeAreaView>
-            <View style={{marginHorizontal: 16, zIndex: 1}}>
-              <Button
-                disabled={
-                  !data.zip_code ||
-                  !data.shipping_address ||
-                  !data.pic_phone ||
-                  !data.pic_name
-                }
-                mode="contained"
-                onPress={() => updateShipping()}>
-                Ubah Alamat
-              </Button>
-            </View>
-            <View style={{marginHorizontal: 16, zIndex: 1}}>
-              <Button
-                mode="contained"
-                color={colors.red}
-                onPress={() => deleteShipping()}>
-                Hapus Alamat
-              </Button>
-            </View>
-          </SafeAreaView>
         </>
       ) : (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <ActivityIndicator size="large" color={colors.red} />
         </View>
       )}
