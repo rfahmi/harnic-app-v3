@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import {useScrollToTop} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
 import {Animated, RefreshControl, View} from 'react-native';
@@ -22,11 +23,16 @@ const HomePage = ({navigation, route}) => {
   useScrollToTop(refList);
 
   const getPanel = async (n, p) => {
-    console.log(`/panel/${n}?limit=${limit}&page=${p}`);
+    const api_token = await AsyncStorage.getItem('api_token');
+    console.log('aa');
     await api
-      .get(`/panel/${n}?limit=${limit}&page=${p}`)
+      .get(`/panel/${n}?limit=${limit}&page=${p}`, {
+        headers: {
+          Authorization: 'Bearer ' + api_token,
+        },
+      })
       .then((res) => {
-        console.log(res.data.data.length);
+        console.log('panels ', res.data.data);
         if (res.data.success) {
           if (p > 1) {
             setPanel([...panel, ...res.data.data]);
@@ -48,6 +54,7 @@ const HomePage = ({navigation, route}) => {
       });
   };
   const _handleRefresh = () => {
+    console.log('ccc');
     setPanel(null);
     setPage(1);
     setHasMore(true);

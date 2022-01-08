@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
   Platform,
+  RefreshControl,
 } from 'react-native';
 import {Modalize} from 'react-native-modalize';
 import {
@@ -21,9 +22,11 @@ import {
   List,
   Surface,
   Title,
+  TouchableRipple,
 } from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useDispatch, useSelector} from 'react-redux';
 import {authentication} from '../../assets/images';
 import FocusAwareStatusBar from '../../components/FocusAwareStatusBar';
@@ -44,11 +47,44 @@ const User = ({navigation}) => {
   const isFocused = useIsFocused();
   const [data, setData] = useState(null);
   const [info, setInfo] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const getData = async () => {
-    // const api_token = await AsyncStorage.getItem('api_token');
-    const user_data = await AsyncStorage.getItem('user_data');
-    user_data && setData(JSON.parse(user_data));
+    const api_token = await AsyncStorage.getItem('api_token');
+    const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
+    await api
+      .get('/user/' + user_data.user_id, {
+        headers: {
+          Authorization: 'Bearer ' + api_token,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.data);
+        if (res.data.success) {
+          setData(res.data.data);
+        } else {
+          RNToasty.Error({
+            title: res.data.message,
+            position: 'bottom',
+          });
+        }
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log('false');
+
+        RNToasty.Error({
+          title: err.message,
+          position: 'center',
+        });
+      });
+  };
+  const _handleRefresh = () => {
+    setData(null);
+    setLoading(true);
+    getData()
+      .then(() => setLoading(false))
+      .catch(() => setLoading(false));
   };
   const getInfo = async (name) => {
     await api
@@ -85,12 +121,15 @@ const User = ({navigation}) => {
       />
       {auth.isLogin ? (
         <>
-          <ScrollView style={{marginHorizontal: 0, backgroundColor: '#fff'}}>
+          <ScrollView
+            style={{marginHorizontal: 0, backgroundColor: '#fff'}}
+            refreshControl={
+              <RefreshControl refreshing={loading} onRefresh={_handleRefresh} />
+            }>
             <View
               style={{
                 marginTop: STATUSBAR_HEIGHT,
-                marginHorizontal: 16,
-                marginBottom: 16,
+                paddingHorizontal: 16,
                 flex: 1,
                 flexDirection: 'row',
                 alignItems: 'center',
@@ -158,6 +197,36 @@ const User = ({navigation}) => {
                 </TouchableOpacity>
               </View>
             </View>
+            {data && data.user_group === '0' && (
+              <TouchableRipple
+                onPress={() =>
+                  navigation.push('UserPoint', {user_id: data.user_id})
+                }
+                style={{
+                  flex: 1,
+                  paddingVertical: 16,
+                }}>
+                <>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      paddingHorizontal: 16,
+                    }}>
+                    <FontAwesome5 name="coins" color="#EFC910" size={16} />
+                    <View style={{marginLeft: 8}}>
+                      <Text style={{fontSize: 16, fontWeight: 'bold'}}>
+                        {Math.floor(data?.total_point)} Point
+                      </Text>
+                      <Text style={{fontSize: 10, color: '#333'}}>
+                        Lihat riwayat point
+                      </Text>
+                    </View>
+                  </View>
+                </>
+              </TouchableRipple>
+            )}
             <Separator color="#1100BB" />
             <List.Section>
               <List.Subheader>Pesanan</List.Subheader>

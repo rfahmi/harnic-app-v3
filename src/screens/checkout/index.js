@@ -45,6 +45,8 @@ const Checkout = ({navigation, route}) => {
   const [type, setType] = useState(null);
   const [time, setTime] = useState(null);
   const [vouchers, setVouchers] = useState(null);
+  const [point, setPoint] = useState(0);
+  const [usePoint, setUsePoint] = useState(false);
 
   const [selectedShipping, setSelectedShipping] = useState(null);
   const [selectedExpedition, setSelectedExpedition] = useState(null);
@@ -281,11 +283,33 @@ const Checkout = ({navigation, route}) => {
       });
   };
 
+  const getPoint = async () => {
+    const api_token = await AsyncStorage.getItem('api_token');
+    const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
+    await api
+      .get('/user/' + user_data.user_id, {
+        headers: {
+          Authorization: 'Bearer ' + api_token,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.data);
+        if (res.data.success) {
+          let p = res.data.data.total_point;
+          setPoint(p);
+        }
+      })
+      .catch(() => {
+        console.log('false');
+      });
+  };
+
   useFocusEffect(
     React.useCallback(() => {
       console.log('focus');
       getShipping();
       getVoucher();
+      getPoint();
     }, []),
   );
 
@@ -492,6 +516,12 @@ const Checkout = ({navigation, route}) => {
             time={selectedTime}
             voucher={selectedVoucher}
             note={note}
+            showPoint={false}
+            point={point}
+            usePoint={usePoint}
+            usePointChanged={() => {
+              setUsePoint(!usePoint);
+            }}
             disabled={
               loading ||
               (selectedType && selectedType.has_time && !selectedTime)
