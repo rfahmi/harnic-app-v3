@@ -2,9 +2,21 @@ import {useNavigation} from '@react-navigation/native';
 import React, {memo} from 'react';
 import {Dimensions, FlatList, View, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Categories = ({categories, size = 3}) => {
   const navigation = useNavigation();
+  const sliceIntoChunks = (arr, chunkSize) => {
+    const res = [];
+    for (let i = 0; i < arr.length; i += chunkSize) {
+      const chunk = arr.slice(i, i + chunkSize);
+      res.push(chunk);
+    }
+    console.log(res);
+    return res;
+  };
+
+  const categories_chunk = sliceIntoChunks(categories, 8);
   const _renderItems = ({item}) => {
     return (
       <TouchableOpacity
@@ -30,10 +42,9 @@ const Categories = ({categories, size = 3}) => {
         }}>
         <View
           style={{
-            width: (Dimensions.get('window').width - 16) / size,
+            width: (Dimensions.get('window').width - 32) / size,
             aspectRatio: 1 / 1,
-            borderWidth: 2,
-            borderColor: 'transparent',
+            margin: 2,
           }}>
           <FastImage
             style={{
@@ -56,14 +67,20 @@ const Categories = ({categories, size = 3}) => {
     return String(index + item.cat_id);
   };
   return (
-    <FlatList
-      data={categories}
-      style={{marginVertical: 8}}
-      renderItem={_renderItems}
-      numColumns={size}
-      horizontal={false}
-      keyExtractor={keyExtractor}
-    />
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      style={{flexDirection: 'row', margin: 8}}>
+      {categories_chunk.map((c) => (
+        <FlatList
+          data={c}
+          renderItem={_renderItems}
+          numColumns={size}
+          horizontal={false}
+          keyExtractor={keyExtractor}
+        />
+      ))}
+    </ScrollView>
   );
 };
 

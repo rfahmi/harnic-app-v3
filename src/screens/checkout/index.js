@@ -637,6 +637,7 @@ const Checkout = ({navigation, route}) => {
             <TextInput
               value={typedVoucher}
               style={{marginBottom: 8}}
+              disabled={selectedVoucher}
               mode="outlined"
               autoCapitalize="characters"
               onChangeText={(e) => setTypedVoucher(e.toUpperCase())}
