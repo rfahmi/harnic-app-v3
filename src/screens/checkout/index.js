@@ -237,6 +237,13 @@ const Checkout = ({navigation, route}) => {
   };
 
   const applyVoucher = async (code) => {
+    if (!code) {
+      RNToasty.Warn({
+        title: 'Kode voucher kosong',
+        position: 'center',
+      });
+      return;
+    }
     setLoading(true);
     const api_token = await AsyncStorage.getItem('api_token');
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
@@ -628,26 +635,34 @@ const Checkout = ({navigation, route}) => {
           <Title>Kode Voucher</Title>
           <View>
             <TextInput
+              value={typedVoucher}
+              style={{marginBottom: 8}}
               mode="outlined"
               autoCapitalize="characters"
-              onChangeText={(e) => setTypedVoucher(e)}
+              onChangeText={(e) => setTypedVoucher(e.toUpperCase())}
             />
-            <IconButton
-              icon="check"
-              style={{
-                backgroundColor: colors.primary,
-                position: 'absolute',
-                right: 4,
-                top: 10,
-                zIndex: 3,
-              }}
-              disabled={!typedVoucher}
-              color={colors.white}
-              onPress={() => {
-                applyVoucher(typedVoucher);
-                sheet_voucher.current?.close();
-              }}
-            />
+            {!selectedVoucher ? (
+              <Button
+                mode="contained"
+                disabled={!typedVoucher}
+                onPress={() => {
+                  applyVoucher(typedVoucher);
+                  sheet_voucher.current?.close();
+                }}>
+                GUNAKAN DISKON
+              </Button>
+            ) : (
+              <Button
+                mode="contained"
+                color={colors.error}
+                onPress={() => {
+                  setTypedVoucher('');
+                  setSelectedVoucher(null);
+                  sheet_voucher.current?.close();
+                }}>
+                COPOT DISKON
+              </Button>
+            )}
           </View>
           {vouchers &&
             vouchers.map((item, index) => {
@@ -658,6 +673,7 @@ const Checkout = ({navigation, route}) => {
                     title={item.vc_code.toUpperCase()}
                     description={item.vc_name}
                     onPress={() => {
+                      setTypedVoucher(item.vc_code.toUpperCase());
                       applyVoucher(item.vc_code);
                       sheet_voucher.current?.close();
                     }}

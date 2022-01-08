@@ -33,9 +33,10 @@ const FooterCheckout = ({
     if (usePoint) {
       setTotal(product + delivery_fee - discount_value - point);
     } else {
+      console.log('nopoint', discount_value);
       setTotal(product + delivery_fee - discount_value);
     }
-  }, [usePoint]);
+  }, [usePoint, discount_value, product, delivery_fee, point]);
 
   const _handleCheckout = async () => {
     setLoading(true);
@@ -116,7 +117,7 @@ const FooterCheckout = ({
         }}>
         <Text style={{color: 'black', fontSize: 14}}>Total Barang</Text>
         <Text style={{fontSize: 14, fontWeight: 'bold', color: '#333'}}>
-          Rp{currencyFormat(product)}
+          Rp{currencyFormat(product)} {console.log(usePoint)}
         </Text>
       </View>
       <View
