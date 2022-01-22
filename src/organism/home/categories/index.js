@@ -20,6 +20,7 @@ const Categories = ({categories, size = 3}) => {
   const _renderItems = ({item}) => {
     return (
       <TouchableOpacity
+        key={'cat' + item.cat_id}
         onPress={() => {
           if (item.custom_page2_url) {
             if (!item.custom_page2_url === '#') {

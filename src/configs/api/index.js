@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const app_version = 137;
-export const app_version_name = '3.3.7';
+export const app_version = 138;
+export const app_version_name = '3.3.8';
 
 export const api = axios.create({
   baseURL: 'https://apiv3.harnicid.com/v3',
@@ -9,5 +9,5 @@ export const api = axios.create({
     Accept: 'application/json',
     'Content-Type': 'application/x-www-form-urlencoded',
   },
-  timeout: 10000,
+  timeout: 5000,
 });

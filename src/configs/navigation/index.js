@@ -5,6 +5,7 @@ import Developer from '../../screens/developer';
 import HomePage from '../../screens/home/HomePage';
 import HomePanel from '../../screens/home/HomePanel';
 import Splash from '../../screens/splash';
+import Maintenance from '../../screens/splash/Maintenance';
 import AppStack from './app';
 import TransactionStack from './app/user/Transaction';
 import UserShippingStack from './app/user/UserShipping';
@@ -21,6 +22,7 @@ const RootStack = () => {
         <Stack.Screen name="Splash" component={Splash} />
       )}
       <Stack.Screen name="App" component={AppStack} />
+      <Stack.Screen name="Maintenance" component={Maintenance} />
       <Stack.Screen name="Auth" component={AuthStack} />
       <Stack.Screen name="Search" component={SearchStack} />
       <Stack.Screen name="HomePage" component={HomePage} />

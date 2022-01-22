@@ -11,14 +11,7 @@ import {
 } from 'react-native';
 import {Skeleton} from 'react-native-animated-skeleton';
 import {Modalize} from 'react-native-modalize';
-import {
-  Button,
-  Divider,
-  IconButton,
-  List,
-  TextInput,
-  Title,
-} from 'react-native-paper';
+import {Button, Divider, List, TextInput, Title} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
 import FooterCheckout from '../../components/FooterCheckout';
 import {api} from '../../configs/api';
@@ -45,6 +38,7 @@ const Checkout = ({navigation, route}) => {
   const [type, setType] = useState(null);
   const [time, setTime] = useState(null);
   const [vouchers, setVouchers] = useState(null);
+  const [userGroup, setUserGroup] = useState(0);
   const [point, setPoint] = useState(0);
   const [usePoint, setUsePoint] = useState(false);
 
@@ -302,8 +296,9 @@ const Checkout = ({navigation, route}) => {
       .then((res) => {
         console.log(res.data.data);
         if (res.data.success) {
-          let p = res.data.data.total_point;
-          setPoint(p);
+          let p = res.data.data;
+          setPoint(p.total_point);
+          setUserGroup(p.user_group);
         }
       })
       .catch(() => {
@@ -523,7 +518,7 @@ const Checkout = ({navigation, route}) => {
             time={selectedTime}
             voucher={selectedVoucher}
             note={note}
-            showPoint={false}
+            showPoint={userGroup === '0'}
             point={point}
             usePoint={usePoint}
             usePointChanged={() => {

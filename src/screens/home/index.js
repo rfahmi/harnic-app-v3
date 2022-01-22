@@ -41,7 +41,8 @@ const Home = ({navigation}) => {
         }
       })
       .catch((err) => {
-        console.log('Error:', err);
+        console.error('Error:', err);
+        navigation.navigate('Maintenance');
       });
     return result;
   };
