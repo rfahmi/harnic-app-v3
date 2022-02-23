@@ -9,3 +9,4 @@ export const nologo = require('./nologo.jpg');
 export const permata = require('./permata.jpg');
 export const ovo = require('./ovo.jpg');
 export const dana = require('./dana.jpg');
+export const gopay = require('./gopay.jpg');

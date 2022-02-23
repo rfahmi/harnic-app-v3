@@ -5,20 +5,55 @@ import {
   Modal,
   Platform,
   StatusBar,
+  Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  View,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import WebView from 'react-native-webview';
 
-const ProductPictures = ({pictures, parentScrollView}) => {
+const ProductPictures = ({pictures, parentScrollView, video}) => {
   const [modal, setModal] = useState(false);
   const [selected, setSelected] = useState(null);
   const STATUSBAR_HEIGHT =
     Platform.OS === 'ios' ? getStatusBarHeight() : StatusBar.currentHeight;
   const HEADER_MAX_HEIGHT = Dimensions.get('window').width;
+
+  const _renderItems = ({item}) => {
+    return (
+      <TouchableWithoutFeedback
+        style={{
+          width: HEADER_MAX_HEIGHT,
+          height: HEADER_MAX_HEIGHT,
+        }}
+        onPress={() => {
+          setSelected(item.imagePath);
+          setModal(true);
+        }}>
+        <FastImage
+          style={{
+            flex: 1,
+            width: HEADER_MAX_HEIGHT,
+            height: HEADER_MAX_HEIGHT,
+          }}
+          source={{
+            uri: item.imagePath,
+            priority: FastImage.priority.normal,
+          }}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+      </TouchableWithoutFeedback>
+    );
+  };
+
+  const keyExtractor = (item, index) => {
+    return String('Img' + index);
+  };
+
   return (
     <>
       <FlatList
@@ -27,32 +62,32 @@ const ProductPictures = ({pictures, parentScrollView}) => {
         style={{marginVertical: 8}}
         showsHorizontalScrollIndicator={false}
         disableScrollViewPanResponder
-        snapToInterval={HEADER_MAX_HEIGHT}
-        snapToAlignment="center"
-        renderItem={({item}) => (
-          <TouchableWithoutFeedback
-            style={{
-              width: HEADER_MAX_HEIGHT,
-              height: HEADER_MAX_HEIGHT,
-            }}
-            onPress={() => {
-              setSelected(item.imagePath);
-              setModal(true);
-            }}>
-            <FastImage
+        disableIntervalMomentum={true}
+        keyExtractor={keyExtractor}
+        ListHeaderComponent={() =>
+          video ? (
+            <View
               style={{
-                flex: 1,
                 width: HEADER_MAX_HEIGHT,
                 height: HEADER_MAX_HEIGHT,
-              }}
-              source={{
-                uri: item.imagePath,
-                priority: FastImage.priority.normal,
-              }}
-              resizeMode={FastImage.resizeMode.cover}
-            />
-          </TouchableWithoutFeedback>
-        )}
+                backgroundColor: 'red',
+              }}>
+              <WebView
+                style={{flex: 1}}
+                javaScriptEnabled={true}
+                source={{
+                  uri:
+                    'https://www.youtube.com/embed/' +
+                    video +
+                    '?rel=0&autoplay=0&showinfo=0&controls=0',
+                }}
+              />
+            </View>
+          ) : null
+        }
+        snapToInterval={HEADER_MAX_HEIGHT}
+        snapToAlignment="center"
+        renderItem={_renderItems}
         horizontal
       />
       <Modal

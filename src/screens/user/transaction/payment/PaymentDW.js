@@ -113,7 +113,7 @@ const PaymentDW = ({trx}) => {
         numColumns={2}
         renderItem={({item, index}) => (
           <TouchableOpacity
-            style={{flex: 1}}
+            style={{flex: 1 / 2}}
             onPress={() => _handleAlert(item)}>
             <Card
               style={{

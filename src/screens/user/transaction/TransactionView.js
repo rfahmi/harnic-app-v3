@@ -802,6 +802,20 @@ const TransactionView = ({navigation, route}) => {
                 />
                 <Divider />
                 <List.Item
+                  title="Poin Digunakan"
+                  right={() => (
+                    <View
+                      style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        paddingRight: 16,
+                      }}>
+                      <Text>{data && currencyFormat(data.discount2 || 0)}</Text>
+                    </View>
+                  )}
+                />
+                <Divider />
+                <List.Item
                   title="Ongkos Kirim"
                   right={() => (
                     <View
@@ -830,12 +844,14 @@ const TransactionView = ({navigation, route}) => {
                         justifyContent: 'center',
                         paddingRight: 16,
                       }}>
-                      <Text>
+                      <Text
+                        style={{
+                          fontWeight: 'bold',
+                          fontSize: 16,
+                          color: 'orange',
+                        }}>
                         Rp
-                        {data &&
-                          currencyFormat(
-                            data.netsales + data.ongkir - data.discount,
-                          )}
+                        {data && currencyFormat(data.total)}
                       </Text>
                     </View>
                   )}

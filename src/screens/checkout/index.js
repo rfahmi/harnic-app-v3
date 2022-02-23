@@ -178,12 +178,12 @@ const Checkout = ({navigation, route}) => {
       .then((res) => {
         setLoading(false);
         setLoading4(false);
+        setSelectedTime(null);
         if (res.data.success) {
           setTime(res.data.data);
           // setSelectedTime(res.data.data[0]);
         } else {
           setTime(null);
-          setSelectedTime(null);
           RNToasty.Error({
             title: res.data.message,
             position: 'center',

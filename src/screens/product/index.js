@@ -434,6 +434,7 @@ const Product = ({navigation, route}) => {
                       ? data.media_ios
                       : data.media
                   }
+                  video={data.youtube_video}
                   parentScrollView={scrollRef.current}
                 />
               ) : (
