@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const app_version = 140;
-export const app_version_name = '3.4.0';
+export const app_version = 141;
+export const app_version_name = '3.4.1';
 
 export const api = axios.create({
   baseURL: __DEV__

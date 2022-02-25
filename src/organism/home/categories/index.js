@@ -17,6 +17,10 @@ const Categories = ({categories, size = 3}) => {
   };
 
   const categories_chunk = sliceIntoChunks(categories, 8);
+  const ITEM_WIDTH =
+    categories_chunk.length === 1
+      ? (Dimensions.get('window').width - 32) / size
+      : Dimensions.get('window').width / size;
   const _renderItems = ({item}) => {
     return (
       <TouchableOpacity
@@ -43,7 +47,7 @@ const Categories = ({categories, size = 3}) => {
         }}>
         <View
           style={{
-            width: (Dimensions.get('window').width - 32) / size,
+            width: ITEM_WIDTH,
             aspectRatio: 1 / 1,
             margin: 2,
           }}>

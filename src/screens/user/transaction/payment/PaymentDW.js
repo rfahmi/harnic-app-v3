@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   FlatList,
   Image,
+  Linking,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -31,6 +32,7 @@ const PaymentDW = ({trx}) => {
     setAlert(true);
   };
   const _confirm = async (dw_code) => {
+    setAlert(false);
     setLoading(true);
     const api_token = await AsyncStorage.getItem('api_token');
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
@@ -48,22 +50,30 @@ const PaymentDW = ({trx}) => {
       )
       .then((res) => {
         if (res.data.success) {
-          console.log(res.data.data);
-          setPaymentUrl(res.data.data);
-          webviewModal.current?.open();
+          const urlProtocol = res.data.data.split('://')[0];
+          if (urlProtocol === 'http' || urlProtocol === 'https') {
+            setPaymentUrl(res.data.data);
+            webviewModal.current?.open();
+          } else {
+            try {
+              Linking.openURL(res.data.data);
+            } catch (err) {
+              RNToasty.Error({
+                title: err.message,
+                position: 'bottom',
+              });
+            }
+          }
         } else {
-          console.log('success false', res.data);
           RNToasty.Error({
             title: res.data.message,
             position: 'bottom',
           });
         }
-        setAlert(false);
         setLoading(false);
       })
       .catch((err) => {
         console.log('catch');
-        setAlert(false);
         setLoading(false);
         RNToasty.Error({
           title: err.message,

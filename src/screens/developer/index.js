@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React, {useEffect, useRef, useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Linking, Text, TouchableOpacity, View} from 'react-native';
 import {List, TextInput} from 'react-native-paper';
 import {FacebookWebView} from '../../components/FacebookWebView';
 import HeaderBack from '../../components/HeaderBack';
@@ -9,6 +9,7 @@ const Developer = ({navigation}) => {
   const webviewModal = useRef(null);
   const [fcm, setFcm] = useState(null);
   const [webviewUrl, setWebviewUrl] = useState('https://harnic.id');
+  const [deeplink, setDeeplink] = useState('harnic://transaction/JL2202240006');
   useEffect(() => {
     const getFcm = async () => {
       setFcm(await AsyncStorage.getItem('fcm_token'));
@@ -101,6 +102,31 @@ const Developer = ({navigation}) => {
             })
           }>
           <Text>Open Product ID:1</Text>
+        </TouchableOpacity>
+        <TextInput
+          style={{marginVertical: 4}}
+          value={deeplink}
+          onChangeText={(e) => setDeeplink(e)}
+          mode="outlined"
+          returnKeyLabel="Go"
+          selectTextOnFocus
+        />
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#aaa',
+            padding: 16,
+            margin: 4,
+            color: '#fff',
+            borderRadius: 8,
+          }}
+          onPress={() => {
+            try {
+              Linking.openURL(deeplink);
+            } catch (error) {
+              alert.apply(error.message);
+            }
+          }}>
+          <Text>Open Deeplink</Text>
         </TouchableOpacity>
       </View>
     </>
