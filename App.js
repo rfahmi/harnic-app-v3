@@ -119,7 +119,7 @@ const App = () => {
   };
 
   const linking = {
-    prefixes: ['harnic://'],
+    prefixes: ['harnic://', 'https://harnic.id', 'https://www.harnic.id'],
     config,
   };
   return (

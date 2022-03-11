@@ -76,8 +76,9 @@ const Categories = ({categories, size = 3}) => {
       horizontal
       showsHorizontalScrollIndicator={false}
       style={{flexDirection: 'row', margin: 8}}>
-      {categories_chunk.map((c) => (
+      {categories_chunk.map((c, index) => (
         <FlatList
+          key={'list' + index}
           data={c}
           renderItem={_renderItems}
           numColumns={size}

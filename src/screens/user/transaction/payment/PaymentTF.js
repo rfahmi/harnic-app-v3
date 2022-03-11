@@ -4,6 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import React, {memo, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
+  Linking,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -224,6 +225,20 @@ const PaymentTF = ({trx}) => {
             </Card>
           </ScrollView>
           <View style={{margin: 16, zIndex: 1}}>
+            <Button
+              disabled={loading}
+              color="green"
+              style={{marginBottom: 8}}
+              mode="contained"
+              onPress={() =>
+                Linking.openURL(
+                  'whatsapp://send?text=Hai, mohon cek pembayaran transfer BCA untuk pesanan nomor ' +
+                    trx.trxno +
+                    '&phone=+6282166001212',
+                )
+              }>
+              Chat CS
+            </Button>
             <Button
               disabled={loading}
               mode="contained"
