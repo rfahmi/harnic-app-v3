@@ -144,13 +144,11 @@ const PaymentTF = ({trx}) => {
                     fontSize: 24,
                     fontWeight: 'bold',
                   }}>
-                  Rp{currencyFormat(trx.netsales + trx.ongkir - trx.discount)}
+                  Rp{currencyFormat(trx.total)}
                 </Text>
                 <TouchableOpacity
                   onPress={() => {
-                    Clipboard.setString(
-                      String(trx.netsales + trx.ongkir - trx.discount),
-                    );
+                    Clipboard.setString(String(trx.total));
                     RNToasty.Show({
                       title: 'Disalin ke papan klip',
                       position: 'center',

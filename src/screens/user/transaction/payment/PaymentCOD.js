@@ -83,7 +83,7 @@ const PaymentCOD = ({trx}) => {
             Nominal yang harus dibayar:
           </Text>
           <Text style={{textAlign: 'center', fontSize: 24, fontWeight: 'bold'}}>
-            Rp{currencyFormat(trx.netsales + trx.ongkir - trx.discount)}
+            Rp{currencyFormat(trx.total)}
           </Text>
         </Card>
         <Card
