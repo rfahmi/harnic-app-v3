@@ -12,7 +12,6 @@ const Categories = ({categories, size = 3}) => {
       const chunk = arr.slice(i, i + chunkSize);
       res.push(chunk);
     }
-    console.log(res);
     return res;
   };
 

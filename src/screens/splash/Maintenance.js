@@ -1,5 +1,6 @@
 import React from 'react';
-import {BackHandler, View} from 'react-native';
+import {View} from 'react-native';
+import RNRestart from 'react-native-restart';
 import Empty from '../../organism/empty';
 
 const Maintenance = () => {
@@ -9,8 +10,8 @@ const Maintenance = () => {
         image="bug_fixed"
         title="Oops! Layanan Belum Tersedia"
         caption="Jangan khawatir, HARNIC.ID akan segera kembali"
-        actionLabel="KEMBALI NANTI"
-        action={() => BackHandler.exitApp()}
+        actionLabel="Muat Ulang"
+        action={() => RNRestart.Restart()}
       />
     </View>
   );

@@ -212,7 +212,11 @@ const UserNotification = ({navigation, route}) => {
   };
   return (
     <>
-      <HeaderBack title="Notifikasi" search={false} />
+      <HeaderBack
+        title="Notifikasi"
+        search={false}
+        back={() => navigation.replace('User')}
+      />
       <FlatList
         data={data}
         refreshControl={

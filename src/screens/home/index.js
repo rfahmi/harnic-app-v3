@@ -15,6 +15,8 @@ import {setCart} from '../../configs/redux/action/cartActions';
 import {setSuggestion} from '../../configs/redux/action/suggestionActions';
 import AsyncStorage from '@react-native-community/async-storage';
 import {FAB} from 'react-native-paper';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {colors} from '../../constants/colors';
 
 const Home = ({navigation}) => {
   const dispatch = useDispatch();
@@ -35,9 +37,13 @@ const Home = ({navigation}) => {
       .get('/configs' + append_url)
       .then((res) => {
         if (res.data.success) {
+          console.log(res.data.data?.user);
+          if (res.data.data?.maintenance == 1) {
+            throw new Error('Maintenance Mode');
+          }
           return res.data.data;
         } else {
-          console.log('gagal');
+          throw new Error('gagal');
         }
       })
       .catch((err) => {
@@ -91,8 +97,32 @@ const Home = ({navigation}) => {
 
   const _renderTop = () => {
     return (
-      <View style={{alignItems: 'center'}}>
+      <View style={{alignItems: 'stretch', justifyContent: 'center'}}>
         <Banners banners={config.banners} parentScrollView={refList.current} />
+        {config &&
+          config.user &&
+          config.user.user_id &&
+          !config.user.has_password && (
+            <TouchableOpacity
+              style={{
+                backgroundColor: colors.note,
+                paddingVertical: 8,
+                paddingHorizontal: 16,
+              }}
+              onPress={() =>
+                navigation.navigate('User', {
+                  screen: 'UserPassword',
+                  params: {user_id: config.user.user_id},
+                })
+              }>
+              <Text style={{fontWeight: 'bold', fontSize: 16}}>
+                Anda belum membuat password!
+              </Text>
+              <Text style={{fontSize: 11}}>
+                Tekan disini untuk membuat password baru
+              </Text>
+            </TouchableOpacity>
+          )}
         <HomeIcons />
         <Categories
           categories={config.categories}

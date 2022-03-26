@@ -12,16 +12,55 @@ import {
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CartCounter from './CartCounter';
+import Share from 'react-native-share';
 
-const HeaderBackTransparent = ({headerOpacity, visibility}) => {
+const HeaderBackTransparent = ({headerOpacity, visibility, shareData}) => {
   const navigation = useNavigation();
   const STATUSBAR_HEIGHT =
     Platform.OS === 'ios' ? getStatusBarHeight() : StatusBar.currentHeight;
-  const _goBack = () => navigation.goBack();
+  const _goBack = () => navigation.goBack() || navigation.replace('App');
 
   const _handleSearch = () => navigation.push('Search', {key: Date.now()});
   const _handleCart = () => navigation.navigate('Cart');
   const _handleHome = () => navigation.navigate('App', {screen: 'Home'});
+  const _handleShare = ({url, title, message}) => {
+    const options = Platform.select({
+      ios: {
+        activityItemSources: [
+          {
+            // For sharing url with custom title.
+            placeholderItem: {type: 'url', content: url},
+            item: {
+              default: {type: 'url', content: url},
+            },
+            subject: {
+              default: title,
+            },
+            linkMetadata: {originalUrl: url, url, title},
+          },
+          {
+            // For sharing text.
+            placeholderItem: {type: 'text', content: message},
+            item: {
+              default: {type: 'text', content: message},
+              message: null, // Specify no text to share via Messages app.
+            },
+            linkMetadata: {
+              // For showing app icon on share preview.
+              title: message,
+            },
+          },
+        ],
+      },
+      default: {
+        title,
+        subject: title,
+        message: `${message} ${url}`,
+      },
+    });
+
+    Share.open(options);
+  };
 
   const HeaderContent = ({transparent}) => {
     return (
@@ -97,6 +136,28 @@ const HeaderBackTransparent = ({headerOpacity, visibility}) => {
             </TouchableOpacity>
           )}
 
+          {shareData && (
+            <TouchableOpacity
+              onPress={() => _handleShare(shareData)}
+              style={{
+                backgroundColor: transparent
+                  ? 'rgba(0,0,0,0.3)'
+                  : 'transparent',
+                zIndex: 1,
+                padding: 8,
+                marginLeft: 4,
+                aspectRatio: 1 / 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 100,
+              }}>
+              <Icon
+                name="share-variant"
+                size={22}
+                color={transparent ? '#fff' : '#555'}
+              />
+            </TouchableOpacity>
+          )}
           <TouchableOpacity
             onPress={_handleCart}
             style={{

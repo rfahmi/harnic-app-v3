@@ -46,6 +46,7 @@ const Login = ({navigation}) => {
   const WINDOW_WIDTH = Dimensions.get('window').width;
 
   const modalOTP = useRef(null);
+  const modalPassword = useRef(null);
 
   const _onLoginPressed = () => {
     setLoading(true);
@@ -107,18 +108,22 @@ const Login = ({navigation}) => {
         setLoading(false);
         if (res.data.success) {
           if (res.data.registered) {
-            sendOTP(phone.value).then((r) => {
-              if (r) {
-                setShowSendAgain(false);
-                setWaitingTime(60 * 2);
-                modalOTP.current?.open();
-              } else {
-                RNToasty.Success({
-                  title: res.data.message,
-                  position: 'bottom',
-                });
-              }
-            });
+            if (res.data.has_password) {
+              modalPassword.current?.open();
+            } else {
+              sendOTP(phone.value).then((r) => {
+                if (r) {
+                  setShowSendAgain(false);
+                  setWaitingTime(60 * 2);
+                  modalOTP.current?.open();
+                } else {
+                  RNToasty.Success({
+                    title: res.data.message,
+                    position: 'bottom',
+                  });
+                }
+              });
+            }
           } else {
             setPhone({...phone, error: res.data.message});
           }
@@ -176,6 +181,50 @@ const Login = ({navigation}) => {
         setLoading(false);
         if (res.data.success) {
           modalOTP.current?.close();
+          navigation.navigate('App', {screen: 'Home'});
+          dispatch(setAuth(true));
+          dispatch(setPriceType(res.data.data.user.price_type));
+          AsyncStorage.setItem('api_token', res.data.data.api_token);
+          AsyncStorage.setItem('user_data', JSON.stringify(res.data.data.user));
+          const fcm_token = await AsyncStorage.getItem('fcm_token');
+          saveFcm(fcm_token);
+          RNToasty.Success({
+            title: res.data.message,
+            position: 'bottom',
+          });
+        } else {
+          RNToasty.Error({
+            title: res.data.message,
+            position: 'bottom',
+          });
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        RNToasty.Error({
+          title: err.message,
+          position: 'center',
+        });
+      });
+  };
+  const _onPasswordSubmit = () => {
+    setLoading(true);
+    const phoneError = phoneValidator(phone.value);
+
+    if (phoneError) {
+      setPhone({...phone, error: phoneError});
+      setLoading(false);
+      return;
+    }
+    api
+      .post(
+        '/auth/signin/phone',
+        qs.stringify({phone: phone.value, password: password.value}),
+      )
+      .then(async (res) => {
+        setLoading(false);
+        if (res.data.success) {
+          modalPassword.current?.close();
           navigation.navigate('App', {screen: 'Home'});
           dispatch(setAuth(true));
           dispatch(setPriceType(res.data.data.user.price_type));
@@ -374,6 +423,75 @@ const Login = ({navigation}) => {
                   />
                 </>
               )}
+            </View>
+          </View>
+        )}
+      </Modalize>
+      <Modalize
+        ref={modalPassword}
+        modalHeight={WINDOW_HEIGHT * 0.5}
+        modalStyle={{flex: 1, zIndex: 3}}>
+        {loading ? (
+          <View
+            style={{
+              height: WINDOW_HEIGHT * 0.5,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <ActivityIndicator size="large" color={colors.primary} />
+          </View>
+        ) : (
+          <View style={{flex: 1, padding: 16}}>
+            <Text
+              style={{
+                marginTop: 16,
+                fontWeight: 'bold',
+                fontSize: 24,
+                width: WINDOW_WIDTH * 0.8,
+              }}>
+              Login Dengan Password
+            </Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text>Atau </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  sendOTP(phone.value).then((r) => {
+                    if (r) {
+                      modalPassword.current?.close();
+                      setShowSendAgain(false);
+                      setWaitingTime(60 * 2);
+                      modalOTP.current?.open();
+                    } else {
+                      RNToasty.Success({
+                        title: r.data.message,
+                        position: 'bottom',
+                      });
+                    }
+                  });
+                }}>
+                <Text style={{color: colors.primary, fontWeight: 'bold'}}>
+                  login dengan OTP
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{alignItems: 'center'}}>
+              <TextInput
+                label="Password"
+                returnKeyType="done"
+                value={password.value}
+                onChangeText={(text) => setPassword({value: text, error: ''})}
+                error={!!password.error}
+                errorText={password.error}
+                secureTextEntry
+              />
+              <Button
+                mode="contained"
+                style={{width: '100%', marginVertical: 10, zIndex: 0}}
+                labelStyle={{fontWeight: 'bold', fontSize: 15, lineHeight: 26}}
+                onPress={_onPasswordSubmit}
+                disabled={!showSendAgain}>
+                Log In
+              </Button>
             </View>
           </View>
         )}

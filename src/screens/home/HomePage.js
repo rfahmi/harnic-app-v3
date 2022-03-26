@@ -16,11 +16,14 @@ const HomePage = ({navigation, route}) => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const {name} = route.params;
+  const title = name.replace('/-/g', ' ');
   const [panel, setPanel] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const refList = useRef(null);
   const scroll = useRef(new Animated.Value(0)).current;
   useScrollToTop(refList);
+
+  const titleCase = (str) => str.replace(/\b\S/g, (t) => t.toUpperCase());
 
   const getPanel = async (n, p) => {
     const api_token = await AsyncStorage.getItem('api_token');
@@ -96,7 +99,17 @@ const HomePage = ({navigation, route}) => {
 
   return (
     <>
-      <HeaderBackSearch />
+      <HeaderBackSearch
+        shareData={
+          name
+            ? {
+                url: 'https://harnic.id/url/' + name,
+                title: name,
+                message: `Temukan produk ${title} termurah, dan pasti gratis ongkir di harnic`,
+              }
+            : null
+        }
+      />
       {!panel ? (
         <PageSkeleton />
       ) : (

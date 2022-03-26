@@ -380,6 +380,15 @@ const Product = ({navigation, route}) => {
           inputRange: [0, 100],
           outputRange: [0, 1],
         })}
+        shareData={
+          data
+            ? {
+                url: 'https://harnic.id/product/' + itemid,
+                title: data.online_name,
+                message: `Temukan ${data.online_name} termurah, dan pasti gratis ongkir di harnic`,
+              }
+            : null
+        }
       />
       {!data ? (
         <ProductSkeleton />

@@ -1,24 +1,63 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {Text, TouchableOpacity, View,Platform} from 'react-native';
+import {Text, TouchableOpacity, View, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CartCounter from './CartCounter';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+import Share from 'react-native-share';
 
-const HeaderBackSearch = () => {
+const HeaderBackSearch = ({shareData}) => {
   const navigation = useNavigation();
-  const _goBack = () => navigation.goBack();
+  const _goBack = () => navigation.goBack() || navigation.replace('App');
   const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? getStatusBarHeight() : 0;
 
   const _handleSearch = () => navigation.push('Search', {key: Date.now()});
   const _handleCart = () => navigation.navigate('Cart');
   const _handleHome = () => navigation.navigate('App', {screen: 'Home'});
+  const _handleShare = ({url, title, message}) => {
+    const options = Platform.select({
+      ios: {
+        activityItemSources: [
+          {
+            // For sharing url with custom title.
+            placeholderItem: {type: 'url', content: url},
+            item: {
+              default: {type: 'url', content: url},
+            },
+            subject: {
+              default: title,
+            },
+            linkMetadata: {originalUrl: url, url, title},
+          },
+          {
+            // For sharing text.
+            placeholderItem: {type: 'text', content: message},
+            item: {
+              default: {type: 'text', content: message},
+              message: null, // Specify no text to share via Messages app.
+            },
+            linkMetadata: {
+              // For showing app icon on share preview.
+              title: message,
+            },
+          },
+        ],
+      },
+      default: {
+        title,
+        subject: title,
+        message: `${message} ${url}`,
+      },
+    });
+
+    Share.open(options);
+  };
 
   return (
     <>
       <View
         style={{
-          marginTop:STATUSBAR_HEIGHT,
+          marginTop: STATUSBAR_HEIGHT,
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -56,6 +95,23 @@ const HeaderBackSearch = () => {
             </Text>
           </View>
         </TouchableOpacity>
+        {shareData && (
+          <TouchableOpacity
+            onPress={() => _handleShare(shareData)}
+            style={{
+              backgroundColor: 'transparent',
+
+              zIndex: 1,
+              padding: 8,
+              marginLeft: 4,
+              aspectRatio: 1 / 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 100,
+            }}>
+            <Icon name="share-variant" size={22} color="#555" />
+          </TouchableOpacity>
+        )}
         <View style={{flexDirection: 'row'}}>
           <TouchableOpacity
             onPress={_handleCart}

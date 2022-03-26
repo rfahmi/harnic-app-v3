@@ -115,6 +115,9 @@ const App = () => {
           },
         },
       },
+      HomePage: {
+        path: 'url/:name',
+      },
     },
   };
 

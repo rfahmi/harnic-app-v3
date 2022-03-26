@@ -184,8 +184,7 @@ const User = ({navigation}) => {
                       screen: 'SearchWebView',
                       params: {
                         title: 'Harnic Care',
-                        url:
-                          'https://tawk.to/chat/5d79fce5c22bdd393bb57440/default',
+                        url: 'https://tawk.to/chat/5d79fce5c22bdd393bb57440/default',
                       },
                     });
                   }}>
@@ -379,7 +378,16 @@ const User = ({navigation}) => {
               <List.Item
                 title="Password"
                 left={() => <List.Icon icon="lock-outline" />}
-                onPress={() => navigation.push('UserPassword')}
+                onPress={() =>
+                  navigation.push('UserPassword', {user_id: data.user_id})
+                }
+                right={() => (
+                  <>
+                    {data && !data.has_password && (
+                      <List.Icon icon="alert-circle-outline" color="orange" />
+                    )}
+                  </>
+                )}
               />
               <Divider />
               <List.Item
