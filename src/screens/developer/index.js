@@ -1,12 +1,18 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import React, { useEffect, useRef, useState } from 'react';
-import { KeyboardAvoidingView, Linking, Text, TouchableOpacity, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { List, TextInput } from 'react-native-paper';
-import { FacebookWebView } from '../../components/FacebookWebView';
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  KeyboardAvoidingView,
+  Linking,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
+import {List, TextInput} from 'react-native-paper';
+import {FacebookWebView} from '../../components/FacebookWebView';
 import HeaderBack from '../../components/HeaderBack';
 
-const Developer = ({ navigation }) => {
+const Developer = ({navigation}) => {
   const webviewModal = useRef(null);
   const [fcm, setFcm] = useState(null);
   const [webviewUrl, setWebviewUrl] = useState('https://harnic.id');
@@ -25,8 +31,8 @@ const Developer = ({ navigation }) => {
         uri={webviewUrl}
         onClose={() => console.log('closed')}
       />
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior="height">
-        <ScrollView style={{ padding: 16 }}>
+      <KeyboardAvoidingView style={{flex: 1}} behavior="height">
+        <ScrollView style={{padding: 16}}>
           <List.Item
             title="Goto Test Panel"
             onPress={() =>
@@ -45,14 +51,14 @@ const Developer = ({ navigation }) => {
           />
           <Text>Your FCM Token</Text>
           <TextInput
-            style={{ marginTop: 4 }}
+            style={{marginTop: 4}}
             value={fcm}
             mode="outlined"
             selectTextOnFocus
           />
           <Text>Test Webview</Text>
           <TextInput
-            style={{ marginVertical: 4 }}
+            style={{marginVertical: 4}}
             value={webviewUrl}
             onChangeText={(e) => setWebviewUrl(e)}
             mode="outlined"
@@ -100,13 +106,13 @@ const Developer = ({ navigation }) => {
             onPress={() =>
               navigation.push('Search', {
                 screen: 'Product',
-                params: { itemid: 1 },
+                params: {itemid: 1},
               })
             }>
             <Text>Open Product ID:1</Text>
           </TouchableOpacity>
           <TextInput
-            style={{ marginVertical: 4 }}
+            style={{marginVertical: 4}}
             value={deeplink}
             onChangeText={(e) => setDeeplink(e)}
             mode="outlined"

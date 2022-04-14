@@ -18,7 +18,7 @@ const HeaderBackTransparent = ({headerOpacity, visibility, shareData}) => {
   const navigation = useNavigation();
   const STATUSBAR_HEIGHT =
     Platform.OS === 'ios' ? getStatusBarHeight() : StatusBar.currentHeight;
-  const _goBack = () => navigation.goBack() || navigation.replace('App');
+  const _goBack = () => navigation.goBack();
 
   const _handleSearch = () => navigation.push('Search', {key: Date.now()});
   const _handleCart = () => navigation.navigate('Cart');

@@ -122,13 +122,15 @@ const ProductCard = ({
         )}
         {progressBar && (
           <View style={{marginBottom: 4, height: 12}}>
-            {item && item.max_stock ? (
+            {item && Number(item.max_stock) ? (
               <PowerBar
                 width={cardWidth}
-                current={item.stock}
-                max={item.max_stock}
+                current={item.stock || 0}
+                max={item.max_stock || 9999}
               />
-            ) : null}
+            ) : (
+              <View />
+            )}
           </View>
         )}
         {buyButton && (

@@ -49,6 +49,7 @@ export const addCart = async (item_id, qty, note, toast) => {
 export const updateCart = async (item_id, qty, note, toast) => {
   const api_token = await AsyncStorage.getItem('api_token');
   const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
+  console.log(qty);
 
   const result = await api
     .put(

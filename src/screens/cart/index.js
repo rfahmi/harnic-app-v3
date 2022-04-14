@@ -34,6 +34,9 @@ const Cart = ({navigation}) => {
   const [selectedItem, setSelectedItem] = useState(null);
 
   const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    console.log('cart updated');
+  }, [data]);
 
   const getData = async () => {
     const api_token = await AsyncStorage.getItem('api_token');
