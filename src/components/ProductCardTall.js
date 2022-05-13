@@ -108,17 +108,23 @@ const ProductCardTall = ({
                   marginBottom: 4,
                   textDecorationLine: 'line-through',
                 }}>
-                Rp
-                {currencyFormat(
-                  auth.priceType !== 'sellprice' &&
-                    !item.is_promo &&
+                {'Rp' +
+                  currencyFormat(
                     item[auth.priceType] > 0
-                    ? item.sellprice
-                    : item.sellprice2,
-                )}
+                      ? item.sellprice2 > item.sellprice
+                        ? item.sellprice2
+                        : item.sellprice
+                      : item.sellprice2,
+                  )}
               </Text>
             )}
           </View>
+        )}
+        {__DEV__ && (
+          <>
+            <Text style={{fontSize: 8}}>ID: {item.itemid}</Text>
+            <Text style={{fontSize: 8}}>PriceType: {auth.priceType}</Text>
+          </>
         )}
         {progressBar && (
           <View style={{marginBottom: 4, height: 12}}>

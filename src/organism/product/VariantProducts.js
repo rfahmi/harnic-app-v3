@@ -17,8 +17,10 @@ const VariantProducts = ({items}) => {
           item={item}
           style={{
             width: Dimensions.get('window').width / 4,
-            margin: 4,
+            marginRight: 6,
+            marginVertical: 6,
           }}
+          showRating={false}
           showPrice={false}
           progressBar={false}
           buyButton={false}
@@ -29,10 +31,6 @@ const VariantProducts = ({items}) => {
   return (
     <View style={{flexDirection: 'row'}}>
       <FlatList
-        contentContainerStyle={{
-          paddingHorizontal: 8,
-          marginVertical: 8,
-        }}
         data={items}
         renderItem={_renderItems}
         showsHorizontalScrollIndicator={false}

@@ -14,6 +14,7 @@ const ProductCard = ({
   buyButton = true,
   progressBar = true,
   showPrice = true,
+  showRating = true,
 }) => {
   const auth = useSelector((state) => state.auth);
   const [cardWidth, setCardWidth] = useState(0);
@@ -85,7 +86,7 @@ const ProductCard = ({
             {item && item.online_name}
           </Text>
         </View>
-        <StarRating rating={item.rating_avg} />
+        {showRating && <StarRating rating={item.rating_avg} />}
         {showPrice && (
           <View style={{height: 42}}>
             <Text
@@ -108,17 +109,27 @@ const ProductCard = ({
                   marginBottom: 4,
                   textDecorationLine: 'line-through',
                 }}>
-                Rp
-                {currencyFormat(
-                  auth.priceType !== 'sellprice' &&
-                    !item.is_promo &&
+                {'Rp' +
+                  currencyFormat(
                     item[auth.priceType] > 0
-                    ? item.sellprice
-                    : item.sellprice2,
-                )}
+                      ? item.sellprice2 > item.sellprice
+                        ? item.sellprice2
+                        : item.sellprice
+                      : item.sellprice2,
+                  )}
               </Text>
             )}
           </View>
+        )}
+        {__DEV__ && (
+          <>
+            <Text style={{fontSize: 8}}>ID: {item.itemid}</Text>
+            <Text style={{fontSize: 8}}>Price1: {item.sellprice}</Text>
+            <Text style={{fontSize: 8}}>Price2: {item.sellprice2}</Text>
+            <Text style={{fontSize: 8}}>Price3: {item.sellprice3}</Text>
+            <Text style={{fontSize: 8}}>PriceType: {auth.priceType}</Text>
+            <Text style={{fontSize: 8}}>isPromo: {item.is_promo}</Text>
+          </>
         )}
         {progressBar && (
           <View style={{marginBottom: 4, height: 12}}>

@@ -286,7 +286,6 @@ const Product = ({navigation, route}) => {
               onChangeText={(e) => setAddNote(e)}
             />
           </View>
-          {data && data.variants && <VariantProducts items={data.variants} />}
         </ScrollView>
         <Button
           onPress={_handleAddCart}
@@ -539,12 +538,12 @@ const Product = ({navigation, route}) => {
                         color: '#666',
                         textDecorationLine: 'line-through',
                       }}>
-                      {/* {data && 'Rp' + currencyFormat(data.sellprice2)} */}
-                      Rp
-                      {data &&
+                      {'Rp' +
                         currencyFormat(
-                          auth.priceType !== 'sellprice' && !data.is_promo
-                            ? data.sellprice
+                          data[auth.priceType] > 0
+                            ? data.sellprice2 > data.sellprice
+                              ? data.sellprice2
+                              : data.sellprice
                             : data.sellprice2,
                         )}
                     </Text>
@@ -563,6 +562,9 @@ const Product = ({navigation, route}) => {
               <Text style={{fontSize: 12, marginVertical: 8}} numberOfLines={3}>
                 {data && data.item_desc}
               </Text>
+              {data && data.variants && (
+                <VariantProducts items={data.variants} />
+              )}
             </View>
 
             <Separator />

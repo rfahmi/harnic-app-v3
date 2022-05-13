@@ -19,7 +19,7 @@ const Categories = ({categories, size = 3}) => {
   const ITEM_WIDTH =
     categories_chunk.length === 1
       ? (Dimensions.get('window').width - 32) / size
-      : Dimensions.get('window').width / size;
+      : ((Dimensions.get('window').width - 32) / size) * 1.15;
   const _renderItems = ({item}) => {
     return (
       <TouchableOpacity
