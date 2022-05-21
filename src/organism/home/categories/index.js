@@ -75,16 +75,19 @@ const Categories = ({categories, size = 3}) => {
       horizontal
       showsHorizontalScrollIndicator={false}
       style={{flexDirection: 'row', margin: 8}}>
-      {categories_chunk.map((c, index) => (
-        <FlatList
-          key={'list' + index}
-          data={c}
-          renderItem={_renderItems}
-          numColumns={size}
-          horizontal={false}
-          keyExtractor={keyExtractor}
-        />
-      ))}
+      {categories_chunk.map((c, index) => {
+        const numColumns = Math.ceil(c.length / 2);
+        return (
+          <FlatList
+            key={'list' + index}
+            data={c}
+            renderItem={_renderItems}
+            numColumns={numColumns}
+            horizontal={false}
+            keyExtractor={keyExtractor}
+          />
+        );
+      })}
     </ScrollView>
   );
 };
