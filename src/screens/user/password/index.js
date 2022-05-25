@@ -15,6 +15,10 @@ const UserPassword = ({navigation, route}) => {
   const [new2, setNew2] = useState({value: null, error: ''});
 
   const updateData = async (id) => {
+    if (new1.value !== new2.value) {
+      setNew2({...new2, error: 'Password tidak sama'});
+      return;
+    }
     const api_token = await AsyncStorage.getItem('api_token');
     await api
       .put('/user/' + id + '', qs.stringify({user_password: new2.value}), {
