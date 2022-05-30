@@ -1,11 +1,10 @@
-import React, {memo, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {
   Dimensions,
   FlatList,
   Modal,
   Platform,
   StatusBar,
-  Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
@@ -18,12 +17,19 @@ import WebView from 'react-native-webview';
 
 const ProductPictures = ({pictures, parentScrollView, video}) => {
   const [modal, setModal] = useState(false);
-  const [selected, setSelected] = useState(null);
+  const [picArr, setPicArr] = useState([]);
+  const [selected, setSelected] = useState(0);
+
+  useEffect(() => {
+    const arr = pictures.map((a) => ({url: a.imagePath}));
+    setPicArr(arr);
+  }, [pictures]);
+
   const STATUSBAR_HEIGHT =
     Platform.OS === 'ios' ? getStatusBarHeight() : StatusBar.currentHeight;
   const HEADER_MAX_HEIGHT = Dimensions.get('window').width;
 
-  const _renderItems = ({item}) => {
+  const _renderItems = ({item, index}) => {
     return (
       <TouchableWithoutFeedback
         style={{
@@ -31,7 +37,7 @@ const ProductPictures = ({pictures, parentScrollView, video}) => {
           height: HEADER_MAX_HEIGHT,
         }}
         onPress={() => {
-          setSelected(item.imagePath);
+          setSelected(index);
           setModal(true);
         }}>
         <FastImage
@@ -113,7 +119,7 @@ const ProductPictures = ({pictures, parentScrollView, video}) => {
           }}>
           <Icon name="arrow-left" size={22} color="#fff" />
         </TouchableOpacity>
-        <ImageViewer imageUrls={[{url: selected}]} />
+        <ImageViewer imageUrls={picArr} index={selected} />
       </Modal>
     </>
   );
