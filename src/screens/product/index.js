@@ -531,22 +531,38 @@ const Product = ({navigation, route}) => {
                         {data.discount} OFF
                       </Text>
                     </View>
-                    <Text
-                      style={{
-                        marginLeft: 8,
-                        fontSize: 12,
-                        color: '#666',
-                        textDecorationLine: 'line-through',
-                      }}>
-                      {'Rp' +
-                        currencyFormat(
-                          data[auth.priceType] > 0
-                            ? data.sellprice2 > data.sellprice
-                              ? data.sellprice2
-                              : data.sellprice
-                            : data.sellprice2,
-                        )}
-                    </Text>
+                    {data && data.price_slash > 0 ? (
+                      <Text
+                        style={{
+                          fontSize: 10,
+                          color: '#555',
+                          marginBottom: 4,
+                          marginLeft: 8,
+                          textDecorationLine: 'line-through',
+                        }}>
+                        {'Rp' + currencyFormat(data.price_slash)}
+                      </Text>
+                    ) : (
+                      data.sellprice2 > 0 && (
+                        <Text
+                          style={{
+                            fontSize: 10,
+                            color: '#555',
+                            marginBottom: 4,
+                            marginLeft: 8,
+                            textDecorationLine: 'line-through',
+                          }}>
+                          {'Rp' +
+                            currencyFormat(
+                              data[auth.priceType] > 0
+                                ? data.sellprice2 > data.sellprice
+                                  ? data.sellprice2
+                                  : data.sellprice
+                                : data.sellprice2,
+                            )}
+                        </Text>
+                      )
+                    )}
                   </View>
                 )}
               </View>

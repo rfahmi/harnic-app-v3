@@ -101,7 +101,7 @@ const ProductCard = ({
                 ? currencyFormat(item.sellprice)
                 : currencyFormat(item[auth.priceType] || item.sellprice)}
             </Text>
-            {item && item.sellprice2 > 0 && (
+            {item && item.price_slash > 0 ? (
               <Text
                 style={{
                   fontSize: 10,
@@ -109,15 +109,27 @@ const ProductCard = ({
                   marginBottom: 4,
                   textDecorationLine: 'line-through',
                 }}>
-                {'Rp' +
-                  currencyFormat(
-                    item[auth.priceType] > 0
-                      ? item.sellprice2 > item.sellprice
-                        ? item.sellprice2
-                        : item.sellprice
-                      : item.sellprice2,
-                  )}
+                {'Rp' + currencyFormat(item.price_slash)}
               </Text>
+            ) : (
+              item.sellprice2 > 0 && (
+                <Text
+                  style={{
+                    fontSize: 10,
+                    color: '#555',
+                    marginBottom: 4,
+                    textDecorationLine: 'line-through',
+                  }}>
+                  {'Rp' +
+                    currencyFormat(
+                      item[auth.priceType] > 0
+                        ? item.sellprice2 > item.sellprice
+                          ? item.sellprice2
+                          : item.sellprice
+                        : item.sellprice2,
+                    )}
+                </Text>
+              )
             )}
           </View>
         )}
