@@ -585,12 +585,17 @@ const Checkout = ({navigation, route}) => {
                     }}
                     onPress={() => {
                       setSelectedType(item);
-                      item.has_time &&
+                      if (item.has_time) {
                         getTime(
                           selectedShipping.shipping_id,
                           setSelectedExpedition.id,
                           item.id,
                         );
+                      } else {
+                        //SINI
+                        setSelectedTime(null);
+                        setTime(null);
+                      }
                       sheet_type.current?.close();
                     }}
                   />
