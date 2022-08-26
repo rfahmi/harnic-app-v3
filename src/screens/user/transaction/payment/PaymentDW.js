@@ -52,8 +52,21 @@ const PaymentDW = ({trx}) => {
         if (res.data.success) {
           const urlProtocol = res.data.data.split('://')[0];
           if (urlProtocol === 'http' || urlProtocol === 'https') {
-            setPaymentUrl(res.data.data);
-            webviewModal.current?.open();
+            const host = res.data.data.split('/')[2];
+
+            if (host === 'gojek.link') {
+              try {
+                Linking.openURL(res.data.data);
+              } catch (err) {
+                RNToasty.Error({
+                  title: err.message,
+                  position: 'bottom',
+                });
+              }
+            } else {
+              setPaymentUrl(res.data.data);
+              webviewModal.current?.open();
+            }
           } else {
             try {
               Linking.openURL(res.data.data);
