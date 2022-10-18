@@ -37,6 +37,7 @@ import {colors} from '../../constants/colors';
 import {deleteFcm} from '../../utils/fcm';
 import HTML from 'react-native-render-html';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import ListSkeleton from '../../organism/skeleton/ListSkeleton';
 
 const User = ({navigation}) => {
   const dispatch = useDispatch();
@@ -121,390 +122,408 @@ const User = ({navigation}) => {
       />
       {auth.isLogin ? (
         <>
-          <ScrollView
-            style={{marginHorizontal: 0, backgroundColor: '#fff'}}
-            refreshControl={
-              <RefreshControl refreshing={loading} onRefresh={_handleRefresh} />
-            }>
-            <View
-              style={{
-                marginTop: STATUSBAR_HEIGHT,
-                paddingHorizontal: 16,
-                flex: 1,
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <View style={{flex: 1, alignItems: 'flex-start'}}>
-                <Title
-                  style={{
-                    fontWeight: '600',
-                    color: colors.primaryDark,
-                  }}>
-                  {data && data.user_name}
-                </Title>
-                {data && data.status ? (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      backgroundColor: '#00d97e',
-                      borderRadius: 6,
-                      padding: 6,
-                    }}>
-                    <Text style={{marginRight: 8, fontSize: 12, color: '#fff'}}>
-                      {data && data.user_group_name}
-                    </Text>
-                    <Icon name="check-circle" color="#fff" size={16} />
-                  </View>
-                ) : (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      backgroundColor: '#f6c343',
-                      borderRadius: 6,
-                      padding: 6,
-                    }}>
-                    <Text
-                      style={{marginRight: 8, fontSize: 12, color: '#283e59'}}>
-                      {data && data.user_email}
-                    </Text>
-                    <Icon name="information" color="#283e59" size={16} />
-                  </View>
-                )}
-              </View>
+          {data ? (
+            <ScrollView
+              style={{marginHorizontal: 0, backgroundColor: '#fff'}}
+              refreshControl={
+                <RefreshControl
+                  refreshing={loading}
+                  onRefresh={_handleRefresh}
+                />
+              }>
               <View
                 style={{
+                  marginTop: STATUSBAR_HEIGHT,
+                  paddingHorizontal: 16,
                   flex: 1,
-                  alignItems: 'flex-end',
+                  flexDirection: 'row',
+                  alignItems: 'center',
                 }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.push('Search', {
-                      screen: 'SearchWebView',
-                      params: {
-                        title: 'Harnic Care',
-                        url: 'https://tawk.to/chat/5d79fce5c22bdd393bb57440/default',
-                      },
-                    });
+                <View style={{flex: 1, alignItems: 'flex-start'}}>
+                  <Title
+                    style={{
+                      fontWeight: '600',
+                      color: colors.primaryDark,
+                    }}>
+                    {data && data.user_name}
+                  </Title>
+                  {data && data.status ? (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        backgroundColor: '#00d97e',
+                        borderRadius: 6,
+                        padding: 6,
+                      }}>
+                      <Text
+                        style={{marginRight: 8, fontSize: 12, color: '#fff'}}>
+                        {data && data.user_group_name}
+                      </Text>
+                      <Icon name="check-circle" color="#fff" size={16} />
+                    </View>
+                  ) : (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        backgroundColor: '#f6c343',
+                        borderRadius: 6,
+                        padding: 6,
+                      }}>
+                      <Text
+                        style={{
+                          marginRight: 8,
+                          fontSize: 12,
+                          color: '#283e59',
+                        }}>
+                        {data && data.user_email}
+                      </Text>
+                      <Icon name="information" color="#283e59" size={16} />
+                    </View>
+                  )}
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    alignItems: 'flex-end',
                   }}>
-                  <Avatar.Image
-                    size={80}
-                    style={{backgroundColor: 'transparent'}}
-                    source={require('../../assets/images/cs.png')}
-                  />
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.push('Search', {
+                        screen: 'SearchWebView',
+                        params: {
+                          title: 'Harnic Care',
+                          url: 'https://tawk.to/chat/5d79fce5c22bdd393bb57440/default',
+                        },
+                      });
+                    }}>
+                    <Avatar.Image
+                      size={80}
+                      style={{backgroundColor: 'transparent'}}
+                      source={require('../../assets/images/cs.png')}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-            {data && data.user_group === '0' && (
-              <TouchableRipple
-                onPress={() =>
-                  navigation.push('UserPoint', {user_id: data.user_id})
-                }
-                style={{
-                  flex: 1,
-                  paddingVertical: 16,
-                }}>
-                <>
-                  <View
+              {data && data.user_group === '0' && (
+                <TouchableRipple
+                  onPress={() =>
+                    navigation.push('UserPoint', {user_id: data.user_id})
+                  }
+                  style={{
+                    flex: 1,
+                    paddingVertical: 16,
+                  }}>
+                  <>
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        paddingHorizontal: 16,
+                      }}>
+                      <FontAwesome5 name="coins" color="#EFC910" size={16} />
+                      <View style={{marginLeft: 8}}>
+                        <Text style={{fontSize: 16, fontWeight: 'bold'}}>
+                          {Math.floor(data?.total_point)} Point
+                        </Text>
+                        <Text style={{fontSize: 10, color: '#333'}}>
+                          Lihat riwayat point
+                        </Text>
+                      </View>
+                    </View>
+                  </>
+                </TouchableRipple>
+              )}
+              <Separator color="#1100BB" />
+              <List.Section>
+                <List.Subheader>Pesanan</List.Subheader>
+                <Surface
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    marginHorizontal: 16,
+                    borderRadius: 6,
+                    elevation: 0,
+                  }}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.push('Transaction', {
+                        screen: 'UserTransaction',
+                        params: {user_id: data.user_id, init: 0},
+                      })
+                    }
                     style={{
                       flex: 1,
-                      flexDirection: 'row',
+                      backgroundColor: '#eee',
+                      borderRadius: 6,
+                      aspectRatio: 1 / 1,
+                      justifyContent: 'center',
                       alignItems: 'center',
-                      paddingHorizontal: 16,
+                      margin: 8,
+                      padding: 6,
                     }}>
-                    <FontAwesome5 name="coins" color="#EFC910" size={16} />
-                    <View style={{marginLeft: 8}}>
-                      <Text style={{fontSize: 16, fontWeight: 'bold'}}>
-                        {Math.floor(data?.total_point)} Point
-                      </Text>
-                      <Text style={{fontSize: 10, color: '#333'}}>
-                        Lihat riwayat point
-                      </Text>
-                    </View>
-                  </View>
-                </>
-              </TouchableRipple>
-            )}
-            <Separator color="#1100BB" />
-            <List.Section>
-              <List.Subheader>Pesanan</List.Subheader>
-              <Surface
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  marginHorizontal: 16,
-                  borderRadius: 6,
-                  elevation: 0,
-                }}>
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.push('Transaction', {
-                      screen: 'UserTransaction',
-                      params: {user_id: data.user_id, init: 0},
-                    })
-                  }
-                  style={{
-                    flex: 1,
-                    backgroundColor: '#eee',
-                    borderRadius: 6,
-                    aspectRatio: 1 / 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    margin: 8,
-                    padding: 6,
-                  }}>
-                  <Icon
-                    color={colors.grayDark}
-                    size={22}
-                    name="clock-check-outline"
-                  />
-                  <Text style={{fontSize: 9}}>Baru</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.push('Transaction', {
-                      screen: 'UserTransaction',
-                      params: {user_id: data.user_id, init: 1},
-                    })
-                  }
-                  style={{
-                    flex: 1,
-                    backgroundColor: '#eee',
-                    borderRadius: 6,
-                    aspectRatio: 1 / 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    margin: 8,
-                    padding: 6,
-                  }}>
-                  <Icon
-                    color={colors.grayDark}
-                    size={22}
-                    name="package-variant-closed"
-                  />
-                  <Text style={{fontSize: 9}}>Disiapkan</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.push('Transaction', {
-                      screen: 'UserTransaction',
-                      params: {user_id: data.user_id, init: 2},
-                    })
-                  }
-                  style={{
-                    flex: 1,
-                    backgroundColor: '#eee',
-                    borderRadius: 6,
-                    aspectRatio: 1 / 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    margin: 8,
-                    padding: 6,
-                  }}>
-                  <Icon
-                    color={colors.grayDark}
-                    size={22}
-                    name="truck-fast-outline"
-                  />
-                  <Text style={{fontSize: 9}}>Dikirim</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.push('Transaction', {
-                      screen: 'UserTransaction',
-                      params: {user_id: data.user_id, init: 3},
-                    })
-                  }
-                  style={{
-                    flex: 1,
-                    backgroundColor: '#eee',
-                    borderRadius: 6,
-                    aspectRatio: 1 / 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    margin: 8,
-                    padding: 6,
-                  }}>
-                  <Icon color={colors.grayDark} size={22} name="check" />
-                  <Text style={{fontSize: 9}}>Diterima</Text>
-                </TouchableOpacity>
-              </Surface>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'flex-end',
-                  paddingRight: 8,
-                }}>
-                <Button
-                  mode="text"
-                  color={colors.grayDark}
-                  uppercase={false}
-                  onPress={() =>
-                    navigation.push('Transaction', {
-                      screen: 'UserTransaction',
-                      params: {user_id: data.user_id, init: 5},
-                    })
-                  }>
-                  <Text
+                    <Icon
+                      color={colors.grayDark}
+                      size={22}
+                      name="clock-check-outline"
+                    />
+                    <Text style={{fontSize: 9}}>Baru</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.push('Transaction', {
+                        screen: 'UserTransaction',
+                        params: {user_id: data.user_id, init: 1},
+                      })
+                    }
                     style={{
-                      fontSize: 10,
+                      flex: 1,
+                      backgroundColor: '#eee',
+                      borderRadius: 6,
+                      aspectRatio: 1 / 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      margin: 8,
+                      padding: 6,
                     }}>
-                    Lihat Semua
-                  </Text>
-                </Button>
-              </View>
-            </List.Section>
-            <Separator color="#1100BB" />
-            <List.Section>
-              <List.Subheader>Pengaturan</List.Subheader>
-              <List.Item
-                title="Kode Voucher"
-                left={() => <List.Icon icon="ticket-percent-outline" />}
-                onPress={() =>
-                  navigation.push('UserVoucher', {user_id: data.user_id})
-                }
-              />
-              <Divider />
-              <List.Item
-                title="Data Pengguna"
-                left={() => <List.Icon icon="account-outline" />}
-                onPress={() =>
-                  navigation.push('UserData', {user_id: data.user_id})
-                }
-              />
-              <Divider />
-              <List.Item
-                title="Password"
-                left={() => <List.Icon icon="lock-outline" />}
-                onPress={() =>
-                  navigation.push('UserPassword', {user_id: data.user_id})
-                }
-                right={() => (
-                  <>
-                    {data && !data.has_password && (
-                      <List.Icon icon="alert-circle-outline" color="orange" />
-                    )}
-                  </>
-                )}
-              />
-              <Divider />
-              <List.Item
-                title="Alamat Kirim"
-                left={() => <List.Icon icon="map-marker-outline" />}
-                onPress={() =>
-                  navigation.push('UserShipping', {
-                    screen: 'UserShipping',
-                    params: {user_id: data.user_id},
-                  })
-                }
-              />
-              <Divider />
-              <List.Item
-                title="Kartu Kredit"
-                left={() => <List.Icon icon="credit-card-outline" />}
-                onPress={() =>
-                  navigation.push('UserCard', {user_id: data.user_id})
-                }
-              />
-              <Divider />
-              <List.Item
-                title="Notifikasi"
-                left={() => <List.Icon icon="bell-outline" />}
-                onPress={() =>
-                  navigation.push('UserNotification', {user_id: data.user_id})
-                }
-                // right={() => (
-                //   <View
-                //     style={{
-                //       marginRight: 16,
-                //       justifyContent: 'center',
-                //       alignItems: 'center',
-                //     }}>
-                //     <Badge
-                //       visible={true}
-                //       style={{backgroundColor: 'orange', color: '#fff'}}>
-                //       5
-                //     </Badge>
-                //   </View>
-                // )}
-              />
-              {/* <Divider />
+                    <Icon
+                      color={colors.grayDark}
+                      size={22}
+                      name="package-variant-closed"
+                    />
+                    <Text style={{fontSize: 9}}>Disiapkan</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.push('Transaction', {
+                        screen: 'UserTransaction',
+                        params: {user_id: data.user_id, init: 2},
+                      })
+                    }
+                    style={{
+                      flex: 1,
+                      backgroundColor: '#eee',
+                      borderRadius: 6,
+                      aspectRatio: 1 / 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      margin: 8,
+                      padding: 6,
+                    }}>
+                    <Icon
+                      color={colors.grayDark}
+                      size={22}
+                      name="truck-fast-outline"
+                    />
+                    <Text style={{fontSize: 9}}>Dikirim</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.push('Transaction', {
+                        screen: 'UserTransaction',
+                        params: {user_id: data.user_id, init: 3},
+                      })
+                    }
+                    style={{
+                      flex: 1,
+                      backgroundColor: '#eee',
+                      borderRadius: 6,
+                      aspectRatio: 1 / 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      margin: 8,
+                      padding: 6,
+                    }}>
+                    <Icon color={colors.grayDark} size={22} name="check" />
+                    <Text style={{fontSize: 9}}>Diterima</Text>
+                  </TouchableOpacity>
+                </Surface>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
+                    paddingRight: 8,
+                  }}>
+                  <Button
+                    mode="text"
+                    color={colors.grayDark}
+                    uppercase={false}
+                    onPress={() =>
+                      navigation.push('Transaction', {
+                        screen: 'UserTransaction',
+                        params: {user_id: data.user_id, init: 5},
+                      })
+                    }>
+                    <Text
+                      style={{
+                        fontSize: 10,
+                      }}>
+                      Lihat Semua
+                    </Text>
+                  </Button>
+                </View>
+              </List.Section>
+              <Separator color="#1100BB" />
+              <List.Section>
+                <List.Subheader>Pengaturan</List.Subheader>
+                <List.Item
+                  title="Kode Voucher"
+                  left={() => <List.Icon icon="ticket-percent-outline" />}
+                  onPress={() =>
+                    navigation.push('UserVoucher', {user_id: data.user_id})
+                  }
+                />
+                <Divider />
+                <List.Item
+                  title="Data Pengguna"
+                  left={() => <List.Icon icon="account-outline" />}
+                  onPress={() =>
+                    navigation.push('UserData', {user_id: data.user_id})
+                  }
+                />
+                <Divider />
+                <List.Item
+                  title="Password"
+                  left={() => <List.Icon icon="lock-outline" />}
+                  onPress={() =>
+                    navigation.push('UserPassword', {user_id: data.user_id})
+                  }
+                  right={() => (
+                    <>
+                      {data && !data.has_password && (
+                        <List.Icon icon="alert-circle-outline" color="orange" />
+                      )}
+                    </>
+                  )}
+                />
+                <Divider />
+                <List.Item
+                  title="Alamat Kirim"
+                  left={() => <List.Icon icon="map-marker-outline" />}
+                  onPress={() =>
+                    navigation.push('UserShipping', {
+                      screen: 'UserShipping',
+                      params: {user_id: data.user_id},
+                    })
+                  }
+                />
+                <Divider />
+                <List.Item
+                  title="Kartu Kredit"
+                  left={() => <List.Icon icon="credit-card-outline" />}
+                  onPress={() =>
+                    navigation.push('UserCard', {user_id: data.user_id})
+                  }
+                />
+                <Divider />
+                <List.Item
+                  title="Notifikasi"
+                  left={() => <List.Icon icon="bell-outline" />}
+                  onPress={() =>
+                    navigation.push('UserNotification', {user_id: data.user_id})
+                  }
+                  // right={() => (
+                  //   <View
+                  //     style={{
+                  //       marginRight: 16,
+                  //       justifyContent: 'center',
+                  //       alignItems: 'center',
+                  //     }}>
+                  //     <Badge
+                  //       visible={true}
+                  //       style={{backgroundColor: 'orange', color: '#fff'}}>
+                  //       5
+                  //     </Badge>
+                  //   </View>
+                  // )}
+                />
+                {/* <Divider />
             <List.Item
               title="Aktivasi Akun"
               left={() => <List.Icon icon="check" />}
             /> */}
-            </List.Section>
-            <Separator color="#1100BB" />
-            <List.Section>
-              <List.Subheader>Informasi Lainnya</List.Subheader>
-              <List.Item
-                title="Informasi Pembayaran"
-                left={() => <List.Icon icon="credit-card-outline" />}
-                onPress={() => getInfo('informasi-pembayaran')}
-              />
-              <Divider />
-              <List.Item
-                title={`Shipping ${'&'} Delivery`}
-                left={() => <List.Icon icon="truck-check-outline" />}
-                onPress={() => getInfo('shipping-delivery')}
-              />
-              <Divider />
-              <List.Item
-                title="Informasi Return"
-                left={() => <List.Icon icon="backup-restore" />}
-                onPress={() => getInfo('informasi-return')}
-              />
-              <Divider />
-              <List.Item
-                title="Tentang Harnic"
-                left={() => <List.Icon icon="information-outline" />}
-                onPress={() => getInfo('about-us')}
-              />
-              <Divider />
-              <List.Item
-                title="Kebijakan Privasi"
-                left={() => <List.Icon icon="shield-alert-outline" />}
-                onPress={() => getInfo('kebijakan-privasi')}
-              />
-              {data && data.is_developer === 1 && (
-                <>
-                  <Divider />
-                  <List.Item
-                    title="Developer Menu"
-                    left={() => <List.Icon icon="lightbulb-outline" />}
-                    onPress={() => navigation.navigate('Developer')}
-                  />
-                </>
-              )}
-            </List.Section>
-            <View style={{marginVertical: 16}} />
-            <View style={{margin: 16}}>
-              <Button
-                mode="contained"
-                color={colors.red}
-                style={{borderRadius: 30, elevation: 0}}
-                labelStyle={{fontWeight: 'bold', fontSize: 15, lineHeight: 26}}
-                onPress={async () => {
-                  await navigation.navigate('Auth');
-                  await deleteFcm().then(() => {
-                    dispatch(setAuth(false));
-                    AsyncStorage.clear();
-                  });
-                }}>
-                Log Out
-              </Button>
-            </View>
-            <View style={{flex: 1, alignItems: 'center', height: 50}}>
-              <Text style={{color: colors.gray, fontSize: 12}}>
-                Versi {app_version_name}
-              </Text>
-              <Text style={{color: colors.gray, fontSize: 12}}>
-                {'\u00A9'} PT. Harnic Online Store
-              </Text>
-            </View>
-          </ScrollView>
+              </List.Section>
+              <Separator color="#1100BB" />
+              <List.Section>
+                <List.Subheader>Informasi Lainnya</List.Subheader>
+                <List.Item
+                  title="Informasi Pembayaran"
+                  left={() => <List.Icon icon="credit-card-outline" />}
+                  onPress={() => getInfo('informasi-pembayaran')}
+                />
+                <Divider />
+                <List.Item
+                  title={`Shipping ${'&'} Delivery`}
+                  left={() => <List.Icon icon="truck-check-outline" />}
+                  onPress={() => getInfo('shipping-delivery')}
+                />
+                <Divider />
+                <List.Item
+                  title="Informasi Return"
+                  left={() => <List.Icon icon="backup-restore" />}
+                  onPress={() => getInfo('informasi-return')}
+                />
+                <Divider />
+                <List.Item
+                  title="Tentang Harnic"
+                  left={() => <List.Icon icon="information-outline" />}
+                  onPress={() => getInfo('about-us')}
+                />
+                <Divider />
+                <List.Item
+                  title="Kebijakan Privasi"
+                  left={() => <List.Icon icon="shield-alert-outline" />}
+                  onPress={() => getInfo('kebijakan-privasi')}
+                />
+                {data && data.is_developer === 1 && (
+                  <>
+                    <Divider />
+                    <List.Item
+                      title="Developer Menu"
+                      left={() => <List.Icon icon="lightbulb-outline" />}
+                      onPress={() => navigation.navigate('Developer')}
+                    />
+                  </>
+                )}
+              </List.Section>
+              <View style={{marginVertical: 16}} />
+              <View style={{margin: 16}}>
+                <Button
+                  mode="contained"
+                  color={colors.red}
+                  style={{borderRadius: 30, elevation: 0}}
+                  labelStyle={{
+                    fontWeight: 'bold',
+                    fontSize: 15,
+                    lineHeight: 26,
+                  }}
+                  onPress={async () => {
+                    await navigation.navigate('Auth');
+                    await deleteFcm().then(() => {
+                      dispatch(setAuth(false));
+                      AsyncStorage.clear();
+                    });
+                  }}>
+                  Log Out
+                </Button>
+              </View>
+              <View style={{flex: 1, alignItems: 'center', height: 50}}>
+                <Text style={{color: colors.gray, fontSize: 12}}>
+                  Versi {app_version_name}
+                </Text>
+                <Text style={{color: colors.gray, fontSize: 12}}>
+                  {'\u00A9'} PT. Harnic Online Store
+                </Text>
+              </View>
+            </ScrollView>
+          ) : (
+            <ScrollView style={{marginHorizontal: 0, backgroundColor: '#fff'}}>
+              <ListSkeleton />
+            </ScrollView>
+          )}
           <Modalize
             ref={modalizeRef}
             modalHeight={Dimensions.get('window').height * 0.7}>

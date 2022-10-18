@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {View, Image, TouchableOpacity} from 'react-native';
+import {View, Image, TouchableOpacity, Linking} from 'react-native';
 import {Avatar} from 'react-native-paper';
 
 const HomeIcons = () => {
@@ -61,13 +61,14 @@ const HomeIcons = () => {
         <TouchableOpacity
           style={{flex: 1}}
           onPress={() =>
-            navigation.push('Search', {
-              screen: 'SearchWebView',
-              params: {
-                title: 'Harnic Care',
-                url: 'https://tawk.to/chat/5d79fce5c22bdd393bb57440/default',
-              },
-            })
+            // navigation.push('Search', {
+            //   screen: 'SearchWebView',
+            //   params: {
+            //     title: 'Harnic Care',
+            //     url: 'https://tawk.to/chat/5d79fce5c22bdd393bb57440/default',
+            //   },
+            // })
+            Linking.openURL('https://wa.me/6282166001212')
           }>
           <Avatar.Image
             source={require('../../../assets/images/cs.png')}

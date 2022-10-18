@@ -8,7 +8,7 @@ import Share from 'react-native-share';
 
 const HeaderBackSearch = ({shareData}) => {
   const navigation = useNavigation();
-  const _goBack = () => navigation.goBack() || navigation.replace('App');
+  const _goBack = () => navigation.goBack();
   const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? getStatusBarHeight() : 0;
 
   const _handleSearch = () => navigation.push('Search', {key: Date.now()});

@@ -384,7 +384,7 @@ const Checkout = ({navigation, route}) => {
               topRightText={
                 selectedShipping && selectedShipping.default ? 'Default' : ''
               }
-              style={{marginHorizontal: 16, marginVertical: 12}}
+              style={{marginHorizontal: 16, marginVertical: 8}}
             />
           </View>
           <Card
@@ -413,7 +413,7 @@ const Checkout = ({navigation, route}) => {
             onPress={() => {
               sheet_type.current?.open();
             }}
-            style={{marginHorizontal: 16, marginBottom: 12}}
+            style={{marginHorizontal: 16, marginBottom: 8}}
           />
           {time && (
             <Card
@@ -448,11 +448,10 @@ const Checkout = ({navigation, route}) => {
               }}
               style={{
                 marginHorizontal: 16,
-                marginBottom: 12,
               }}
             />
           )}
-          <View style={{alignItems: 'center', marginVertical: 24}}>
+          <View style={{alignItems: 'center', marginVertical: 8}}>
             <Text
               style={{
                 color: colors.grayDark,
@@ -478,9 +477,9 @@ const Checkout = ({navigation, route}) => {
             onPress={() => {
               sheet_voucher.current?.open();
             }}
-            style={{marginHorizontal: 16, marginBottom: 12}}
+            style={{marginHorizontal: 16}}
           />
-          <View style={{alignItems: 'center', marginVertical: 16}}>
+          <View style={{alignItems: 'center', marginVertical: 12}}>
             <Text
               style={{
                 color: colors.grayDark,
@@ -493,7 +492,7 @@ const Checkout = ({navigation, route}) => {
               Tulis patokan alamat anda disini
             </Text>
           </View>
-          <View style={{margin: 16}}>
+          <View style={{marginHorizontal: 16}}>
             <TextInput
               style={{
                 backgroundColor: '#FEF4C5',
@@ -505,7 +504,7 @@ const Checkout = ({navigation, route}) => {
               value={note}
               multiline
               mode="outlined"
-              numberOfLines={3}
+              numberOfLines={2}
               placeholder="Beri kami deskripsi tempat anda, patokan alamat dll (opsional)"
               onChangeText={(e) => setNote(e)}
             />
