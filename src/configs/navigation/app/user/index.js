@@ -7,6 +7,7 @@ import UserCard from '../../../../screens/user/card';
 import UserVoucher from '../../../../screens/user/voucher';
 import UserNotification from '../../../../screens/user/notification';
 import UserPoint from '../../../../screens/user/point';
+import UserBilling from '../../../../screens/user/billing';
 const Stack = createStackNavigator();
 
 const UserStack = () => {
@@ -16,6 +17,7 @@ const UserStack = () => {
       <Stack.Screen name="UserData" component={UserData} />
       <Stack.Screen name="UserPassword" component={UserPassword} />
       <Stack.Screen name="UserCard" component={UserCard} />
+      <Stack.Screen name="UserBilling" component={UserBilling} />
       <Stack.Screen name="UserPoint" component={UserPoint} />
       <Stack.Screen name="UserVoucher" component={UserVoucher} />
       <Stack.Screen name="UserNotification" component={UserNotification} />

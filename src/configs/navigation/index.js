@@ -7,6 +7,7 @@ import HomePanel from '../../screens/home/HomePanel';
 import Splash from '../../screens/splash';
 import Maintenance from '../../screens/splash/Maintenance';
 import AppStack from './app';
+import BillingStack from './app/billing';
 import TransactionStack from './app/user/Transaction';
 import UserShippingStack from './app/user/UserShipping';
 import AuthStack from './auth';
@@ -31,6 +32,7 @@ const RootStack = () => {
       <Stack.Screen name="Transaction" component={TransactionStack} />
       <Stack.Screen name="UserShipping" component={UserShippingStack} />
       <Stack.Screen name="Developer" component={Developer} />
+      <Stack.Screen name="Billing" component={BillingStack} />
     </Stack.Navigator>
   );
 };

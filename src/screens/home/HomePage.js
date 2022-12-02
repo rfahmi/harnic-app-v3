@@ -50,7 +50,7 @@ const HomePage = ({navigation, route}) => {
       })
       .catch((err) => {
         RNToasty.Error({
-          title: err,
+          title: err.message,
           position: 'bottom',
         });
       });

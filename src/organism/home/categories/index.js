@@ -29,11 +29,16 @@ const Categories = ({categories, size = 3}) => {
             if (!item.custom_page2_url === '#') {
               alert('Coming Soon!');
             } else {
-              const name = item.custom_page2_url.replace(
-                'https://page.harnic.id/url/',
-                '',
-              );
-              navigation.push('HomePage', {name});
+              const url = item.custom_page2_url.split('://');
+              if (url[0] === 'https') {
+                const name = item.custom_page2_url.replace(
+                  'https://page.harnic.id/url/',
+                  '',
+                );
+                navigation.push('HomePage', {name});
+              } else if (url[0] === 'screen') {
+                navigation.push(url[1]);
+              }
             }
           } else {
             navigation.push('Search', {
