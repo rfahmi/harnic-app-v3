@@ -9,6 +9,7 @@ import Maintenance from '../../screens/splash/Maintenance';
 import AppStack from './app';
 import BillingStack from './app/billing';
 import TransactionStack from './app/user/Transaction';
+import UserBillingStack from './app/user/UserBilling';
 import UserShippingStack from './app/user/UserShipping';
 import AuthStack from './auth';
 import CheckoutStack from './checkout';
@@ -30,6 +31,7 @@ const RootStack = () => {
       <Stack.Screen name="HomePanel" component={HomePanel} />
       <Stack.Screen name="Checkout" component={CheckoutStack} />
       <Stack.Screen name="Transaction" component={TransactionStack} />
+      <Stack.Screen name="UserBilling" component={UserBillingStack} />
       <Stack.Screen name="UserShipping" component={UserShippingStack} />
       <Stack.Screen name="Developer" component={Developer} />
       <Stack.Screen name="Billing" component={BillingStack} />

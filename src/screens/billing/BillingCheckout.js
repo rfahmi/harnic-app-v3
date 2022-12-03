@@ -19,10 +19,9 @@ const BillingCheckout = ({navigation, route}) => {
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
     await api
       .post(
-        '/billing/prepaid/checkout',
+        `user/${user_data.user_id}/billing`,
         qs.stringify({
           type: product.product_type,
-          user_id: user_data.user_id,
           customer_id: customer_id,
           product_code: product.product_code,
         }),
@@ -34,9 +33,9 @@ const BillingCheckout = ({navigation, route}) => {
       )
       .then((res) => {
         if (res.data.success) {
-          navigation.navigate('User', {
-            screen: 'UserBilling',
-            params: {user_id: user_data.user_id},
+          navigation.navigate('UserBilling', {
+            screen: 'BillingView',
+            params: {billing: res.data.data},
           });
         }
         setLoading(false);

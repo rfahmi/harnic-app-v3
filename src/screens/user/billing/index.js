@@ -1,37 +1,46 @@
 import AsyncStorage from '@react-native-community/async-storage';
+import {useIsFocused} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
-import {FlatList, RefreshControl, TouchableOpacity} from 'react-native';
+import {FlatList, RefreshControl} from 'react-native';
+import {List} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
-import CreditCard from '../../../components/CreditCard';
 import HeaderBack from '../../../components/HeaderBack';
 import {api} from '../../../configs/api';
 import Empty from '../../../organism/empty';
+import {currencyFormat} from '../../../utils/formatter';
 
 const UserBilling = ({navigation, route}) => {
   const {user_id} = route.params;
+  const isFocused = useIsFocused();
+  const limit = 8;
   const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
   const [data, setData] = useState(null);
-  const [dataSelected, setDataSelected] = useState(null);
-  const modalizeRef = useRef(null);
 
-  const getData = async (id) => {
+  const getData = async (p) => {
     const api_token = await AsyncStorage.getItem('api_token');
     await api
-      .get('/user/' + id + '/billing/prepaid', {
+      .get(`/user/${user_id}/billing?page=${p}&limit=${limit}`, {
         headers: {
           Authorization: 'Bearer ' + api_token,
         },
       })
       .then((res) => {
         if (res.data.success) {
-          setData(res.data.data);
+          if (p > 1) {
+            setData([...data, ...res.data.data]);
+          } else {
+            setData(res.data.data);
+          }
+          if (res.data.data.length < limit) {
+            setHasMore(false);
+          }
         } else {
           RNToasty.Error({
             title: res.data.message,
             position: 'bottom',
           });
         }
-        console.log(res.data);
       })
       .catch((err) => {
         console.log('false');
@@ -43,41 +52,60 @@ const UserBilling = ({navigation, route}) => {
       });
   };
 
+  const onLoadMore = () => {
+    getData(page)
+      .then(() => {
+        setLoading(false);
+        setPage(page + 1);
+      })
+      .catch(() => setLoading(false));
+  };
+
   const _handleRefresh = () => {
     setData(null);
     setLoading(true);
-    getData(user_id)
+    getData(1)
       .then(() => setLoading(false))
       .catch(() => setLoading(false));
   };
   useEffect(() => {
     setLoading(true);
-    getData(user_id)
+    getData(1)
       .then(() => setLoading(false))
       .catch(() => setLoading(false));
-  }, [user_id]);
+  }, [isFocused]);
 
-  const keyExtractor = (item, index) => {
-    return String(index + item.card_id);
-  };
   const _renderItems = ({item, index}) => {
     return (
-      <TouchableOpacity
-        style={{
-          paddingTop: 8,
+      <List.Item
+        key={`UserBilling${item.id}`}
+        titleNumberOfLines={2}
+        titleEllipsizeMode="tail"
+        title={item.product_desc}
+        description={`Rp ${currencyFormat(Number(item.price))}`}
+        descriptionStyle={{
+          fontSize: 16,
+          fontWeight: 'bold',
+          color: 'orange',
+          marginBottom: 2,
         }}
-        key={`UserBilling${item.card_id}-${index}`}
-        onPress={() => {
-          setDataSelected(item.card_id);
-          modalizeRef.current?.open();
-        }}>
-        <CreditCard
-          num={item.card_num}
-          holder={item.card_holder}
-          cvc={item.card_cvc}
-          exp={item.card_exp}
-        />
-      </TouchableOpacity>
+        right={() =>
+          item.status === 0 ? (
+            <List.Icon icon="progress-alert" color="gray" />
+          ) : item.status === 1 ? (
+            <List.Icon icon="progress-clock" color="gray" />
+          ) : item.status === 2 ? (
+            <List.Icon icon="progress-check" color="green" />
+          ) : item.status === 3 ? (
+            <List.Icon icon="check" color="green" />
+          ) : item.status === 4 ? (
+            <List.Icon icon="check-all" color="green" />
+          ) : (
+            <List.Icon icon="error-outline" color="red" />
+          )
+        }
+        onPress={() => navigation.push('BillingView', {billing: item})}
+      />
     );
   };
   return (
@@ -100,7 +128,9 @@ const UserBilling = ({navigation, route}) => {
         contentContainerStyle={{flexGrow: 1}}
         renderItem={_renderItems}
         horizontal={false}
-        keyExtractor={keyExtractor}
+        onEndReached={onLoadMore}
+        onEndThreshold={0.3}
+        style={{backgroundColor: '#fff'}}
       />
     </>
   );

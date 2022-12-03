@@ -365,6 +365,16 @@ const User = ({navigation}) => {
                     </Text>
                   </Button>
                 </View>
+                <List.Item
+                  title="Topup & Tagihan"
+                  left={() => <List.Icon icon="receipt" />}
+                  onPress={() =>
+                    navigation.push('UserBilling', {
+                      screen: 'UserBilling',
+                      params: {user_id: data.user_id},
+                    })
+                  }
+                />
               </List.Section>
               <Separator color="#1100BB" />
               <List.Section>

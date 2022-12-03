@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "start": "react-native start",
+    "android": "npx react-native run-android",
+    "ios": "npx react-native run-ios",
+    "start": "npx react-native start",
     "test": "jest",
     "lint": "eslint ."
   },
@@ -16,7 +16,7 @@
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/masked-view": "^0.1.10",
-    "@react-native-community/netinfo": "^9.3.6",
+    "@react-native-community/netinfo": "^9.3.7",
     "@react-native-community/push-notification-ios": "^1.8.0",
     "@react-native-community/viewpager": "3.3.0",
     "@react-native-firebase/analytics": "^11.5.0",
