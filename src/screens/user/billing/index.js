@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import {useIsFocused} from '@react-navigation/native';
-import React, {useEffect, useRef, useState} from 'react';
-import {FlatList, RefreshControl} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {FlatList, RefreshControl, View} from 'react-native';
 import {List} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
 import HeaderBack from '../../../components/HeaderBack';
@@ -15,9 +15,10 @@ const UserBilling = ({navigation, route}) => {
   const limit = 8;
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(false);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
 
   const getData = async (p) => {
+    console.log('call page: ' + p);
     const api_token = await AsyncStorage.getItem('api_token');
     await api
       .get(`/user/${user_id}/billing?page=${p}&limit=${limit}`, {
@@ -75,6 +76,10 @@ const UserBilling = ({navigation, route}) => {
       .catch(() => setLoading(false));
   }, [isFocused]);
 
+  const keyExtractor = (item, index) => {
+    return String(item.id);
+  };
+
   const _renderItems = ({item, index}) => {
     return (
       <List.Item
@@ -101,7 +106,7 @@ const UserBilling = ({navigation, route}) => {
           ) : item.status === 4 ? (
             <List.Icon icon="check-all" color="green" />
           ) : (
-            <List.Icon icon="error-outline" color="red" />
+            <List.Icon icon="alert-circle-outline" color="red" />
           )
         }
         onPress={() => navigation.push('BillingView', {billing: item})}
@@ -128,9 +133,11 @@ const UserBilling = ({navigation, route}) => {
         contentContainerStyle={{flexGrow: 1}}
         renderItem={_renderItems}
         horizontal={false}
+        ListFooterComponent={hasMore ? <ListSkeleton /> : <View />}
         onEndReached={onLoadMore}
         onEndThreshold={0.3}
         style={{backgroundColor: '#fff'}}
+        keyExtractor={keyExtractor}
       />
     </>
   );

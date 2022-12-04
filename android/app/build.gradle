@@ -133,8 +133,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
-        versionCode 152
-        versionName "3.5.2"
+        versionCode 153
+        versionName "3.5.3"
     }
     splits {
         abi {

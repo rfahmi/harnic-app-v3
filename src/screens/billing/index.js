@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, RefreshControl, StatusBar, View} from 'react-native';
+import {Alert, Dimensions, RefreshControl, StatusBar, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import {RNToasty} from 'react-native-toasty';
@@ -54,9 +54,11 @@ const Billing = ({navigation}) => {
         key={'service' + item.id}
         onPress={() => {
           auth.isLogin
-            ? navigation.push('BillingProducts', {
-                service: item,
-              })
+            ? item.status == 1
+              ? navigation.push('BillingProducts', {
+                  service: item,
+                })
+              : Alert.alert('Oopps!', 'Layanan ini belum tersedia saat ini')
             : navigation.navigate('Auth');
         }}>
         <View

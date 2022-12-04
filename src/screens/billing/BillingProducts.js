@@ -1,6 +1,6 @@
 import qs from 'qs';
 import React, {useState} from 'react';
-import {Dimensions, ScrollView, View} from 'react-native';
+import {Dimensions, RefreshControl, ScrollView, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import {Button, Text, TextInput} from 'react-native-paper';
@@ -14,10 +14,12 @@ import {sanitizePhone} from '../../utils/phone';
 const BillingProducts = ({navigation, route}) => {
   const [number, setNumber] = useState('');
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const {service} = route.params;
   const ITEM_WIDTH = (Dimensions.get('window').width - 42) / 2;
 
   const getProduct = async (customer_id) => {
+    setLoading(true);
     await api
       .post(
         `/billing/prepaid/products/${service.type_code}`,
@@ -35,7 +37,8 @@ const BillingProducts = ({navigation, route}) => {
           title: err.message,
           position: 'bottom',
         });
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   const _selectContact = () => {
@@ -112,7 +115,9 @@ const BillingProducts = ({navigation, route}) => {
   return (
     <>
       <HeaderBackSearch />
-      <ScrollView style={{padding: 16}}>
+      <ScrollView
+        style={{padding: 16}}
+        refreshControl={<RefreshControl refreshing={loading} />}>
         <Text
           variant="titleLarge"
           style={{fontWeight: 'bold', marginBottom: 8}}>
@@ -132,7 +137,10 @@ const BillingProducts = ({navigation, route}) => {
             <TextInput.Icon icon="contacts" onPress={() => _selectContact()} />
           }
         />
-        <Button mode="contained" onPress={() => getProduct(number)}>
+        <Button
+          disabled={number.length < 10}
+          mode="contained"
+          onPress={() => getProduct(number)}>
           Pilih Produk
         </Button>
         <View style={{margin: 16}} />

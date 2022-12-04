@@ -33,7 +33,7 @@ const BillingCheckout = ({navigation, route}) => {
       )
       .then((res) => {
         if (res.data.success) {
-          navigation.navigate('UserBilling', {
+          navigation.replace('UserBilling', {
             screen: 'BillingView',
             params: {billing: res.data.data},
           });

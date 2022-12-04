@@ -14,7 +14,6 @@ const BillingView = ({navigation, route}) => {
   const [data, setData] = useState(null);
 
   const getData = async (trxno) => {
-    console.log(`/user/${billing.user_id}/billing/${trxno}`);
     const api_token = await AsyncStorage.getItem('api_token');
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
     await api
@@ -43,18 +42,47 @@ const BillingView = ({navigation, route}) => {
       });
   };
 
+  const cancel = async (trxno) => {
+    setLoading(true);
+    const api_token = await AsyncStorage.getItem('api_token');
+    const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
+    await api
+      .post(
+        `/user/${user_data.user_id}/billing/${trxno}/void`,
+        {},
+        {
+          headers: {
+            Authorization: 'Bearer ' + api_token,
+          },
+        },
+      )
+      .then((res) => {
+        if (res.data.success) {
+          navigation.replace('UserBilling', {user_id: user_data.user_id});
+        } else {
+          RNToasty.Error({
+            title: res.data.message,
+            position: 'bottom',
+          });
+        }
+      })
+      .catch((err) => {
+        RNToasty.Error({
+          title: err.message,
+          position: 'bottom',
+        });
+      })
+      .finally(() => setLoading(false));
+  };
+
   const _handleRefresh = () => {
     setData(null);
     setLoading(true);
-    getData(billing.trxno)
-      .then(() => setLoading(false))
-      .catch(() => setLoading(false));
+    getData(billing.trxno).finally(() => setLoading(false));
   };
   useEffect(() => {
     setLoading(true);
-    getData(billing.trxno)
-      .then(() => setLoading(false))
-      .catch(() => setLoading(false));
+    getData(billing.trxno).finally(() => setLoading(false));
   }, []);
 
   const getIcon = (num) => {
@@ -69,7 +97,7 @@ const BillingView = ({navigation, route}) => {
         ? 'check'
         : num === 4
         ? 'check-all'
-        : 'error-outline';
+        : 'alert-circle-outline';
     return res;
   };
 
@@ -104,7 +132,7 @@ const BillingView = ({navigation, route}) => {
                 )}`}</Text>
               </Card.Content>
             </Card>
-            {data.status == 0 ? (
+            {data.status < 2 ? (
               <Button
                 mode="contained"
                 style={{marginTop: 32}}
@@ -112,26 +140,27 @@ const BillingView = ({navigation, route}) => {
                   navigation.push('BIllingPayment', {
                     screen: 'BillingPayment',
                     params: {
-                      trx: data
-                    }
+                      trx: data,
+                    },
                   })
                 }>
                 BAYAR
-              </Button>
-            ) : data.status == 1 ? (
-              <Button mode="contained" style={{marginTop: 32}}>
-                SELESAIKAN PEMBAYARAN
               </Button>
             ) : (
               <Button disabled mode="contained" style={{marginTop: 32}}>
                 BAYAR
               </Button>
             )}
-            {data.status == 0 && (
+            {data.status == 0 ? (
               <Button
+                onPress={() => cancel(data.trxno)}
                 mode="contained"
                 color={colors.error}
                 style={{marginTop: 8}}>
+                BATALKAN TRANSAKSI
+              </Button>
+            ) : (
+              <Button disabled mode="contained" style={{marginTop: 8}}>
                 BATALKAN TRANSAKSI
               </Button>
             )}
