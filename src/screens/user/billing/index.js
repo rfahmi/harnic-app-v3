@@ -124,7 +124,7 @@ const UserBilling = ({navigation, route}) => {
         ListEmptyComponent={
           !loading && (
             <Empty
-              image="card_payment"
+              image="loading"
               title="Belum Ada Transaksi Topup"
               caption="Topup pulsa dan data lewat harnic sekarang"
             />

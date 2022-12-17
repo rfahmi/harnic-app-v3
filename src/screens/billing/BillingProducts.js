@@ -1,5 +1,6 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import qs from 'qs';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Dimensions, RefreshControl, ScrollView, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
@@ -52,6 +53,14 @@ const BillingProducts = ({navigation, route}) => {
       getProduct(sanitizePhone(selectedPhone.number));
     });
   };
+
+  useEffect(async () => {
+    const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
+    if (user_data && user_data.user_phone) {
+      setNumber(user_data.user_phone);
+      getProduct(user_data.user_phone);
+    }
+  }, []);
 
   const _renderItems = ({item}) => {
     return (
