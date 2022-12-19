@@ -1,12 +1,34 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {memo} from 'react';
-import {Dimensions, FlatList, Platform, TouchableOpacity} from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  ScrollView,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
 import BannerItem from '../../../components/BannerItem';
 
-const BannerGrid = ({data}) => {
+const BannerGridSlide = ({data}) => {
   const navigation = useNavigation();
+  const size = data.param1;
+  const item_per_chunk = size * 2;
+  const sliceIntoChunks = (arr, chunkSize) => {
+    const res = [];
+    for (let i = 0; i < arr.length; i += chunkSize) {
+      const chunk = arr.slice(i, i + chunkSize);
+      res.push(chunk);
+    }
+    return res;
+  };
+  const items_chunk = sliceIntoChunks(data.items, item_per_chunk);
+  const ITEM_WIDTH =
+    items_chunk.length === 1
+      ? (Dimensions.get('window').width - 32) / size
+      : ((Dimensions.get('window').width - 32) / size) * 1.15;
+
   const keyExtractor = (item, index) => {
-    return String(`BannerGrid${item.banner_id}-${index}`);
+    return String(`BannerGridSlide${item.banner_id}-${index}`);
   };
   const _renderItems = ({item, index}) => {
     return (
@@ -55,7 +77,7 @@ const BannerGrid = ({data}) => {
           }
           aspect={data.param2 || 1}
           style={{
-            width: Dimensions.get('window').width / data.param1 - 4,
+            width: ITEM_WIDTH,
             margin: 2,
           }}
         />
@@ -63,15 +85,25 @@ const BannerGrid = ({data}) => {
     );
   };
   return (
-    <FlatList
-      data={data.items}
-      style={{backgroundColor: '#fff'}}
-      renderItem={_renderItems}
-      numColumns={data.param1}
-      horizontal={false}
-      keyExtractor={keyExtractor}
-    />
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      style={{backgroundColor: '#fff'}}>
+      {items_chunk.map((c, index) => {
+        const numColumns = Math.ceil(c.length / 2);
+        return (
+          <FlatList
+            key={'list' + index}
+            data={c}
+            renderItem={_renderItems}
+            numColumns={numColumns}
+            horizontal={false}
+            keyExtractor={keyExtractor}
+          />
+        );
+      })}
+    </ScrollView>
   );
 };
 
-export default memo(BannerGrid);
+export default memo(BannerGridSlide);

@@ -98,7 +98,11 @@ const Home = ({navigation}) => {
   const _renderTop = () => {
     return (
       <View style={{alignItems: 'stretch', justifyContent: 'center'}}>
-        <Banners banners={config.banners} parentScrollView={refList.current} />
+        <Banners
+          banners={config && config.banners}
+          parentScrollView={refList.current}
+          warning={config && config.warning}
+        />
         {config &&
           config.user &&
           config.user.user_id &&

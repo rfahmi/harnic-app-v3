@@ -1,7 +1,14 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import qs from 'qs';
 import React, {useEffect, useState} from 'react';
-import {Dimensions, RefreshControl, ScrollView, View} from 'react-native';
+import {
+  Dimensions,
+  RefreshControl,
+  ScrollView,
+  View,
+  PermissionsAndroid,
+  Platform,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import {Button, Text, TextInput} from 'react-native-paper';
@@ -42,15 +49,26 @@ const BillingProducts = ({navigation, route}) => {
       .finally(() => setLoading(false));
   };
 
-  const _selectContact = () => {
+  const _selectContact = async () => {
+    if (Platform.OS === 'android') {
+      const request = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+      );
+
+      // denied permission
+      if (request === PermissionsAndroid.RESULTS.DENIED)
+        throw Error('Permission Denied');
+      // user chose 'deny, don't ask again'
+      else if (request === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN)
+        throw Error('Permission Denied');
+    }
     selectContactPhone().then((selection) => {
-      if (!selection) {
-        return null;
+      if (selection) {
+        setData([]);
+        let {selectedPhone} = selection;
+        setNumber(sanitizePhone(selectedPhone.number));
+        getProduct(sanitizePhone(selectedPhone.number));
       }
-      setData([]);
-      let {selectedPhone} = selection;
-      setNumber(sanitizePhone(selectedPhone.number));
-      getProduct(sanitizePhone(selectedPhone.number));
     });
   };
 

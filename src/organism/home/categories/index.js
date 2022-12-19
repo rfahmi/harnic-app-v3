@@ -73,7 +73,7 @@ const Categories = ({categories, size = 3}) => {
     );
   };
   const keyExtractor = (item, index) => {
-    return String(index + item.cat_id);
+    return String('maincat' + index + item.cat_id);
   };
   return (
     <ScrollView

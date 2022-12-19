@@ -1,6 +1,7 @@
 import React, {memo, lazy, Suspense} from 'react';
 import {View} from 'react-native';
 import {Skeleton} from 'react-native-animated-skeleton';
+import BannerGridSlide from './BannerGridSlide';
 import Title from './Title';
 
 const ItemSlideBanner = lazy(() => import('./ItemSlideBanner'));
@@ -45,6 +46,8 @@ const Panels = ({data}) => {
           <BannerBasic data={data} />
         ) : data.component_type === 'BANNER_GRID' ? (
           <BannerGrid data={data} />
+        ) : data.component_type === 'BANNER_GRID_SLIDE' ? (
+          <BannerGridSlide data={data} />
         ) : data.component_type === 'CAROUSEL' ? (
           <Carousel data={data} />
         ) : data.component_type === 'UNKNOWN' ? null : null}

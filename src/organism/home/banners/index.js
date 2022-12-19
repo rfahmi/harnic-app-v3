@@ -1,9 +1,10 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {memo} from 'react';
-import {Dimensions, View} from 'react-native';
+import {Dimensions, View, Text} from 'react-native';
 import Carousel from 'react-native-smart-carousel';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Banners = ({banners, parentScrollView}) => {
+const Banners = ({banners, parentScrollView, warning}) => {
   const navigation = useNavigation();
   const WINDOW_WIDTH = Dimensions.get('window').width;
   const BANNER_HEIGHT = WINDOW_WIDTH * 0.75;
@@ -18,7 +19,7 @@ const Banners = ({banners, parentScrollView}) => {
           <Carousel
             parentScrollViewRef={parentScrollView}
             data={banners}
-            autoPlay={false}
+            autoPlay={true}
             height={BANNER_HEIGHT}
             onPress={(e) => {
               const b = banner(e);
@@ -56,6 +57,21 @@ const Banners = ({banners, parentScrollView}) => {
             navigationColor={'#ffffff'}
             navigationType="dot"
           />
+          {warning && warning.show && warning.message && (
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: '#CE3F40',
+                padding: 4,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <Icon name="alert-octagon" size={24} color="#fff" />
+              <Text style={{color: '#fff', marginLeft: 4, flex: 1}}>
+                {warning.message}
+              </Text>
+            </View>
+          )}
         </>
       ) : (
         <View

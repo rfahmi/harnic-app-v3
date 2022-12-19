@@ -40,6 +40,9 @@ const BannerBasic = ({data}) => {
             case 'panel':
               navigation.push('HomePanel', {name: data.api});
               break;
+            case 'screen':
+              navigation.push(data.api);
+              break;
             default:
               break;
           }

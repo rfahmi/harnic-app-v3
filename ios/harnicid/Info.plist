@@ -84,5 +84,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSContactsUsageDescription</key>
+	<string>THis app uses your contacts to make user able to select number on their contact for billing transaction like mobile credit purchase</string>
 </dict>
 </plist>

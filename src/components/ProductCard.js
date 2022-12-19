@@ -14,7 +14,7 @@ const ProductCard = ({
   buyButton = true,
   progressBar = true,
   showPrice = true,
-  showRating = true,
+  showRating = false,
 }) => {
   const auth = useSelector((state) => state.auth);
   const [cardWidth, setCardWidth] = useState(0);
