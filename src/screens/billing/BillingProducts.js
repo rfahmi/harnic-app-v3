@@ -26,6 +26,13 @@ const BillingProducts = ({navigation, route}) => {
   const {service} = route.params;
   const ITEM_WIDTH = (Dimensions.get('window').width - 42) / 2;
 
+  const getUserData = async () => {
+    const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
+    if (user_data && user_data.user_phone) {
+      setNumber(user_data.user_phone);
+      getProduct(user_data.user_phone);
+    }
+  };
   const getProduct = async (customer_id) => {
     setLoading(true);
     await api
@@ -72,12 +79,8 @@ const BillingProducts = ({navigation, route}) => {
     });
   };
 
-  useEffect(async () => {
-    const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
-    if (user_data && user_data.user_phone) {
-      setNumber(user_data.user_phone);
-      getProduct(user_data.user_phone);
-    }
+  useEffect(() => {
+    getUserData();
   }, []);
 
   const _renderItems = ({item}) => {
