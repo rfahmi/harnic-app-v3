@@ -2,6 +2,7 @@ import React, {memo} from 'react';
 import {Text, View} from 'react-native';
 import HeaderBack from '../../../../components/HeaderBack';
 import PaymentDW from './PaymentDW';
+import PaymentTF from './PaymentTF';
 import PaymentVA from './PaymentVA';
 const Pay = ({navigation, route}) => {
   const {code, trx} = route.params;
@@ -11,6 +12,8 @@ const Pay = ({navigation, route}) => {
         <PaymentVA trx={trx} />
       ) : code === 'dw' ? (
         <PaymentDW trx={trx} />
+      ) : code === 'tf' ? (
+        <PaymentTF trx={trx} />
       ) : (
         <>
           <HeaderBack title="Not Supported" search={false} />

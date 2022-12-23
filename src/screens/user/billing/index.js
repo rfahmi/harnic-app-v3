@@ -13,6 +13,7 @@ const UserBilling = ({navigation, route}) => {
   const {user_id} = route.params;
   const isFocused = useIsFocused();
   const limit = 8;
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(false);
   const [data, setData] = useState([]);
@@ -98,7 +99,7 @@ const UserBilling = ({navigation, route}) => {
           item.status === 0 ? (
             <List.Icon icon="progress-alert" color="gray" />
           ) : item.status === 1 ? (
-            <List.Icon icon="progress-clock" color="gray" />
+            <List.Icon icon="progress-clock" color="orange" />
           ) : item.status === 2 ? (
             <List.Icon icon="progress-check" color="green" />
           ) : item.status === 3 ? (
@@ -109,7 +110,7 @@ const UserBilling = ({navigation, route}) => {
             <List.Icon icon="alert-circle-outline" color="red" />
           )
         }
-        onPress={() => navigation.push('BillingView', {billing: item})}
+        onPress={() => navigation.push('BillingView', {trxno: item.trxno})}
       />
     );
   };

@@ -35,7 +35,7 @@ const BillingCheckout = ({navigation, route}) => {
         if (res.data.success) {
           navigation.replace('UserBilling', {
             screen: 'BillingView',
-            params: {billing: res.data.data},
+            params: {trxno: res.data.data.trxno},
           });
         }
         setLoading(false);

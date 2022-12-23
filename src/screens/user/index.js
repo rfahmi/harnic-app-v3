@@ -12,6 +12,7 @@ import {
   View,
   Platform,
   RefreshControl,
+  Linking,
 } from 'react-native';
 import {Modalize} from 'react-native-modalize';
 import {
@@ -190,13 +191,14 @@ const User = ({navigation}) => {
                   }}>
                   <TouchableOpacity
                     onPress={() => {
-                      navigation.push('Search', {
-                        screen: 'SearchWebView',
-                        params: {
-                          title: 'Harnic Care',
-                          url: 'https://tawk.to/chat/5d79fce5c22bdd393bb57440/default',
-                        },
-                      });
+                      // navigation.push('Search', {
+                      //   screen: 'SearchWebView',
+                      //   params: {
+                      //     title: 'Harnic Care',
+                      //     url: 'https://tawk.to/chat/5d79fce5c22bdd393bb57440/default',
+                      //   },
+                      // });
+                      Linking.openURL('https://wa.me/6282166001212');
                     }}>
                     <Avatar.Image
                       size={80}

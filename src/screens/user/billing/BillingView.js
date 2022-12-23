@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import Clipboard from '@react-native-community/clipboard';
+import {useIsFocused} from '@react-navigation/native';
 import moment from 'moment';
 import React, {useEffect, useState, useRef} from 'react';
 import {Dimensions, RefreshControl, ScrollView, View} from 'react-native';
@@ -22,7 +23,8 @@ import {colors} from '../../../constants/colors';
 import {currencyFormat} from '../../../utils/formatter';
 
 const BillingView = ({navigation, route}) => {
-  const {billing} = route.params;
+  const {trxno} = route.params;
+  const isFocused = useIsFocused();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
   const [paymentData, setPaymentData] = useState(null);
@@ -30,11 +32,11 @@ const BillingView = ({navigation, route}) => {
   const [totalDuration, setTotalDuration] = useState(0);
   const WINDOW_HEIGHT = Dimensions.get('window').height;
 
-  const getData = async (trxno) => {
+  const getData = async (t) => {
     const api_token = await AsyncStorage.getItem('api_token');
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
     await api
-      .get(`/user/${user_data.user_id}/billing/${trxno}`, {
+      .get(`/user/${user_data.user_id}/billing/${t}`, {
         headers: {
           Authorization: 'Bearer ' + api_token,
         },
@@ -64,7 +66,7 @@ const BillingView = ({navigation, route}) => {
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
     await api
       .post(
-        `/user/${user_data.user_id}/billing/${billing.trxno}/payment/va/CONTINUE`,
+        `/user/${user_data.user_id}/billing/${trxno}/payment/va/CONTINUE`,
         {},
         {
           headers: {
@@ -119,13 +121,13 @@ const BillingView = ({navigation, route}) => {
     setTotalDuration(d);
   };
 
-  const cancel = async (trxno) => {
+  const cancel = async (t) => {
     setLoading(true);
     const api_token = await AsyncStorage.getItem('api_token');
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
     await api
       .post(
-        `/user/${user_data.user_id}/billing/${trxno}/void`,
+        `/user/${user_data.user_id}/billing/${t}/void`,
         {},
         {
           headers: {
@@ -155,12 +157,12 @@ const BillingView = ({navigation, route}) => {
   const _handleRefresh = () => {
     setData(null);
     setLoading(true);
-    getData(billing.trxno).finally(() => setLoading(false));
+    getData(trxno).finally(() => setLoading(false));
   };
   useEffect(() => {
     setLoading(true);
-    getData(billing.trxno).finally(() => setLoading(false));
-  }, []);
+    getData(trxno).finally(() => setLoading(false));
+  }, [isFocused]);
 
   const getIcon = (num) => {
     const res =
@@ -180,7 +182,7 @@ const BillingView = ({navigation, route}) => {
 
   return (
     <>
-      <HeaderBack title={billing.trxno} search={false} />
+      <HeaderBack title={trxno} search={false} />
       <ScrollView
         style={{padding: 16}}
         refreshControl={
@@ -214,7 +216,7 @@ const BillingView = ({navigation, route}) => {
                 mode="contained"
                 style={{marginTop: 32}}
                 onPress={() =>
-                  navigation.push('BIllingPayment', {
+                  navigation.replace('BIllingPayment', {
                     screen: 'BillingPayment',
                     params: {
                       trx: data,

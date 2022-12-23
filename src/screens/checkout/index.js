@@ -19,7 +19,7 @@ import {colors} from '../../constants/colors';
 import {currencyFormat} from '../../utils/formatter';
 
 const Checkout = ({navigation, route}) => {
-  const {total_item} = route.params;
+  const {total_item, total_item_slashed} = route.params;
   const sheet_shipping = useRef(null);
   const sheet_type = useRef(null);
   const sheet_time = useRef(null);
@@ -317,6 +317,18 @@ const Checkout = ({navigation, route}) => {
 
   return (
     <>
+      {total_item_slashed > 0 && (
+        <View
+          style={{
+            padding: 8,
+            backgroundColor: colors.green,
+            alignItems: 'center',
+          }}>
+          <Text style={{color: '#fff', fontWeight: 'bold'}}>
+            Anda Hemat Rp.{currencyFormat(total_item_slashed)}
+          </Text>
+        </View>
+      )}
       <ScrollView>
         <KeyboardAvoidingView>
           <View style={{position: 'relative'}}>

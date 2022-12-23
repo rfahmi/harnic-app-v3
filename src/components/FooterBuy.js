@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
-import {ActivityIndicator, View} from 'react-native';
+import {ActivityIndicator, View, Linking} from 'react-native';
 import {Appbar, Button, IconButton} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
 import {useDispatch} from 'react-redux';
@@ -14,10 +14,11 @@ const FooterBuy = ({item, openModal}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const _handleChat = () => {
-    navigation.push('SearchWebView', {
-      title: 'Harnic Care',
-      url: 'https://tawk.to/chat/5d79fce5c22bdd393bb57440/default',
-    });
+    // navigation.push('SearchWebView', {
+    //   title: 'Harnic Care',
+    //   url: 'https://tawk.to/chat/5d79fce5c22bdd393bb57440/default',
+    // });
+    Linking.openURL('https://wa.me/6282166001212');
   };
   const _handleBuy = () => {
     setLoading(true);

@@ -12,11 +12,15 @@ const FooterCart = ({products, attribute}) => {
     (t, obj) => Number(obj.subtotal) + Number(t),
     0,
   );
+  const total_slashed = products.reduce(
+    (t, obj) => Number(obj.old_price) + Number(t),
+    0,
+  );
   const min_order = attribute.min_order || 30000;
   const _handleNext = () =>
     navigation.navigate('Checkout', {
       screen: 'Checkout',
-      params: {total_item: total},
+      params: {total_item: total, total_item_slashed: total_slashed},
     });
 
   return (
