@@ -49,6 +49,9 @@ const Banners = ({banners, parentScrollView, warning}) => {
                 case 'page':
                   navigation.push('HomePage', {name: b.param});
                   break;
+                case 'screen':
+                  navigation.push(b.param);
+                  break;
                 default:
                   break;
               }
