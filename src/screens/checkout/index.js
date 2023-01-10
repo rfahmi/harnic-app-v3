@@ -64,9 +64,16 @@ const Checkout = ({navigation, route}) => {
         setLoading(false);
         setLoading1(false);
         if (res.data.success) {
-          setShipping(res.data.data);
-          setSelectedShipping(res.data.data[0]);
-          getExpedition(res.data.data[0].shipping_id);
+          if (res.data.data.length > 0) {
+            setShipping(res.data.data);
+            setSelectedShipping(res.data.data[0]);
+            getExpedition(res.data.data[0].shipping_id);
+          } else {
+            RNToasty.Warn({
+              title: 'Silahkan tambah alamat terlebih dahulu',
+              position: 'center',
+            });
+          }
         } else {
           RNToasty.Error({
             title: res.data.message,
@@ -399,34 +406,36 @@ const Checkout = ({navigation, route}) => {
               style={{marginHorizontal: 16, marginVertical: 8}}
             />
           </View>
-          <Card
-            title="Jenis Pengiriman"
-            description={
-              loading3 || loading2 ? (
-                <Skeleton
-                  loaderStyle={{
-                    width: 200,
-                    height: 16,
-                    marginVertical: 4,
-                    backgroundColor: '#ddd',
-                  }}
-                  direction="column"
-                  numberOfItems={1}
-                />
-              ) : selectedType ? (
-                `${selectedExpedition.label} / ${selectedType.label}`
-              ) : (
-                'Pilih Jenis Pengiriman'
-              )
-            }
-            iconType="MaterialCommunityIcons"
-            iconName="package"
-            iconBackgroundColor={colors.primary}
-            onPress={() => {
-              sheet_type.current?.open();
-            }}
-            style={{marginHorizontal: 16, marginBottom: 8}}
-          />
+          {type && (
+            <Card
+              title="Jenis Pengiriman"
+              description={
+                loading3 || loading2 ? (
+                  <Skeleton
+                    loaderStyle={{
+                      width: 200,
+                      height: 16,
+                      marginVertical: 4,
+                      backgroundColor: '#ddd',
+                    }}
+                    direction="column"
+                    numberOfItems={1}
+                  />
+                ) : selectedType ? (
+                  `${selectedExpedition.label} / ${selectedType.label}`
+                ) : (
+                  'Pilih Jenis Pengiriman'
+                )
+              }
+              iconType="MaterialCommunityIcons"
+              iconName="package"
+              iconBackgroundColor={colors.primary}
+              onPress={() => {
+                sheet_type.current?.open();
+              }}
+              style={{marginHorizontal: 16, marginBottom: 8}}
+            />
+          )}
           {time && (
             <Card
               title="Jam Terima Paket"
@@ -537,7 +546,9 @@ const Checkout = ({navigation, route}) => {
             }}
             disabled={
               loading ||
-              (selectedType && selectedType.has_time && !selectedTime)
+              !selectedShipping ||
+              !selectedType ||
+              (selectedType.has_time && !selectedTime)
             }
           />
         </KeyboardAvoidingView>
