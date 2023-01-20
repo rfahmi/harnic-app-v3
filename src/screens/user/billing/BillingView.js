@@ -211,6 +211,39 @@ const BillingView = ({navigation, route}) => {
                 )}`}</Text>
               </Card.Content>
             </Card>
+            <Card style={{marginTop: 16}}>
+              <Card.Content style={{alignItems: 'flex-start'}}>
+                <Title>Token Number</Title>
+                <View
+                  style={{
+                    width: '100%',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: '#ddd',
+                    padding: 8,
+                    borderRadius: 8,
+                  }}>
+                  {data.status >= 2 && data.sn ? (
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: '#333',
+                      }}>
+                      {data.sn.split('/')[0]}
+                    </Text>
+                  ) : (
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        color: '#333',
+                      }}>
+                      Belum Tersedia
+                    </Text>
+                  )}
+                </View>
+              </Card.Content>
+            </Card>
             {data.status == 0 ? (
               <Button
                 mode="contained"
