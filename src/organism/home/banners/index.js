@@ -19,7 +19,7 @@ const Banners = ({banners, parentScrollView, warning}) => {
           <Carousel
             parentScrollViewRef={parentScrollView}
             data={banners}
-            autoPlay={true}
+            autoPlay={!__DEV__}
             height={BANNER_HEIGHT}
             onPress={(e) => {
               const b = banner(e);

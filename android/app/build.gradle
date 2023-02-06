@@ -133,8 +133,9 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
-        versionCode 161
-        versionName "3.6.1"
+        versionCode 162
+        versionName "3.6.2"
+        missingDimensionStrategy 'react-native-camera', 'general'
     }
     splits {
         abi {

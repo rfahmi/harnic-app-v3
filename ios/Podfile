@@ -10,6 +10,8 @@ target 'harnicid' do
 
   pod 'react-native-restart', :path => '../node_modules/react-native-restart'
 
+  pod 'react-native-camera', :path => '../node_modules/react-native-camera'
+
   target 'harnicidTests' do
     inherit! :complete
     # Pods for testing

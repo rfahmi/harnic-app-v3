@@ -58,6 +58,18 @@ const HomeTopBar = ({headerOpacity, visibility, auth}) => {
           </View>
         </TouchableOpacity>
         <IconButton
+          icon="barcode-scan"
+          color={mode === 'light' ? colors.white : colors.grayDark}
+          size={26}
+          style={{zIndex: 1}}
+          onPress={() => {
+            navigation.push('Search', {
+              screen: 'Scan',
+              params: {action: 'sase'},
+            });
+          }}
+        />
+        <IconButton
           icon="bell"
           color={mode === 'light' ? colors.white : colors.grayDark}
           size={26}

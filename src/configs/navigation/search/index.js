@@ -5,6 +5,7 @@ import SearchResult from '../../../screens/search/SearchResult';
 import Product from '../../../screens/product';
 import ProductReview from '../../../screens/product/ProductReview';
 import SearchWebView from '../../../screens/search/SearchWebView';
+import Scan from '../../../screens/search/Scan';
 
 const Stack = createStackNavigator();
 
@@ -35,6 +36,11 @@ const SearchStack = () => {
         name="SearchWebView"
         component={SearchWebView}
         options={{headerShown: false, title: 'Loading'}}
+      />
+      <Stack.Screen
+        name="Scan"
+        component={Scan}
+        options={{title: 'Scan Barcode'}}
       />
     </Stack.Navigator>
   );
