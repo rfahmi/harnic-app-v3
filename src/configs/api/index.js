@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const app_version = 162;
-export const app_version_name = '3.6.2';
+export const app_version = 163;
+export const app_version_name = '3.6.3';
 export let baseURL = __DEV__
   ? 'https://api3.harnic.id/v3'
   : // 'http://10.0.2.2:8000/v3'
@@ -15,3 +15,5 @@ export const api = axios.create({
   },
   timeout: 5000,
 });
+
+export const source = axios.CancelToken.source();

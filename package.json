@@ -61,7 +61,6 @@
     "react-native-scrollable-tab-view": "^1.0.0",
     "react-native-select-contact": "^1.6.3",
     "react-native-share": "^7.3.7",
-    "react-native-smart-carousel": "^1.1.0",
     "react-native-star-rating": "^1.1.0",
     "react-native-status-bar-height": "^2.6.0",
     "react-native-timeline-flatlist": "^0.7.3",
@@ -71,8 +70,7 @@
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "switch-button-react-native": "^1.0.3",
-    "yarn": "^1.22.10"
+    "switch-button-react-native": "^1.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.17",

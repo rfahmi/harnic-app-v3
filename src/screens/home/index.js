@@ -131,12 +131,13 @@ const Home = ({navigation}) => {
         <Categories
           categories={config.categories}
           size={config.category_size || 4}
+          parentScrollViewRef={refList.current}
         />
       </View>
     );
   };
   const _renderPanel = useCallback(({item, index}) => {
-    return <Panels data={item} />;
+    return <Panels data={item} parentScrollViewRef={refList.current} />;
   }, []);
 
   const keyExtractor = (item, index) => {

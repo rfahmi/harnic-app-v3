@@ -18,14 +18,14 @@ enableScreens();
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: async function (token) {
-    console.log('TOKEN:', token);
+    // console.log('TOKEN:', token);
     await AsyncStorage.setItem('fcm_token', token.token);
     saveFcm(token.token);
   },
 
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification: function (notification) {
-    console.log('onNotification NOTIFICATION:', notification);
+    // console.log('onNotification NOTIFICATION:', notification);
 
     // process the notification
     notification.userInteraction &&
@@ -43,9 +43,8 @@ PushNotification.configure({
 
   // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
   onAction: function (notification) {
-    console.log('onAction ACTION:', notification.action);
-    console.log('onAction NOTIFICATION:', notification);
-
+    // console.log('onAction ACTION:', notification.action);
+    // console.log('onAction NOTIFICATION:', notification);
     // process the action
   },
 

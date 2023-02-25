@@ -1,10 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {memo} from 'react';
+import {useRef} from 'react';
 import {Dimensions, FlatList, View, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {ScrollView} from 'react-native-gesture-handler';
 
-const Categories = ({categories, size = 3}) => {
+const Categories = ({categories, size = 3, parentScrollViewRef}) => {
+  const refCategoryGridMainList = useRef(null);
   const navigation = useNavigation();
   const sliceIntoChunks = (arr, chunkSize) => {
     const res = [];
@@ -77,6 +79,8 @@ const Categories = ({categories, size = 3}) => {
   };
   return (
     <ScrollView
+      ref={refCategoryGridMainList}
+      parentScrollViewRef={parentScrollViewRef}
       horizontal
       showsHorizontalScrollIndicator={false}
       style={{flexDirection: 'row', margin: 8}}>
@@ -84,7 +88,8 @@ const Categories = ({categories, size = 3}) => {
         const numColumns = Math.ceil(c.length / 2);
         return (
           <FlatList
-            key={'list' + index}
+            parentScrollViewRef={refCategoryGridMainList.current}
+            key={'listCatItem' + index}
             data={c}
             renderItem={_renderItems}
             numColumns={numColumns}

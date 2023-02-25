@@ -14,7 +14,7 @@ import ProductCardHorizontal from '../../../components/ProductCardHorizontal';
 import ProductCardTall from '../../../components/ProductCardTall';
 import {api} from '../../../configs/api';
 
-const ItemInfinite = ({data}) => {
+const ItemInfinite = ({data, parentScrollViewRef}) => {
   const navigation = useNavigation();
   const category_id = String(data.api)
     .replace('product/infinite/', '')
@@ -142,6 +142,7 @@ const ItemInfinite = ({data}) => {
         justifyContent: 'center',
       }}>
       <FlatList
+        parentScrollViewRef={parentScrollViewRef}
         data={items}
         renderItem={_renderItems}
         numColumns={data.param1}
