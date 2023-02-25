@@ -1,5 +1,5 @@
 import {useIsFocused} from '@react-navigation/native';
-import React, { useEffect } from 'react';
+import React, {useState} from 'react';
 import {KeyboardAvoidingView, View} from 'react-native';
 import BarcodeMask from 'react-native-barcode-mask';
 import {RNCamera} from 'react-native-camera';
@@ -8,6 +8,7 @@ import {api} from '../../configs/api';
 
 const Scan = ({navigation}) => {
   const isFocused = useIsFocused();
+  const [processingBarcode, setProcessingBarcode] = useState(false);
 
   const getPermission = async () => {
     const cameraPermission = await Camera.getCameraPermissionStatus();
@@ -15,17 +16,21 @@ const Scan = ({navigation}) => {
   }
 
   const onBarCodeRead = async (scanResult) => {
-    await api.get('/product/barcode/' + scanResult.data).then((res) => {
-      if (res.data.success) {
-        navigation.push('Product', {itemid: res.data.data.itemmst});
-      } else {
-        navigation.goBack();
-        RNToasty.Warn({
-          title: 'Produk tidak ditemukan',
-          position: 'center',
-        });
-      }
-    });
+    if (!processingBarcode) {
+      setProcessingBarcode(true);
+      await api.get('/product/barcode/' + scanResult.data).then((res) => {
+        if (res.data.success) {
+          navigation.push('Product', {itemid: res.data.data.itemmst});
+        } else {
+          navigation.goBack();
+          RNToasty.Warn({
+            title: 'Produk tidak ditemukan',
+            position: 'center',
+          });
+        }
+        setProcessingBarcode(false);
+      });
+    }
   };
 
   useEffect(() => {

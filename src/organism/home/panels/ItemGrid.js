@@ -6,7 +6,7 @@ import ProductCardHorizontal from '../../../components/ProductCardHorizontal';
 import ProductCardHorizontalWeight from '../../../components/ProductCardHorizontalWeight';
 import ProductCardTall from '../../../components/ProductCardTall';
 
-const ItemGrid = ({data}) => {
+const ItemGrid = ({data, parentScrollViewRef}) => {
   const navigation = useNavigation();
   const keyExtractor = (item, index) => {
     return `ItemGrid${data.panel_id}-${data.component_id}-${item.itemid}-${index}`;
@@ -64,6 +64,7 @@ const ItemGrid = ({data}) => {
         justifyContent: 'center',
       }}>
       <FlatList
+        parentScrollViewRef={parentScrollViewRef}
         data={data.items}
         renderItem={_renderItems}
         numColumns={data.param1}

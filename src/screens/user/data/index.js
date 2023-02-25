@@ -1,12 +1,14 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import qs from 'qs';
-import React, {useState, useEffect} from 'react';
-import {RefreshControl, ScrollView, View} from 'react-native';
+import React, {useState, useEffect, Platform} from 'react';
+import {Alert, RefreshControl, ScrollView, View} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
 import Button from '../../../components/Button';
 import HeaderBack from '../../../components/HeaderBack';
 import {api} from '../../../configs/api';
+import {colors} from '../../../constants/colors';
+import {deleteFcm} from '../../../utils/fcm';
 
 const UserData = ({navigation, route}) => {
   const {user_id} = route.params;
@@ -73,6 +75,63 @@ const UserData = ({navigation, route}) => {
           position: 'center',
         });
       });
+  };
+
+  const _handleClose = async () => {
+    Alert.alert(
+      'Konfirmasi',
+      'Anda yakin ingin menutup akun?',
+      [
+        {
+          text: 'Batal',
+          style: 'cancel',
+        },
+        {
+          text: 'Ya',
+          onPress: async () => {
+            const api_token = await AsyncStorage.getItem('api_token');
+            await api
+              .post(
+                '/user/' + user_id + '/close',
+                {},
+                {
+                  headers: {
+                    Authorization: 'Bearer ' + api_token,
+                  },
+                },
+              )
+              .then(async (res) => {
+                if (res.data.success) {
+                  navigation.goBack();
+                  RNToasty.Success({
+                    title: res.data.message,
+                    position: 'bottom',
+                  });
+
+                  await navigation.replace('Auth');
+                  await deleteFcm().then(() => {
+                    dispatch(setAuth(false));
+                    AsyncStorage.clear();
+                  });
+                } else {
+                  RNToasty.Error({
+                    title: res.data.message,
+                    position: 'bottom',
+                  });
+                }
+              })
+              .catch((err) => {
+                RNToasty.Error({
+                  title: err.message,
+                  position: 'center',
+                });
+              });
+          },
+          style: 'destructive',
+        },
+      ],
+      {cancelable: true},
+    );
   };
 
   const _handleRefresh = () => {
@@ -145,6 +204,14 @@ const UserData = ({navigation, route}) => {
         <Button mode="contained" onPress={() => _handleUpdate()}>
           Simpan
         </Button>
+        {Platform.OS === 'ios' && (
+          <Button
+            mode="text"
+            color={colors.error}
+            onPress={() => _handleClose()}>
+            Tutup Akun
+          </Button>
+        )}
       </View>
     </>
   );

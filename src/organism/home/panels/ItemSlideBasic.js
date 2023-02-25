@@ -5,7 +5,7 @@ import ProductCard from '../../../components/ProductCard';
 import ProductCardHorizontal from '../../../components/ProductCardHorizontal';
 import ProductCardTall from '../../../components/ProductCardTall';
 
-const ItemSlideBasic = ({data}) => {
+const ItemSlideBasic = ({data, parentScrollViewRef}) => {
   const navigation = useNavigation();
 
   const keyExtractor = (item, index) => {
@@ -51,6 +51,7 @@ const ItemSlideBasic = ({data}) => {
   return (
     <View style={{backgroundColor: data.color2, flexDirection: 'row'}}>
       <FlatList
+        parentScrollViewRef={parentScrollViewRef}
         contentContainerStyle={{
           paddingHorizontal: 8,
           marginVertical: 8,

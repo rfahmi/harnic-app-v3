@@ -32,7 +32,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {authentication} from '../../assets/images';
 import FocusAwareStatusBar from '../../components/FocusAwareStatusBar';
 import Separator from '../../components/Separator';
-import {api, app_version_name} from '../../configs/api';
+import {api, app_version_name, source} from '../../configs/api';
 import {setAuth} from '../../configs/redux/action/authActions';
 import {colors} from '../../constants/colors';
 import {deleteFcm} from '../../utils/fcm';
@@ -88,6 +88,7 @@ const User = ({navigation}) => {
       .then(() => setLoading(false))
       .catch(() => setLoading(false));
   };
+
   const getInfo = async (name) => {
     await api
       .get('/info/' + name)
@@ -112,8 +113,13 @@ const User = ({navigation}) => {
 
   useEffect(() => {
     getData();
+    // Clear AsyncStorage values on component unmount
+    return async () => {
+      source.cancel();
+      await AsyncStorage.removeItem('data');
+      await AsyncStorage.removeItem('user_data');
+    };
   }, [isFocused]);
-
   return (
     <>
       <FocusAwareStatusBar
@@ -513,7 +519,7 @@ const User = ({navigation}) => {
                     lineHeight: 26,
                   }}
                   onPress={async () => {
-                    await navigation.navigate('Auth');
+                    await navigation.replace('Auth');
                     await deleteFcm().then(() => {
                       dispatch(setAuth(false));
                       AsyncStorage.clear();

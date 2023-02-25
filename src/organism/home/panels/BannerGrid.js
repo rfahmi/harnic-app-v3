@@ -3,7 +3,7 @@ import React, {memo} from 'react';
 import {Dimensions, FlatList, Platform, TouchableOpacity} from 'react-native';
 import BannerItem from '../../../components/BannerItem';
 
-const BannerGrid = ({data}) => {
+const BannerGrid = ({data, parentScrollViewRef}) => {
   const navigation = useNavigation();
   const keyExtractor = (item, index) => {
     return String(`BannerGrid${item.banner_id}-${index}`);
@@ -64,6 +64,7 @@ const BannerGrid = ({data}) => {
   };
   return (
     <FlatList
+      parentScrollViewRef={parentScrollViewRef}
       data={data.items}
       style={{backgroundColor: '#fff'}}
       renderItem={_renderItems}

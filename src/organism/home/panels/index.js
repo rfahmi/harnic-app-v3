@@ -14,7 +14,7 @@ const Carousel = lazy(() => import('./Carousel'));
 const ItemVs = lazy(() => import('./ItemVs'));
 const ItemInfinite = lazy(() => import('./ItemInfinite'));
 
-const Panels = ({data}) => {
+const Panels = ({data, parentScrollViewRef}) => {
   return (
     <View>
       <Suspense
@@ -33,23 +33,32 @@ const Panels = ({data}) => {
         ) : data.component_type === 'TITLE_TIMER' ? (
           <TitleTimer data={data} />
         ) : data.component_type === 'ITEM_SLIDE_BASIC' ? (
-          <ItemSlideBasic data={data} />
+          <ItemSlideBasic
+            data={data}
+            parentScrollViewRef={parentScrollViewRef}
+          />
         ) : data.component_type === 'ITEM_SLIDE_BANNER' ? (
-          <ItemSlideBanner data={data} />
+          <ItemSlideBanner
+            data={data}
+            parentScrollViewRef={parentScrollViewRef}
+          />
         ) : data.component_type === 'ITEM_GRID' ? (
-          <ItemGrid data={data} />
+          <ItemGrid data={data} parentScrollViewRef={parentScrollViewRef} />
         ) : data.component_type === 'ITEM_VS' ? (
           <ItemVs data={data} />
         ) : data.component_type === 'ITEM_INFINITE' ? (
-          <ItemInfinite data={data} />
+          <ItemInfinite data={data} parentScrollViewRef={parentScrollViewRef} />
         ) : data.component_type === 'BANNER_BASIC' ? (
           <BannerBasic data={data} />
         ) : data.component_type === 'BANNER_GRID' ? (
-          <BannerGrid data={data} />
+          <BannerGrid data={data} parentScrollViewRef={parentScrollViewRef} />
         ) : data.component_type === 'BANNER_GRID_SLIDE' ? (
-          <BannerGridSlide data={data} />
+          <BannerGridSlide
+            data={data}
+            parentScrollViewRef={parentScrollViewRef}
+          />
         ) : data.component_type === 'CAROUSEL' ? (
-          <Carousel data={data} />
+          <Carousel data={data} parentScrollViewRef={parentScrollViewRef} />
         ) : data.component_type === 'UNKNOWN' ? null : null}
       </Suspense>
     </View>

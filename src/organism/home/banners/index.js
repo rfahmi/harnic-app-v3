@@ -1,92 +1,120 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {memo} from 'react';
-import {Dimensions, View, Text} from 'react-native';
-import Carousel from 'react-native-smart-carousel';
+import React, {memo, useCallback} from 'react';
+import {
+  Dimensions,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Banners = ({banners, parentScrollView, warning}) => {
+const Banners = memo(({banners, parentScrollView, warning}) => {
   const navigation = useNavigation();
   const WINDOW_WIDTH = Dimensions.get('window').width;
-  const BANNER_HEIGHT = WINDOW_WIDTH * 0.75;
-  const banner = (id) => {
-    const idx = banners.findIndex((x) => x.id === id);
-    return banners[idx];
-  };
+  const renderItem = useCallback(
+    ({item}) => (
+      <TouchableOpacity onPress={() => onBannerPress(item)}>
+        <Image source={{uri: item.imagePath}} style={styles.image} />
+      </TouchableOpacity>
+    ),
+    [],
+  );
+
+  const keyExtractor = useCallback((item) => item.id.toString(), []);
+
+  const onBannerPress = useCallback(
+    (b) => {
+      switch (b.action) {
+        case 'category':
+          navigation.push('Search', {
+            screen: 'SearchResult',
+            params: {
+              category: b.param,
+            },
+          });
+          break;
+        case 'brand':
+          navigation.push('Search', {
+            screen: 'SearchResult',
+            params: {
+              brand: b.param,
+            },
+          });
+          break;
+        case 'product':
+          navigation.push('Search', {
+            screen: 'Product',
+            params: {itemid: b.param},
+          });
+          break;
+        case 'page':
+          navigation.push('HomePage', {name: b.param});
+          break;
+        case 'screen':
+          navigation.push(b.param);
+          break;
+        default:
+          break;
+      }
+    },
+    [navigation],
+  );
+
   return (
-    <View style={{position: 'relative'}}>
+    <View style={styles.container}>
       {banners ? (
         <>
-          <Carousel
+          <FlatList
             parentScrollViewRef={parentScrollView}
             data={banners}
-            autoPlay={!__DEV__}
-            height={BANNER_HEIGHT}
-            onPress={(e) => {
-              const b = banner(e);
-              switch (b.action) {
-                case 'category':
-                  navigation.push('Search', {
-                    screen: 'SearchResult',
-                    params: {
-                      category: b.param,
-                    },
-                  });
-                  break;
-                case 'brand':
-                  navigation.push('Search', {
-                    screen: 'SearchResult',
-                    params: {
-                      brand: b.param,
-                    },
-                  });
-                  break;
-                case 'product':
-                  navigation.push('Search', {
-                    screen: 'Product',
-                    params: {itemid: b.param},
-                  });
-                  break;
-                case 'page':
-                  navigation.push('HomePage', {name: b.param});
-                  break;
-                case 'screen':
-                  navigation.push(b.param);
-                  break;
-                default:
-                  break;
-              }
-            }}
-            navigation={true}
-            navigationColor={'#ffffff'}
-            navigationType="dot"
+            keyExtractor={keyExtractor}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={renderItem}
+            pagingEnabled
+            snapToInterval={WINDOW_WIDTH}
+            snapToAlignment="start"
           />
-          {warning && warning.show && warning.message && (
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: '#CE3F40',
-                padding: 4,
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
+          {warning?.show && warning?.message && (
+            <View style={styles.warning}>
               <Icon name="alert-octagon" size={24} color="#fff" />
-              <Text style={{color: '#fff', marginLeft: 4, flex: 1}}>
-                {warning.message}
-              </Text>
+              <Text style={styles.warningText}>{warning.message}</Text>
             </View>
           )}
         </>
       ) : (
-        <View
-          style={{
-            height: BANNER_HEIGHT,
-            backgroundColor: '#ccc',
-            width: WINDOW_WIDTH,
-          }}
-        />
+        <View style={[styles.image, styles.placeholder]} />
       )}
     </View>
   );
-};
+});
 
-export default memo(Banners);
+const styles = StyleSheet.create({
+  container: {
+    position: 'relative',
+  },
+  image: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').width * 0.75,
+  },
+  placeholder: {
+    backgroundColor: '#ccc',
+  },
+  warning: {
+    flex: 1,
+    backgroundColor: '#CE3F40',
+    padding: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  warningText: {
+    color: '#fff',
+    marginLeft: 4,
+    flex: 1,
+  },
+});
+
+export default Banners;

@@ -6,7 +6,7 @@ import ProductCard from '../../../components/ProductCard';
 import ProductCardHorizontal from '../../../components/ProductCardHorizontal';
 import ProductCardTall from '../../../components/ProductCardTall';
 
-const ItemSlideBanner = ({data}) => {
+const ItemSlideBanner = ({data, parentScrollViewRef}) => {
   const navigation = useNavigation();
   const scroll = useRef(new Animated.Value(0)).current;
 
@@ -84,6 +84,7 @@ const ItemSlideBanner = ({data}) => {
       </Animated.View>
 
       <Animated.FlatList
+        parentScrollViewRef={parentScrollViewRef}
         onScroll={Animated.event(
           [{nativeEvent: {contentOffset: {x: scroll}}}],
           {useNativeDriver: true},
