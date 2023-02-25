@@ -52,6 +52,7 @@ const User = ({navigation}) => {
   const [loading, setLoading] = useState(false);
 
   const getData = async () => {
+    console.log('get data user');
     const api_token = await AsyncStorage.getItem('api_token');
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
     await api
@@ -70,7 +71,6 @@ const User = ({navigation}) => {
             position: 'bottom',
           });
         }
-        console.log(res.data);
       })
       .catch((err) => {
         console.log('false');
@@ -113,12 +113,6 @@ const User = ({navigation}) => {
 
   useEffect(() => {
     getData();
-    // Clear AsyncStorage values on component unmount
-    return async () => {
-      source.cancel();
-      await AsyncStorage.removeItem('data');
-      await AsyncStorage.removeItem('user_data');
-    };
   }, [isFocused]);
   return (
     <>

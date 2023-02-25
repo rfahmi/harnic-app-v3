@@ -1,5 +1,5 @@
 import {useIsFocused} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {KeyboardAvoidingView, View} from 'react-native';
 import BarcodeMask from 'react-native-barcode-mask';
 import {RNCamera} from 'react-native-camera';

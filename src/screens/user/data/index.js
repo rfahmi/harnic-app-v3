@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import qs from 'qs';
-import React, {useState, useEffect, Platform} from 'react';
-import {Alert, RefreshControl, ScrollView, View} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {Alert, RefreshControl, ScrollView, View, Platform} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
 import Button from '../../../components/Button';
