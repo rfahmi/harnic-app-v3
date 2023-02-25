@@ -1,5 +1,5 @@
 import {useIsFocused} from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {KeyboardAvoidingView, View} from 'react-native';
 import BarcodeMask from 'react-native-barcode-mask';
 import {RNCamera} from 'react-native-camera';
@@ -8,6 +8,11 @@ import {api} from '../../configs/api';
 
 const Scan = ({navigation}) => {
   const isFocused = useIsFocused();
+
+  const getPermission = async () => {
+    const cameraPermission = await Camera.getCameraPermissionStatus();
+    const microphonePermission = await Camera.getMicrophonePermissionStatus();
+  }
 
   const onBarCodeRead = async (scanResult) => {
     await api.get('/product/barcode/' + scanResult.data).then((res) => {
@@ -22,6 +27,11 @@ const Scan = ({navigation}) => {
       }
     });
   };
+
+  useEffect(() => {
+    console.log("Effect");
+    getPermission();
+  }, []);
 
   return (
     <KeyboardAvoidingView style={styles.root}>

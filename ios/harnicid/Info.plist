@@ -46,8 +46,12 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>This app use camera to scan product barcode and redirect them to the related product page</string>
+	<key>NSContactsUsageDescription</key>
+	<string>This app uses your contacts to make user able to select number on their contact for billing transaction like mobile credit purchase</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -84,9 +88,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSContactsUsageDescription</key>
-	<string>This app uses your contacts to make user able to select number on their contact for billing transaction like mobile credit purchase</string>
-	<key>NSCameraUsageDescription</key>
-	<string>This app use camera to scan product barcode and redirect them to the related product page</string>
 </dict>
 </plist>

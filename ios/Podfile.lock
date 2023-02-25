@@ -288,6 +288,14 @@ PODS:
     - React-cxxreact (= 0.63.4)
     - React-jsi (= 0.63.4)
   - React-jsinspector (0.63.4)
+  - react-native-camera (4.2.1):
+    - React-Core
+    - react-native-camera/RCT (= 4.2.1)
+    - react-native-camera/RN (= 4.2.1)
+  - react-native-camera/RCT (4.2.1):
+    - React-Core
+  - react-native-camera/RN (4.2.1):
+    - React-Core
   - react-native-date-picker (3.4.3):
     - React-Core
   - react-native-netinfo (9.3.7):
@@ -425,6 +433,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-date-picker (from `../node_modules/react-native-date-picker`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-restart (from `../node_modules/react-native-restart`)
@@ -509,6 +518,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-camera:
+    :path: "../node_modules/react-native-camera"
   react-native-date-picker:
     :path: "../node_modules/react-native-date-picker"
   react-native-netinfo:
@@ -604,6 +615,7 @@ SPEC CHECKSUMS:
   React-jsi: a0418934cf48f25b485631deb27c64dc40fb4c31
   React-jsiexecutor: 93bd528844ad21dc07aab1c67cb10abae6df6949
   React-jsinspector: 58aef7155bc9a9683f5b60b35eccea8722a4f53a
+  react-native-camera: 3eae183c1d111103963f3dd913b65d01aef8110f
   react-native-date-picker: 201b481c94dcb7678f4712477ad026dd7793305b
   react-native-netinfo: 2517ad504b3d303e90d7a431b0fcaef76d207983
   react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
@@ -640,6 +652,6 @@ SPEC CHECKSUMS:
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
 
-PODFILE CHECKSUM: 6bb753dbe95818f7a0e7eaf47a9c38eed2b6cdbe
+PODFILE CHECKSUM: 5ea4f02ddd278e000559d59be48c9019954b5047
 
 COCOAPODS: 1.11.3
