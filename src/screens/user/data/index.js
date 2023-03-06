@@ -1,12 +1,12 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import qs from 'qs';
 import React, {useState, useEffect} from 'react';
-import {Alert, RefreshControl, ScrollView, View, Platform} from 'react-native';
+import {Alert, RefreshControl, ScrollView, View, Platform, Text} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
 import Button from '../../../components/Button';
 import HeaderBack from '../../../components/HeaderBack';
-import {api} from '../../../configs/api';
+import {api, app_version_name} from '../../../configs/api';
 import {colors} from '../../../constants/colors';
 import {deleteFcm} from '../../../utils/fcm';
 
@@ -212,6 +212,11 @@ const UserData = ({navigation, route}) => {
             Tutup Akun
           </Button>
         )}
+      </View>
+      <View style={{flex: 1, alignItems: 'center', height: 50}}>
+        <Text style={{color: colors.gray, fontSize: 12}}>
+          Versi {app_version_name}
+        </Text>
       </View>
     </>
   );
