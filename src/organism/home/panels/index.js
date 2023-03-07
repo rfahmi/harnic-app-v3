@@ -4,6 +4,8 @@ import {Skeleton} from 'react-native-animated-skeleton';
 import BannerGridSlide from './BannerGridSlide';
 import Title from './Title';
 
+const YoutubeVideo = lazy(() => import('./YoutubeVideo'));
+const YoutubeVideoWebview = lazy(() => import('./YoutubeVideoWebview'));
 const ItemSlideBanner = lazy(() => import('./ItemSlideBanner'));
 const ItemSlideBasic = lazy(() => import('./ItemSlideBasic'));
 const ItemGrid = lazy(() => import('./ItemGrid'));
@@ -50,6 +52,10 @@ const Panels = ({data, parentScrollViewRef}) => {
           <ItemInfinite data={data} parentScrollViewRef={parentScrollViewRef} />
         ) : data.component_type === 'BANNER_BASIC' ? (
           <BannerBasic data={data} />
+        ) : data.component_type === 'YOUTUBE_VIDEO' ? (
+          <YoutubeVideo data={data} />
+        ) : data.component_type === 'YOUTUBE_VIDEO_WEBVIEW' ? (
+          <YoutubeVideoWebview data={data} />
         ) : data.component_type === 'BANNER_GRID' ? (
           <BannerGrid data={data} parentScrollViewRef={parentScrollViewRef} />
         ) : data.component_type === 'BANNER_GRID_SLIDE' ? (
