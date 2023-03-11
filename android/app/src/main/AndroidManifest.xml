@@ -50,6 +50,7 @@
       </intent-filter>
     </activity>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" android:exported="false"/>
+    <meta-data android:name="com.google.android.youtube.api.key" android:value="AIzaSyBX3NxU1_YZq0I6f6B3hrZfeKpnC6opb68" />
   </application>
   <queries>
       <intent>

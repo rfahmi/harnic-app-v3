@@ -39,6 +39,7 @@ import {deleteFcm} from '../../utils/fcm';
 import HTML from 'react-native-render-html';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import ListSkeleton from '../../organism/skeleton/ListSkeleton';
+import YoutubeVideo from '../../organism/home/panels/YoutubeVideo';
 
 const User = ({navigation}) => {
   const dispatch = useDispatch();
