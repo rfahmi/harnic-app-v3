@@ -10,7 +10,7 @@ const HeaderBack = ({title, subtitle, styles, search = true, back}) => {
 
   return (
     <Appbar.Header style={[{backgroundColor: '#fff', elevation: 0}, styles]}>
-      <Appbar.BackAction onPress={_goBack} />
+      <Appbar.Action icon="arrow-left" onPress={_goBack} />
       <Appbar.Content title={title} subtitle={subtitle} />
       {search && <Appbar.Action icon="magnify" onPress={_handleSearch} />}
     </Appbar.Header>

@@ -8,7 +8,7 @@
     "start": "npx react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --assets-dest ./ios/ --dev=false --platform='ios'"
+    "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --assets-dest ./ios/assets --dev=false --platform='ios'"
   },
   "dependencies": {
     "@freakycoder/react-native-bounceable": "^0.2.4",
