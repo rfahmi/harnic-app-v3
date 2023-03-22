@@ -1,19 +1,24 @@
-import {useIsFocused} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {KeyboardAvoidingView, View} from 'react-native';
+import {RNCamera, Camera} from 'react-native-camera';
 import BarcodeMask from 'react-native-barcode-mask';
-import {RNCamera} from 'react-native-camera';
 import {RNToasty} from 'react-native-toasty';
 import {api} from '../../configs/api';
+import {useIsFocused} from '@react-navigation/native';
 
 const Scan = ({navigation}) => {
   const isFocused = useIsFocused();
   const [processingBarcode, setProcessingBarcode] = useState(false);
 
   const getPermission = async () => {
-    const cameraPermission = await Camera.getCameraPermissionStatus();
-    const microphonePermission = await Camera.getMicrophonePermissionStatus();
-  }
+    const {status} = await Camera.requestCameraPermissions();
+    if (status !== 'granted') {
+      RNToasty.Warn({
+        title: 'Izin kamera dibutuhkan untuk menggunakan fitur ini.',
+        position: 'center',
+      });
+    }
+  };
 
   const onBarCodeRead = async (scanResult) => {
     if (!processingBarcode) {
@@ -34,23 +39,25 @@ const Scan = ({navigation}) => {
   };
 
   useEffect(() => {
-    console.log("Effect");
     getPermission();
   }, []);
 
   return (
     <KeyboardAvoidingView style={styles.root}>
       <View style={styles.upperSection}>
-        <RNCamera
-          onBarCodeRead={isFocused ? onBarCodeRead : null}
-          style={styles.preview}>
-          <BarcodeMask
-            width={300}
-            height={300}
-            showAnimatedLine={true}
-            outerMaskOpacity={0.8}
-          />
-        </RNCamera>
+        {isFocused && (
+          <RNCamera
+            onBarCodeRead={onBarCodeRead}
+            style={styles.preview}
+            captureAudio={false}>
+            <BarcodeMask
+              width={300}
+              height={300}
+              showAnimatedLine={true}
+              outerMaskOpacity={0.8}
+            />
+          </RNCamera>
+        )}
       </View>
     </KeyboardAvoidingView>
   );
