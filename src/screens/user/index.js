@@ -5,14 +5,14 @@ import {
   ActivityIndicator,
   Dimensions,
   Image,
+  Linking,
+  Platform,
+  RefreshControl,
   ScrollView,
   StatusBar,
   Text,
   TouchableOpacity,
   View,
-  Platform,
-  RefreshControl,
-  Linking,
 } from 'react-native';
 import {Modalize} from 'react-native-modalize';
 import {
@@ -25,21 +25,20 @@ import {
   Title,
   TouchableRipple,
 } from 'react-native-paper';
+import HTML from 'react-native-render-html';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {RNToasty} from 'react-native-toasty';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {authentication} from '../../assets/images';
 import FocusAwareStatusBar from '../../components/FocusAwareStatusBar';
 import Separator from '../../components/Separator';
-import {api, app_version_name, source} from '../../configs/api';
+import {api, app_version_name} from '../../configs/api';
 import {setAuth} from '../../configs/redux/action/authActions';
 import {colors} from '../../constants/colors';
-import {deleteFcm} from '../../utils/fcm';
-import HTML from 'react-native-render-html';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
 import ListSkeleton from '../../organism/skeleton/ListSkeleton';
-import YoutubeVideo from '../../organism/home/panels/YoutubeVideo';
+import {deleteFcm} from '../../utils/fcm';
 
 const User = ({navigation}) => {
   const dispatch = useDispatch();

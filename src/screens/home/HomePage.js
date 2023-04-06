@@ -23,8 +23,6 @@ const HomePage = ({navigation, route}) => {
   const scroll = useRef(new Animated.Value(0)).current;
   useScrollToTop(refList);
 
-  const titleCase = (str) => str.replace(/\b\S/g, (t) => t.toUpperCase());
-
   const getPanel = async (n, p) => {
     const api_token = await AsyncStorage.getItem('api_token');
     await api
