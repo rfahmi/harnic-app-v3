@@ -13,14 +13,14 @@ import HomeSkeleton from '../../organism/skeleton/HomeSkeleton';
 import {isLogin} from '../../utils/auth';
 import {setCart} from '../../configs/redux/action/cartActions';
 import {setSuggestion} from '../../configs/redux/action/suggestionActions';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FAB} from 'react-native-paper';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {colors} from '../../constants/colors';
 
 const Home = ({navigation}) => {
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
+  const auth = useSelector(state => state.auth);
   const [config, setConfig] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const refList = useRef(null);
@@ -35,9 +35,9 @@ const Home = ({navigation}) => {
     // }
     const result = await api
       .get('/configs' + append_url)
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
-          console.log(res.data.data?.user);
+          // console.log(res.data.data?.user);
           if (res.data.data?.maintenance == 1) {
             throw new Error('Maintenance Mode');
           }
@@ -46,7 +46,7 @@ const Home = ({navigation}) => {
           throw new Error('gagal');
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.error('Error:', err);
         navigation.navigate('Maintenance');
       });
@@ -55,7 +55,7 @@ const Home = ({navigation}) => {
   const _handleRefresh = () => {
     setConfig(null);
     setRefreshing(true);
-    isLogin().then(async (r) => {
+    isLogin().then(async r => {
       const d = JSON.parse(await AsyncStorage.getItem('user_data'));
       if (r) {
         dispatch(setAuth(true));
@@ -65,7 +65,7 @@ const Home = ({navigation}) => {
         dispatch(setPriceType('sellprice'));
       }
     });
-    getConfig().then((d) => {
+    getConfig().then(d => {
       setConfig(d);
       dispatch(setCart(d.cart));
       dispatch(setSuggestion(d.keywords));
@@ -75,14 +75,14 @@ const Home = ({navigation}) => {
 
   useEffect(() => {
     let isSubscribed = true;
-    getConfig().then((d) => {
+    getConfig().then(d => {
       if (isSubscribed) {
         setConfig(d);
         dispatch(setCart(d.cart));
         dispatch(setSuggestion(d.keywords));
       }
     });
-    isLogin().then(async (r) => {
+    isLogin().then(async r => {
       const d = JSON.parse(await AsyncStorage.getItem('user_data'));
       if (r) {
         dispatch(setAuth(true));

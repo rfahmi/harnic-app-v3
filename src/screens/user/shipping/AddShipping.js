@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, {useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Dimensions,
@@ -8,18 +8,18 @@ import {
   Text,
   View,
 } from 'react-native';
-import { Divider, List, RadioButton, TextInput, Title } from 'react-native-paper';
+import {Divider, List, RadioButton, TextInput, Title} from 'react-native-paper';
 import Button from '../../../components/Button';
 import HeaderBack from '../../../components/HeaderBack';
-import { Modalize } from 'react-native-modalize';
-import { api } from '../../../configs/api';
-import { RNToasty } from 'react-native-toasty';
-import { colors } from '../../../constants/colors';
+import {Modalize} from 'react-native-modalize';
+import {api} from '../../../configs/api';
+import {RNToasty} from 'react-native-toasty';
+import {colors} from '../../../constants/colors';
 import qs from 'qs';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const AddShipping = ({ navigation, route }) => {
-  const { user_id } = route.params;
+const AddShipping = ({navigation, route}) => {
+  const {user_id} = route.params;
   const [areasTitle, setAreasTitle] = useState(null);
   const [areas, setAreas] = useState(null);
 
@@ -44,7 +44,7 @@ const AddShipping = ({ navigation, route }) => {
   const getProvince = async () => {
     await api
       .get('/shipping/province')
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           setAreas(res.data.data);
         } else {
@@ -55,7 +55,7 @@ const AddShipping = ({ navigation, route }) => {
         }
         console.log(res.data);
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'center',
@@ -65,7 +65,7 @@ const AddShipping = ({ navigation, route }) => {
   const getCity = async () => {
     await api
       .get(`/shipping/province/${data.shipping_province}/city`)
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           setAreas(res.data.data);
         } else {
@@ -76,7 +76,7 @@ const AddShipping = ({ navigation, route }) => {
         }
         console.log(res.data);
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'center',
@@ -88,7 +88,7 @@ const AddShipping = ({ navigation, route }) => {
       .get(
         `/shipping/province/${data.shipping_province}/city/${data.shipping_city}/district`,
       )
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           setAreas(res.data.data);
         } else {
@@ -99,7 +99,7 @@ const AddShipping = ({ navigation, route }) => {
         }
         console.log(res.data);
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'center',
@@ -111,7 +111,7 @@ const AddShipping = ({ navigation, route }) => {
       .get(
         `/shipping/province/${data.shipping_province}/city/${data.shipping_city}/district/${data.shipping_dis}/subdistrict`,
       )
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           setAreas(res.data.data);
         } else {
@@ -122,7 +122,7 @@ const AddShipping = ({ navigation, route }) => {
         }
         console.log(res.data);
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'center',
@@ -134,7 +134,7 @@ const AddShipping = ({ navigation, route }) => {
       .get(
         `/shipping/province/${data.shipping_province}/city/${data.shipping_city}/district/${data.shipping_dis}/subdistrict/${data.shipping_subdis}/zip`,
       )
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           setAreas(res.data.data);
         } else {
@@ -145,7 +145,7 @@ const AddShipping = ({ navigation, route }) => {
         }
         console.log(res.data);
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'center',
@@ -161,7 +161,7 @@ const AddShipping = ({ navigation, route }) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           RNToasty.Success({
             title: res.data.message,
@@ -176,7 +176,7 @@ const AddShipping = ({ navigation, route }) => {
         }
         console.log(res);
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'center',
@@ -195,10 +195,10 @@ const AddShipping = ({ navigation, route }) => {
       <Modalize
         ref={modalizeRef}
         modalHeight={Dimensions.get('window').height * 0.7}>
-        <ScrollView style={{ padding: 16 }}>
+        <ScrollView style={{padding: 16}}>
           <Title>{areasTitle}</Title>
           {areas ? (
-            areas.map((d) => {
+            areas.map(d => {
               return (
                 <>
                   <List.Item
@@ -281,17 +281,17 @@ const AddShipping = ({ navigation, route }) => {
               );
             })
           ) : (
-            <View style={{ flex: 1 }}>
+            <View style={{flex: 1}}>
               <ActivityIndicator size="large" color={colors.primary} />
             </View>
           )}
         </ScrollView>
       </Modalize>
       <HeaderBack title="Tambah Alamat" search={false} />
-      <ScrollView style={{ paddingHorizontal: 8, paddingBottom: 24 }}>
+      <ScrollView style={{paddingHorizontal: 8, paddingBottom: 24}}>
         <List.Subheader>Jenis Tempat</List.Subheader>
         <RadioButton.Group
-          onValueChange={(value) => setData({ ...data, shipping_name: value })}
+          onValueChange={value => setData({...data, shipping_name: value})}
           value={data.shipping_name}>
           <RadioButton.Item label="Rumah" value="Rumah" />
           <RadioButton.Item label="Kantor" value="Kantor" />
@@ -301,7 +301,7 @@ const AddShipping = ({ navigation, route }) => {
           title="Provinsi"
           description={
             data.province_name || (
-              <Text style={{ color: colors.red }}>Pilih Provinsi!</Text>
+              <Text style={{color: colors.red}}>Pilih Provinsi!</Text>
             )
           }
           right={() => <List.Icon icon="chevron-down" />}
@@ -316,7 +316,7 @@ const AddShipping = ({ navigation, route }) => {
           title="Kota/Kabupaten"
           description={
             data.city_name || (
-              <Text style={{ color: colors.red }}>Pilih Kota/Kabupaten!</Text>
+              <Text style={{color: colors.red}}>Pilih Kota/Kabupaten!</Text>
             )
           }
           right={() => <List.Icon icon="chevron-down" />}
@@ -331,7 +331,7 @@ const AddShipping = ({ navigation, route }) => {
           title="Kecamatan"
           description={
             data.dis_name || (
-              <Text style={{ color: colors.red }}>Pilih Kecamatan!</Text>
+              <Text style={{color: colors.red}}>Pilih Kecamatan!</Text>
             )
           }
           right={() => <List.Icon icon="chevron-down" />}
@@ -346,7 +346,7 @@ const AddShipping = ({ navigation, route }) => {
           title="Kelurahan/Desa"
           description={
             data.subdis_name || (
-              <Text style={{ color: colors.red }}>Pilih Kelurahan/Desa!</Text>
+              <Text style={{color: colors.red}}>Pilih Kelurahan/Desa!</Text>
             )
           }
           right={() => <List.Icon icon="chevron-down" />}
@@ -361,7 +361,7 @@ const AddShipping = ({ navigation, route }) => {
           title="Kode Pos"
           description={
             data.zip_code || (
-              <Text style={{ color: colors.red }}>Pilih Kode Pos!</Text>
+              <Text style={{color: colors.red}}>Pilih Kode Pos!</Text>
             )
           }
           right={() => <List.Icon icon="chevron-down" />}
@@ -379,14 +379,14 @@ const AddShipping = ({ navigation, route }) => {
           placeholder="Nama Penerima"
           returnKeyType="next"
           value={data.pic_name}
-          onChangeText={(text) =>
+          onChangeText={text =>
             setData({
               ...data,
               pic_name: text,
             })
           }
           autoCapitalize="none"
-          style={{ marginBottom: 8, marginHorizontal: 16 }}
+          style={{marginBottom: 8, marginHorizontal: 16}}
         />
         <TextInput
           label="Nomor HP Penerima"
@@ -394,7 +394,7 @@ const AddShipping = ({ navigation, route }) => {
           placeholder="Nomor HP Penerima"
           returnKeyType="next"
           value={data.pic_phone}
-          onChangeText={(text) =>
+          onChangeText={text =>
             setData({
               ...data,
               pic_phone: text,
@@ -402,7 +402,7 @@ const AddShipping = ({ navigation, route }) => {
           }
           keyboardType="numeric"
           autoCapitalize="none"
-          style={{ marginBottom: 8, marginHorizontal: 16 }}
+          style={{marginBottom: 8, marginHorizontal: 16}}
         />
         <TextInput
           label="Detail Alamat"
@@ -412,20 +412,19 @@ const AddShipping = ({ navigation, route }) => {
           value={data.shipping_address}
           multiline
           numberOfLines={4}
-          onChangeText={(text) =>
+          onChangeText={text =>
             setData({
               ...data,
               shipping_address: text,
             })
           }
           autoCapitalize="none"
-          style={{ marginBottom: 8, marginHorizontal: 16 }}
+          style={{marginBottom: 8, marginHorizontal: 16}}
         />
         <KeyboardAvoidingView
           keyboardVerticalOffset={64}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        >
-          <View style={{ marginHorizontal: 16, zIndex: 1 }}>
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+          <View style={{marginHorizontal: 16, zIndex: 1}}>
             <Button
               disabled={
                 !data.zip_code ||

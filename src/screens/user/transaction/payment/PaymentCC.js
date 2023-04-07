@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import qs from 'qs';
 import React, {memo, useRef, useState} from 'react';
@@ -41,7 +41,7 @@ const PaymentCC = ({trx}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         setLoading(false);
         if (res.data.success) {
           console.log(res.data.data);
@@ -56,7 +56,7 @@ const PaymentCC = ({trx}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
         RNToasty.Error({
           title: err.message,
@@ -127,7 +127,7 @@ const PaymentCC = ({trx}) => {
         ) : (
           <>
             <CreditCardInput
-              onChange={(e) => setCard(e)}
+              onChange={e => setCard(e)}
               requiresName
               allowScroll
             />

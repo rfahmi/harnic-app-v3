@@ -11,7 +11,7 @@ import FooterCart from '../../components/FooterCart';
 import ScreenTitle from '../../components/ScreenTitle';
 import CartItem from './CartItem';
 import Empty from '../../organism/empty';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {api} from '../../configs/api';
 import {RNToasty} from 'react-native-toasty';
 import {useDispatch, useSelector} from 'react-redux';
@@ -28,8 +28,8 @@ const Cart = ({navigation}) => {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const modalizeRef = useRef(null);
-  const data = useSelector((state) => state.cart);
-  const auth = useSelector((state) => state.auth);
+  const data = useSelector(state => state.cart);
+  const auth = useSelector(state => state.auth);
   const [attr, setAttr] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -48,7 +48,7 @@ const Cart = ({navigation}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           dispatch(setCart(res.data.data.products));
           console.log(res.data.data.attribute);
@@ -60,7 +60,7 @@ const Cart = ({navigation}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('false');
 
         RNToasty.Error({
@@ -110,7 +110,7 @@ const Cart = ({navigation}) => {
   const keyExtractor2 = (item, index) => {
     return String('Recomendation' + index + item.item_id);
   };
-  const _renderRecomendation = (recomendations) => {
+  const _renderRecomendation = recomendations => {
     return (
       <>
         <View style={{alignItems: 'center', paddingVertical: 16}}>

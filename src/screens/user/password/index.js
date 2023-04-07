@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import qs from 'qs';
 import React, {useState} from 'react';
 import {RefreshControl, ScrollView, View} from 'react-native';
@@ -14,7 +14,7 @@ const UserPassword = ({navigation, route}) => {
   const [new1, setNew1] = useState({value: null, error: ''});
   const [new2, setNew2] = useState({value: null, error: ''});
 
-  const updateData = async (id) => {
+  const updateData = async id => {
     if (new1.value !== new2.value) {
       setNew2({...new2, error: 'Password tidak sama'});
       return;
@@ -26,7 +26,7 @@ const UserPassword = ({navigation, route}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           navigation.goBack();
           RNToasty.Success({
@@ -40,7 +40,7 @@ const UserPassword = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'center',
@@ -73,7 +73,7 @@ const UserPassword = ({navigation, route}) => {
           label="Password Baru"
           returnKeyType="next"
           value={new1.value}
-          onChangeText={(text) => setNew1({value: text, error: ''})}
+          onChangeText={text => setNew1({value: text, error: ''})}
           error={!!new1.error}
           errorText={new1.error}
           autoCapitalize="none"
@@ -84,7 +84,7 @@ const UserPassword = ({navigation, route}) => {
           label="Ulangi Password Baru"
           returnKeyType="next"
           value={new2.value}
-          onChangeText={(text) => setNew2({value: text, error: ''})}
+          onChangeText={text => setNew2({value: text, error: ''})}
           error={!!new2.error}
           errorText={new2.error}
           autoCapitalize="none"

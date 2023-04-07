@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {memo, useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
@@ -43,7 +43,7 @@ import VariantProducts from '../../organism/product/VariantProducts';
 
 const Product = ({navigation, route}) => {
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
+  const auth = useSelector(state => state.auth);
   const {itemid} = route.params;
   const WINDOW_HEIGHT = Dimensions.get('window').height;
   const [data, setData] = useState(null);
@@ -61,17 +61,17 @@ const Product = ({navigation, route}) => {
   const scrollRef = useRef(null);
   const ongkir = useRef(null);
 
-  const getData = async (id) => {
+  const getData = async id => {
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
     const append_url = user_data ? '?user_id=' + user_data.user_id : '';
 
     await api2('get', '/product/' + id + append_url)
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           setData(res.data.data);
         }
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'bottom',
@@ -101,9 +101,9 @@ const Product = ({navigation, route}) => {
 
   const _handleAddCart = () => {
     setLoading(true);
-    isLogin().then((login) => {
+    isLogin().then(login => {
       if (login) {
-        addCart(itemid, addQty, addNote, true).then((d) => {
+        addCart(itemid, addQty, addNote, true).then(d => {
           cartModal.current?.close();
           d && dispatch(setCart(d));
         });
@@ -290,7 +290,7 @@ const Product = ({navigation, route}) => {
               mode="outlined"
               numberOfLines={3}
               placeholder="Catatan untuk produk ini (opsional)"
-              onChangeText={(e) => setAddNote(e)}
+              onChangeText={e => setAddNote(e)}
             />
           </View>
         </ScrollView>
@@ -344,7 +344,7 @@ const Product = ({navigation, route}) => {
           {data &&
             data.shipping &&
             data.shipping.type &&
-            data.shipping.type.map((i) => (
+            data.shipping.type.map(i => (
               <>
                 <View style={{flexDirection: 'row', marginVertical: 8}}>
                   <View style={{flex: 1}}>

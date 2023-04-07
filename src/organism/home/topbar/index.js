@@ -14,7 +14,7 @@ import {IconButton} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FocusAwareStatusBar from '../../../components/FocusAwareStatusBar';
 import {colors} from '../../../constants/colors';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeTopBar = ({headerOpacity, visibility, auth}) => {
   const navigation = useNavigation();

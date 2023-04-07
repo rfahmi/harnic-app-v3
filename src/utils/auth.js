@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export const isLogin = async () => {
   const api_token = await AsyncStorage.getItem('api_token');
   if (api_token) {

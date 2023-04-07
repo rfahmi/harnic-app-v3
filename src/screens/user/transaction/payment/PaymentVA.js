@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clipboard from '@react-native-community/clipboard';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
@@ -35,11 +35,11 @@ const PaymentVA = ({trx}) => {
   const WINDOW_HEIGHT = Dimensions.get('window').height;
 
   const [data, setData] = useState(null);
-  const _handleAlert = (bank) => {
+  const _handleAlert = bank => {
     setBankSelected(bank);
     setAlert(true);
   };
-  const _confirm = async (bank_code) => {
+  const _confirm = async bank_code => {
     setLoading(true);
     setAlert(false);
     const api_token = await AsyncStorage.getItem('api_token');
@@ -56,7 +56,7 @@ const PaymentVA = ({trx}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         setLoading(false);
         // console.log(res.data.data);
         if (res.data.success) {
@@ -70,7 +70,7 @@ const PaymentVA = ({trx}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
         modal.current?.close();
         RNToasty.Error({
@@ -79,7 +79,7 @@ const PaymentVA = ({trx}) => {
         });
       });
   };
-  const getDuration = (t) => {
+  const getDuration = t => {
     // Coundown timer for a given expiry date-time
     let date = moment().utcOffset('+07:00').format('YYYY-MM-DD HH:mm:ss');
     console.log('d', date);
@@ -113,7 +113,7 @@ const PaymentVA = ({trx}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           console.log(res.data.data);
           setData(res.data.data);
@@ -124,7 +124,7 @@ const PaymentVA = ({trx}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'center',

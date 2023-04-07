@@ -1,7 +1,14 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import qs from 'qs';
 import React, {useState, useEffect} from 'react';
-import {Alert, RefreshControl, ScrollView, View, Platform, Text} from 'react-native';
+import {
+  Alert,
+  RefreshControl,
+  ScrollView,
+  View,
+  Platform,
+  Text,
+} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
 import Button from '../../../components/Button';
@@ -17,7 +24,7 @@ const UserData = ({navigation, route}) => {
   const [email, setEmail] = useState({value: null, error: ''});
   const [phone, setPhone] = useState({value: null, error: ''});
 
-  const getData = async (id) => {
+  const getData = async id => {
     const api_token = await AsyncStorage.getItem('api_token');
     await api
       .get('/user/' + id, {
@@ -25,7 +32,7 @@ const UserData = ({navigation, route}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           setName({value: res.data.data.user_name, error: ''});
           setEmail({value: res.data.data.user_email, error: ''});
@@ -38,7 +45,7 @@ const UserData = ({navigation, route}) => {
         }
         console.log(res.data);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('false');
         RNToasty.Error({
           title: err.message,
@@ -47,7 +54,7 @@ const UserData = ({navigation, route}) => {
       });
   };
 
-  const updateData = async (id) => {
+  const updateData = async id => {
     const api_token = await AsyncStorage.getItem('api_token');
     await api
       .put('/user/' + id + '', qs.stringify({user_name: name.value}), {
@@ -55,7 +62,7 @@ const UserData = ({navigation, route}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           navigation.goBack();
           RNToasty.Success({
@@ -69,7 +76,7 @@ const UserData = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'center',
@@ -100,7 +107,7 @@ const UserData = ({navigation, route}) => {
                   },
                 },
               )
-              .then(async (res) => {
+              .then(async res => {
                 if (res.data.success) {
                   navigation.goBack();
                   RNToasty.Success({
@@ -120,7 +127,7 @@ const UserData = ({navigation, route}) => {
                   });
                 }
               })
-              .catch((err) => {
+              .catch(err => {
                 RNToasty.Error({
                   title: err.message,
                   position: 'center',
@@ -168,7 +175,7 @@ const UserData = ({navigation, route}) => {
           label="Nama Pengguna"
           returnKeyType="next"
           value={name.value}
-          onChangeText={(text) => setName({value: text, error: ''})}
+          onChangeText={text => setName({value: text, error: ''})}
           error={!!name.error}
           errorText={name.error}
           autoCapitalize="none"
@@ -179,7 +186,7 @@ const UserData = ({navigation, route}) => {
           label="Email"
           returnKeyType="next"
           value={email.value}
-          onChangeText={(text) => setEmail({value: text, error: ''})}
+          onChangeText={text => setEmail({value: text, error: ''})}
           error={!!email.error}
           errorText={email.error}
           autoCapitalize="none"
@@ -193,7 +200,7 @@ const UserData = ({navigation, route}) => {
           label="Nomor HP"
           returnKeyType="next"
           value={phone.value}
-          onChangeText={(text) => setPhone({value: text, error: ''})}
+          onChangeText={text => setPhone({value: text, error: ''})}
           error={!!phone.error}
           errorText={phone.error}
           autoCapitalize="none"

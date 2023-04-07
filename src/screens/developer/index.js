@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   KeyboardAvoidingView,
@@ -60,7 +60,7 @@ const Developer = ({navigation}) => {
           <TextInput
             style={{marginVertical: 4}}
             value={webviewUrl}
-            onChangeText={(e) => setWebviewUrl(e)}
+            onChangeText={e => setWebviewUrl(e)}
             mode="outlined"
             returnKeyLabel="Go"
             selectTextOnFocus
@@ -114,7 +114,7 @@ const Developer = ({navigation}) => {
           <TextInput
             style={{marginVertical: 4}}
             value={deeplink}
-            onChangeText={(e) => setDeeplink(e)}
+            onChangeText={e => setDeeplink(e)}
             mode="outlined"
             returnKeyLabel="Go"
             selectTextOnFocus

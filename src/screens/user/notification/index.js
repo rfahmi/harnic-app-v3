@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useRef, useState} from 'react';
 import {Dimensions, FlatList, RefreshControl, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -23,7 +23,7 @@ const UserNotification = ({navigation, route}) => {
   const modalizeRef = useRef(null);
   const WINDOW_HEIGHT = Dimensions.get('window').height;
 
-  const getData = async (p) => {
+  const getData = async p => {
     const api_token = await AsyncStorage.getItem('api_token');
     await api
       .get(`/user/${user_id}/news?page=${p}&limit=${limit}`, {
@@ -31,7 +31,7 @@ const UserNotification = ({navigation, route}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           if (p > 1) {
             setData([...data, ...res.data.data]);
@@ -48,7 +48,7 @@ const UserNotification = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setHasMore(false);
         console.log(err.message);
         // RNToasty.Error({
@@ -58,7 +58,7 @@ const UserNotification = ({navigation, route}) => {
       });
   };
 
-  const deleteData = async (id) => {
+  const deleteData = async id => {
     const api_token = await AsyncStorage.getItem('api_token');
     await api
       .delete('/user/' + user_id + '/news/' + id, {
@@ -66,7 +66,7 @@ const UserNotification = ({navigation, route}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           _handleRefresh();
         } else {
@@ -76,14 +76,14 @@ const UserNotification = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'center',
         });
       });
   };
-  const readData = async (id) => {
+  const readData = async id => {
     const api_token = await AsyncStorage.getItem('api_token');
     await api
       .put(
@@ -95,7 +95,7 @@ const UserNotification = ({navigation, route}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           _handleRefresh();
         } else {
@@ -105,7 +105,7 @@ const UserNotification = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('err', err);
         RNToasty.Error({
           title: err.message,
@@ -125,7 +125,7 @@ const UserNotification = ({navigation, route}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         console.log('res', res);
         if (res.data.success) {
           _handleRefresh();
@@ -136,7 +136,7 @@ const UserNotification = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('err', err);
         RNToasty.Error({
           title: err.message,
@@ -154,7 +154,7 @@ const UserNotification = ({navigation, route}) => {
       })
       .catch(() => setLoading(false));
   };
-  const _handleDelete = (news_id) => {
+  const _handleDelete = news_id => {
     setLoading(true);
     deleteData(news_id)
       .then(() => setLoading(false))

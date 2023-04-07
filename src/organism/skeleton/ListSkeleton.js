@@ -1,6 +1,6 @@
 import React from 'react';
 import {Dimensions, View} from 'react-native';
-import {Skeleton} from 'react-native-animated-skeleton';
+// import {Skeleton} from 'react-native-animated-skeleton';
 import {Divider, List} from 'react-native-paper';
 
 const ListSkeleton = () => {
@@ -8,7 +8,7 @@ const ListSkeleton = () => {
   const SKELETON_COLOR = '#ddd';
   return (
     <>
-      <List.Item
+      {/* <List.Item
         title={
           <Skeleton
             loaderStyle={{
@@ -31,7 +31,7 @@ const ListSkeleton = () => {
             numberOfItems={1}
           />
         }
-      />
+      /> */}
       <Divider />
     </>
   );

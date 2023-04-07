@@ -25,13 +25,13 @@ const ItemInfinite = ({data, parentScrollViewRef}) => {
   const [hasMore, setHasMore] = useState(true);
   const [items, setitems] = useState([]);
 
-  const getItems = async (p) => {
-    console.log({
-      keyword: null,
-      category: category_id[0],
-      brand: null,
-    });
-    console.log(`/product/find?page=${p}&limit=${limit}`);
+  const getItems = async p => {
+    // console.log({
+    //   keyword: null,
+    //   category: category_id[0],
+    //   brand: null,
+    // });
+    // console.log(`/product/find?page=${p}&limit=${limit}`);
     p < limit_page &&
       (await api
         .post(
@@ -42,32 +42,32 @@ const ItemInfinite = ({data, parentScrollViewRef}) => {
             brand: null,
           }),
         )
-        .then((res) => {
-          console.log('--------------------------');
+        .then(res => {
+          // console.log('--------------------------');
           if (res.data.success) {
             if (p > 1) {
-              console.log('>>append');
+              // console.log('>>append');
               setitems([...items, ...res.data.data.products]);
             } else {
-              console.log('>>new');
+              // console.log('>>new');
               setitems(res.data.data.products);
             }
             if (res.data.data.length < limit) {
-              console.log('>>no more');
+              // console.log('>>no more');
               setHasMore(false);
             } else {
-              console.log('>>has more');
+              // console.log('>>has more');
             }
           } else {
-            console.log('failed');
+            // console.log('failed');
             RNToasty.Error({
               title: res.data.message,
               position: 'bottom',
             });
           }
-          console.log('--------------------------');
+          // console.log('--------------------------');
         })
-        .catch((err) => {
+        .catch(err => {
           RNToasty.Error({
             title: err.message,
             position: 'center',
@@ -77,7 +77,7 @@ const ItemInfinite = ({data, parentScrollViewRef}) => {
 
   useEffect(() => {
     let isSubscribed = true;
-    console.log('+++++++++++++++++++++ kena effect ++++++++++++++++++++++++');
+    // console.log('+++++++++++++++++++++ kena effect ++++++++++++++++++++++++');
     setPage(1);
     setHasMore(true);
     getItems(1).then(() => {

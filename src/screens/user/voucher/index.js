@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState} from 'react';
 import {FlatList, RefreshControl, View} from 'react-native';
 import {Divider, List} from 'react-native-paper';
@@ -13,7 +13,7 @@ const UserVoucher = ({navigation, route}) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
 
-  const getData = async (id) => {
+  const getData = async id => {
     const api_token = await AsyncStorage.getItem('api_token');
     await api
       .get('/user/' + id + '/voucher', {
@@ -21,7 +21,7 @@ const UserVoucher = ({navigation, route}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           setData(res.data.data);
         } else {
@@ -32,7 +32,7 @@ const UserVoucher = ({navigation, route}) => {
         }
         console.log(res.data);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('false');
 
         RNToasty.Error({

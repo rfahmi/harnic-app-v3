@@ -1,5 +1,5 @@
 import {Card} from '@paraboly/react-native-card';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useRef, useState} from 'react';
 import {
@@ -9,7 +9,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import {Skeleton} from 'react-native-animated-skeleton';
+// import {Skeleton} from 'react-native-animated-skeleton';
 import {Modalize} from 'react-native-modalize';
 import {Button, Divider, List, TextInput, Title} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
@@ -60,7 +60,7 @@ const Checkout = ({navigation, route}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         setLoading(false);
         setLoading1(false);
         if (res.data.success) {
@@ -81,7 +81,7 @@ const Checkout = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
         setLoading1(false);
         RNToasty.Error({
@@ -90,7 +90,7 @@ const Checkout = ({navigation, route}) => {
         });
       });
   };
-  const getExpedition = async (shipping_id) => {
+  const getExpedition = async shipping_id => {
     setLoading(true);
     setLoading2(true);
     const api_token = await AsyncStorage.getItem('api_token');
@@ -101,7 +101,7 @@ const Checkout = ({navigation, route}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         setLoading(false);
         setLoading2(false);
         if (res.data.success) {
@@ -114,7 +114,7 @@ const Checkout = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
         setLoading2(false);
         RNToasty.Error({
@@ -138,7 +138,7 @@ const Checkout = ({navigation, route}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         setLoading(false);
         setLoading3(false);
         if (res.data.success) {
@@ -159,7 +159,7 @@ const Checkout = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'center',
@@ -182,7 +182,7 @@ const Checkout = ({navigation, route}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         setLoading(false);
         setLoading4(false);
         setSelectedTime(null);
@@ -197,7 +197,7 @@ const Checkout = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
         setLoading4(false);
         RNToasty.Error({
@@ -217,7 +217,7 @@ const Checkout = ({navigation, route}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         setLoading(false);
         if (res.data.success) {
           setVouchers(res.data.data);
@@ -228,7 +228,7 @@ const Checkout = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
         RNToasty.Error({
           title: err.message,
@@ -237,7 +237,7 @@ const Checkout = ({navigation, route}) => {
       });
   };
 
-  const applyVoucher = async (code) => {
+  const applyVoucher = async code => {
     if (!code) {
       RNToasty.Warn({
         title: 'Kode voucher kosong',
@@ -254,7 +254,7 @@ const Checkout = ({navigation, route}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         setLoading(false);
         if (res.data.data && res.data.success) {
           if (res.data.data.DiscValue > 0) {
@@ -281,7 +281,7 @@ const Checkout = ({navigation, route}) => {
           }
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
         setSelectedVoucher(null);
         RNToasty.Error({
@@ -300,7 +300,7 @@ const Checkout = ({navigation, route}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         console.log(res.data.data);
         if (res.data.success) {
           let p = res.data.data;
@@ -367,16 +367,17 @@ const Checkout = ({navigation, route}) => {
               textContainerNumberOfLines={3}
               description={
                 loading1 ? (
-                  <Skeleton
-                    loaderStyle={{
-                      width: 200,
-                      height: 16,
-                      marginVertical: 4,
-                      backgroundColor: '#ddd',
-                    }}
-                    direction="column"
-                    numberOfItems={1}
-                  />
+                  // <Skeleton
+                  //   loaderStyle={{
+                  //     width: 200,
+                  //     height: 16,
+                  //     marginVertical: 4,
+                  //     backgroundColor: '#ddd',
+                  //   }}
+                  //   direction="column"
+                  //   numberOfItems={1}
+                  // />
+                  <View />
                 ) : selectedShipping ? (
                   selectedShipping.shipping_address +
                   ', ' +
@@ -411,16 +412,17 @@ const Checkout = ({navigation, route}) => {
               title="Jenis Pengiriman"
               description={
                 loading3 || loading2 ? (
-                  <Skeleton
-                    loaderStyle={{
-                      width: 200,
-                      height: 16,
-                      marginVertical: 4,
-                      backgroundColor: '#ddd',
-                    }}
-                    direction="column"
-                    numberOfItems={1}
-                  />
+                  // <Skeleton
+                  //   loaderStyle={{
+                  //     width: 200,
+                  //     height: 16,
+                  //     marginVertical: 4,
+                  //     backgroundColor: '#ddd',
+                  //   }}
+                  //   direction="column"
+                  //   numberOfItems={1}
+                  // />
+                  <View />
                 ) : selectedType ? (
                   `${selectedExpedition.label} / ${selectedType.label}`
                 ) : (
@@ -441,16 +443,17 @@ const Checkout = ({navigation, route}) => {
               title="Jam Terima Paket"
               description={
                 loading4 ? (
-                  <Skeleton
-                    loaderStyle={{
-                      width: 200,
-                      height: 16,
-                      marginVertical: 4,
-                      backgroundColor: '#ddd',
-                    }}
-                    direction="column"
-                    numberOfItems={1}
-                  />
+                  // <Skeleton
+                  //   loaderStyle={{
+                  //     width: 200,
+                  //     height: 16,
+                  //     marginVertical: 4,
+                  //     backgroundColor: '#ddd',
+                  //   }}
+                  //   direction="column"
+                  //   numberOfItems={1}
+                  // />
+                  <View />
                 ) : selectedTime ? (
                   `${selectedTime.day}${'\n'}${selectedTime.start} - ${
                     selectedTime.end
@@ -527,7 +530,7 @@ const Checkout = ({navigation, route}) => {
               mode="outlined"
               numberOfLines={2}
               placeholder="Beri kami deskripsi tempat anda, patokan alamat dll (opsional)"
-              onChangeText={(e) => setNote(e)}
+              onChangeText={e => setNote(e)}
             />
           </View>
           <FooterCheckout
@@ -662,7 +665,7 @@ const Checkout = ({navigation, route}) => {
               disabled={selectedVoucher}
               mode="outlined"
               autoCapitalize="characters"
-              onChangeText={(e) => setTypedVoucher(e.toUpperCase())}
+              onChangeText={e => setTypedVoucher(e.toUpperCase())}
             />
             {!selectedVoucher ? (
               <Button

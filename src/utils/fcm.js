@@ -1,8 +1,8 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import qs from 'qs';
 import {api} from '../configs/api';
 
-export const saveFcm = async (push_notification_token) => {
+export const saveFcm = async push_notification_token => {
   const api_token = await AsyncStorage.getItem('api_token');
   const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
 

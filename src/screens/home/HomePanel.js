@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useScrollToTop} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
 import {Animated, RefreshControl, View} from 'react-native';
@@ -31,7 +31,7 @@ const HomePage = ({navigation, route}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         console.log('panels ', res.data.data);
         if (res.data.success) {
           if (p > 1) {
@@ -46,7 +46,7 @@ const HomePage = ({navigation, route}) => {
           setHasMore(false);
         }
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'bottom',

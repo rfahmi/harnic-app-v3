@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clipboard from '@react-native-community/clipboard';
 import {useNavigation} from '@react-navigation/native';
 import React, {memo, useEffect, useState} from 'react';
@@ -37,7 +37,7 @@ const PaymentTF = ({trx}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         setLoading(false);
         if (res.data.success) {
           RNToasty.Success({
@@ -51,7 +51,7 @@ const PaymentTF = ({trx}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
         console.log(err);
         RNToasty.Error({

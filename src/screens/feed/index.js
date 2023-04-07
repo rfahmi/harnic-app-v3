@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useRef, useState, useEffect} from 'react';
 import {
   Animated,
@@ -23,7 +23,7 @@ const Feed = () => {
   const [loading, setLoading] = useState(false);
   const scroll = useRef(new Animated.Value(0)).current;
 
-  const getData = async (p) => {
+  const getData = async p => {
     const api_token = await AsyncStorage.getItem('api_token');
     await api
       .get('/feed', {
@@ -31,7 +31,7 @@ const Feed = () => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           if (p > 1) {
             setData([...data, ...res.data.data]);
@@ -49,7 +49,7 @@ const Feed = () => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setHasMore(false);
         RNToasty.Error({
           title: err.message,
@@ -57,7 +57,7 @@ const Feed = () => {
         });
       });
   };
-  const _handleClaim = async (vc_id) => {
+  const _handleClaim = async vc_id => {
     const api_token = await AsyncStorage.getItem('api_token');
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
     await api
@@ -66,7 +66,7 @@ const Feed = () => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           RNToasty.Success({
             title: res.data.message,
@@ -79,7 +79,7 @@ const Feed = () => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'center',

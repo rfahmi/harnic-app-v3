@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import qs from 'qs';
 import React, {memo, useEffect, useState} from 'react';
@@ -8,6 +7,7 @@ import {RNToasty} from 'react-native-toasty';
 import {api} from '../configs/api';
 import {colors} from '../constants/colors';
 import {currencyFormat} from '../utils/formatter';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const FooterCheckout = ({
   product,
@@ -59,7 +59,7 @@ const FooterCheckout = ({
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         setLoading(false);
         if (res.data.success) {
           navigation.replace('Transaction', {
@@ -86,7 +86,7 @@ const FooterCheckout = ({
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
         RNToasty.Error({
           title: err.message,

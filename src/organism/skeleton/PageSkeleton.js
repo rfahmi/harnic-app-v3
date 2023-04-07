@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import {Dimensions, View} from 'react-native';
 import {Skeleton} from 'react-native-animated-skeleton';
 
@@ -9,7 +9,7 @@ const PageSkeleton = () => {
   const SKELETON_COLOR = '#ddd';
   return (
     <View>
-      <Skeleton
+      {/* <Skeleton
         loaderStyle={{
           width: WINDOW_WIDTH,
           aspectRatio: 4 / 1,
@@ -38,7 +38,7 @@ const PageSkeleton = () => {
           direction="row"
           numberOfItems={3}
         />
-      </View>
+      </View> */}
     </View>
   );
 };

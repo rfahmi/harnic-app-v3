@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import React, {memo, useEffect, useState} from 'react';
 import {FlatList, Platform, RefreshControl, Text, View} from 'react-native';
@@ -20,7 +20,7 @@ const TransactionList = ({user, status}) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
 
-  const getData = async (p) => {
+  const getData = async p => {
     const api_token = await AsyncStorage.getItem('api_token');
     await api
       .get(
@@ -31,7 +31,7 @@ const TransactionList = ({user, status}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           if (p > 1) {
             setData([...data, ...res.data.data]);
@@ -48,7 +48,7 @@ const TransactionList = ({user, status}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'center',

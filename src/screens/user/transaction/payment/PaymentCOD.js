@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import qs from 'qs';
 import React, {memo, useState} from 'react';
@@ -30,7 +30,7 @@ const PaymentCOD = ({trx}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         setLoading(false);
         if (res.data.success) {
           navigation.replace('Transaction', {
@@ -49,7 +49,7 @@ const PaymentCOD = ({trx}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
 
         console.log(err);
@@ -108,7 +108,7 @@ const PaymentCOD = ({trx}) => {
             <TextInput
               mode="flat"
               value={cod_cash}
-              onChangeText={(text) => setCodCash(text)}
+              onChangeText={text => setCodCash(text)}
             />
           </View>
         </Card>

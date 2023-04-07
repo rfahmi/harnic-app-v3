@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import qs from 'qs';
 import React, {useEffect, useState} from 'react';
 import {
@@ -33,7 +33,7 @@ const BillingProducts = ({navigation, route}) => {
       getProduct(user_data.user_phone);
     }
   };
-  const getProduct = async (customer_id) => {
+  const getProduct = async customer_id => {
     setLoading(true);
     await api
       .post(
@@ -42,12 +42,12 @@ const BillingProducts = ({navigation, route}) => {
           customer_id,
         }),
       )
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           setData(res.data.data);
         }
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'bottom',
@@ -69,7 +69,7 @@ const BillingProducts = ({navigation, route}) => {
       else if (request === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN)
         throw Error('Permission Denied');
     }
-    selectContactPhone().then((selection) => {
+    selectContactPhone().then(selection => {
       if (selection) {
         setData([]);
         let {selectedPhone} = selection;
@@ -156,7 +156,7 @@ const BillingProducts = ({navigation, route}) => {
         <TextInput
           style={{marginBottom: 8}}
           value={number}
-          onChangeText={(text) => {
+          onChangeText={text => {
             if (data.length > 0) {
               setData([]);
             }

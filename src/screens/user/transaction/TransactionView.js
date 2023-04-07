@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clipboard from '@react-native-community/clipboard';
 import {useIsFocused} from '@react-navigation/native';
 import moment from 'moment';
@@ -30,7 +30,7 @@ const TransactionView = ({navigation, route}) => {
   const {trxno} = route.params;
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
-  const unfulfilled = data && data?.items.filter((a) => a.qty < a.qorder);
+  const unfulfilled = data && data?.items.filter(a => a.qty < a.qorder);
   const [payment, setPayment] = useState(null);
   const payment_modal = useRef(null);
   const [totalDuration, setTotalDuration] = useState(0);
@@ -46,7 +46,7 @@ const TransactionView = ({navigation, route}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         setLoading(false);
         if (res.data.success) {
           setData(res.data.data);
@@ -57,7 +57,7 @@ const TransactionView = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
         RNToasty.Error({
           title: err.message,
@@ -79,7 +79,7 @@ const TransactionView = ({navigation, route}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         setLoading(false);
         if (res.data.success) {
           getData();
@@ -95,7 +95,7 @@ const TransactionView = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
 
         RNToasty.Error({
@@ -120,7 +120,7 @@ const TransactionView = ({navigation, route}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         setLoading(false);
         if (res.data.success) {
           getData();
@@ -136,7 +136,7 @@ const TransactionView = ({navigation, route}) => {
           });
         }
       })
-      .catch((e) => {
+      .catch(e => {
         setLoading(false);
 
         RNToasty.Error({
@@ -159,7 +159,7 @@ const TransactionView = ({navigation, route}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         setLoading(false);
         if (res.data.success) {
           navigation.push('TransactionReview', {
@@ -174,7 +174,7 @@ const TransactionView = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
 
         RNToasty.Error({
@@ -198,7 +198,7 @@ const TransactionView = ({navigation, route}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         setLoading(false);
         if (res.data.success) {
           navigation.replace('App', {
@@ -216,7 +216,7 @@ const TransactionView = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
 
         RNToasty.Error({
@@ -226,7 +226,7 @@ const TransactionView = ({navigation, route}) => {
       });
   };
 
-  const getDuration = (t) => {
+  const getDuration = t => {
     // Coundown timer for a given expiry date-time
     let date = moment().utcOffset('+07:00').format('YYYY-MM-DD HH:mm:ss');
     // Getting the current date-time
@@ -534,7 +534,7 @@ const TransactionView = ({navigation, route}) => {
               </View>
             )}
             {data &&
-              data.items.map((item) => (
+              data.items.map(item => (
                 <View key={`TrxItem${item.itemid}`}>
                   {item.qty === 0 && (
                     <View

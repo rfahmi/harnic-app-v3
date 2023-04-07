@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {memo, useEffect, useState} from 'react';
 import {Text, View} from 'react-native';
 import {Divider, List} from 'react-native-paper';
@@ -21,7 +21,7 @@ const Payment = ({navigation, route}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           setData(res.data.data);
         } else {
@@ -31,7 +31,7 @@ const Payment = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'center',
@@ -50,7 +50,7 @@ const Payment = ({navigation, route}) => {
         <ListSkeleton />
       ) : (
         <>
-          {data.map((i) => (
+          {data.map(i => (
             <React.Fragment key={i.payment_code}>
               <List.Item
                 title={i.payment_name}

@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import qs from 'qs';
 import React, {useState} from 'react';
 import {RefreshControl, ScrollView} from 'react-native';
@@ -25,7 +25,7 @@ const TransactionReview = ({navigation, route}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         setLoading(false);
         if (res.data.success) {
           RNToasty.Success({
@@ -40,7 +40,7 @@ const TransactionReview = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
 
         console.log(err);
@@ -56,7 +56,7 @@ const TransactionReview = ({navigation, route}) => {
       <ScrollView
         style={{backgroundColor: '#fff'}}
         refreshControl={<RefreshControl refreshing={loading} />}>
-        {items.map((i) => (
+        {items.map(i => (
           <ReviewItem
             item={i}
             send={(item, rating, comment) =>

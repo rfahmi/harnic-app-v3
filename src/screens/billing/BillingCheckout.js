@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import qs from 'qs';
 import React, {useState} from 'react';
 import {Text, View} from 'react-native';
@@ -31,7 +31,7 @@ const BillingCheckout = ({navigation, route}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           navigation.replace('UserBilling', {
             screen: 'BillingView',
@@ -40,7 +40,7 @@ const BillingCheckout = ({navigation, route}) => {
         }
         setLoading(false);
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
         RNToasty.Error({
           title: err.message,

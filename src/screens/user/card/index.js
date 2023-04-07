@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, RefreshControl, TouchableOpacity} from 'react-native';
 import {Modalize} from 'react-native-modalize';
@@ -16,7 +16,7 @@ const UserCard = ({navigation, route}) => {
   const [dataSelected, setDataSelected] = useState(null);
   const modalizeRef = useRef(null);
 
-  const getData = async (id) => {
+  const getData = async id => {
     const api_token = await AsyncStorage.getItem('api_token');
     await api
       .get('/user/' + id + '/card', {
@@ -24,7 +24,7 @@ const UserCard = ({navigation, route}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           setData(res.data.data);
         } else {
@@ -35,7 +35,7 @@ const UserCard = ({navigation, route}) => {
         }
         console.log(res.data);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('false');
 
         RNToasty.Error({
@@ -45,7 +45,7 @@ const UserCard = ({navigation, route}) => {
       });
   };
 
-  const deleteData = async (id) => {
+  const deleteData = async id => {
     const api_token = await AsyncStorage.getItem('api_token');
     await api
       .delete('/user/' + user_id + '/card/' + id, {
@@ -53,7 +53,7 @@ const UserCard = ({navigation, route}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           RNToasty.Success({
             title: res.data.message,
@@ -66,7 +66,7 @@ const UserCard = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'center',
@@ -80,7 +80,7 @@ const UserCard = ({navigation, route}) => {
       .then(() => setLoading(false))
       .catch(() => setLoading(false));
   };
-  const _handleDelete = (card_id) => {
+  const _handleDelete = card_id => {
     setLoading(true);
     deleteData(card_id)
       .then(() => {

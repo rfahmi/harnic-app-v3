@@ -1,6 +1,6 @@
 import React, {memo, lazy, Suspense} from 'react';
 import {View} from 'react-native';
-import {Skeleton} from 'react-native-animated-skeleton';
+// import {Skeleton} from 'react-native-animated-skeleton';
 import BannerGridSlide from './BannerGridSlide';
 import Title from './Title';
 
@@ -21,14 +21,15 @@ const Panels = ({data, parentScrollViewRef}) => {
     <View>
       <Suspense
         fallback={
-          <Skeleton
-            loaderStyle={{
-              flex: 1,
-              height: 200,
-              backgroundColor: '#ddd',
-            }}
-            numberOfItems={1}
-          />
+          // <Skeleton
+          //   loaderStyle={{
+          //     flex: 1,
+          //     height: 200,
+          //     backgroundColor: '#ddd',
+          //   }}
+          //   numberOfItems={1}
+          // />
+          <View />
         }>
         {data.component_type === 'TITLE' ? (
           <Title data={data} />

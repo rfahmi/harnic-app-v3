@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {memo, useEffect, useState} from 'react';
 import {View, Alert, Text} from 'react-native';
 import {Divider, List, Title} from 'react-native-paper';
@@ -12,7 +12,7 @@ const Payment = ({navigation, route}) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const unfulfilled = trx && trx?.items.filter((a) => a.qty < a.qorder);
+  const unfulfilled = trx && trx?.items.filter(a => a.qty < a.qorder);
 
   const getData = async () => {
     const api_token = await AsyncStorage.getItem('api_token');
@@ -27,7 +27,7 @@ const Payment = ({navigation, route}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           setData(res.data.data);
         } else {
@@ -37,7 +37,7 @@ const Payment = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'center',
@@ -59,7 +59,7 @@ const Payment = ({navigation, route}) => {
           },
         },
       )
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
 
         RNToasty.Error({
@@ -74,7 +74,7 @@ const Payment = ({navigation, route}) => {
 
   useEffect(
     () =>
-      navigation.addListener('beforeRemove', (e) => {
+      navigation.addListener('beforeRemove', e => {
         console.log(route.params.fromStack);
         if (e.data.action.type !== 'GO_BACK') {
           // If not go back action
@@ -126,14 +126,14 @@ const Payment = ({navigation, route}) => {
                 style={{fontWeight: 'bold', color: '#333', marginBottom: 4}}>
                 {unfulfilled.length} Produk tidak terpenuhi!
               </Text>
-              {unfulfilled.map((u) => (
+              {unfulfilled.map(u => (
                 <Text style={{fontSize: 10, color: '#333'}}>
                   {u.online_name} -- Kurang {u.qorder - u.qty} pcs
                 </Text>
               ))}
             </View>
           )}
-          {data.map((i) => (
+          {data.map(i => (
             <React.Fragment key={i.payment_code}>
               <List.Item
                 title={i.payment_name}

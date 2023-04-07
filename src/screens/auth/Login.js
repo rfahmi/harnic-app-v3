@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import qs from 'qs';
 import React, {memo, useRef, useState} from 'react';
@@ -64,7 +64,7 @@ const Login = ({navigation}) => {
         '/auth/signin/email',
         qs.stringify({email: email.value, password: password.value}),
       )
-      .then(async (res) => {
+      .then(async res => {
         setLoading(false);
         if (res.data.success) {
           navigation.navigate('App', {screen: 'Home'});
@@ -85,7 +85,7 @@ const Login = ({navigation}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
         RNToasty.Error({
           title: err.message,
@@ -104,14 +104,14 @@ const Login = ({navigation}) => {
     }
     api
       .post('/auth/phone/check', qs.stringify({phone: phone.value}))
-      .then((res) => {
+      .then(res => {
         setLoading(false);
         if (res.data.success) {
           if (res.data.registered) {
             if (res.data.has_password) {
               modalPassword.current?.open();
             } else {
-              sendOTP(phone.value).then((r) => {
+              sendOTP(phone.value).then(r => {
                 if (r) {
                   setShowSendAgain(false);
                   setWaitingTime(60 * 2);
@@ -134,7 +134,7 @@ const Login = ({navigation}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
         RNToasty.Error({
           title: err.message,
@@ -142,10 +142,10 @@ const Login = ({navigation}) => {
         });
       });
   };
-  const sendOTP = (p) => {
+  const sendOTP = p => {
     const result = api
       .post('/auth/phone/otp', qs.stringify({phone: p}))
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           return true;
         } else {
@@ -156,7 +156,7 @@ const Login = ({navigation}) => {
           return false;
         }
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'center',
@@ -166,7 +166,7 @@ const Login = ({navigation}) => {
     return result;
   };
 
-  const _onOtpSubmit = (code) => {
+  const _onOtpSubmit = code => {
     setLoading(true);
     const phoneError = phoneValidator(phone.value);
 
@@ -177,7 +177,7 @@ const Login = ({navigation}) => {
     }
     api
       .post('/auth/signin/phone', qs.stringify({phone: phone.value, otp: code}))
-      .then(async (res) => {
+      .then(async res => {
         setLoading(false);
         if (res.data.success) {
           modalOTP.current?.close();
@@ -199,7 +199,7 @@ const Login = ({navigation}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
         RNToasty.Error({
           title: err.message,
@@ -221,7 +221,7 @@ const Login = ({navigation}) => {
         '/auth/signin/phone',
         qs.stringify({phone: phone.value, password: password.value}),
       )
-      .then(async (res) => {
+      .then(async res => {
         setLoading(false);
         if (res.data.success) {
           modalPassword.current?.close();
@@ -243,7 +243,7 @@ const Login = ({navigation}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
         RNToasty.Error({
           title: err.message,
@@ -270,7 +270,7 @@ const Login = ({navigation}) => {
             <Header>Selamat datang kembali</Header>
           </View>
           <SwitchButton
-            onValueChange={(val) => setMode(val)} // this is necessary for this component
+            onValueChange={val => setMode(val)} // this is necessary for this component
             text1="Nomor HP" // optional: first text in switch button --- default ON
             text2="Email" // optional: second text in switch button --- default OFF
             switchWidth={200} // optional: switch width --- default 44
@@ -291,7 +291,7 @@ const Login = ({navigation}) => {
               <TextInput
                 label="Nomor HP"
                 value={phone.value}
-                onChangeText={(text) => setPhone({value: text, error: ''})}
+                onChangeText={text => setPhone({value: text, error: ''})}
                 error={!!phone.error}
                 errorText={phone.error}
                 autoCapitalize="none"
@@ -313,7 +313,7 @@ const Login = ({navigation}) => {
                 label="Email"
                 returnKeyType="next"
                 value={email.value}
-                onChangeText={(text) => setEmail({value: text, error: ''})}
+                onChangeText={text => setEmail({value: text, error: ''})}
                 error={!!email.error}
                 errorText={email.error}
                 autoCapitalize="none"
@@ -325,7 +325,7 @@ const Login = ({navigation}) => {
                 label="Password"
                 returnKeyType="done"
                 value={password.value}
-                onChangeText={(text) => setPassword({value: text, error: ''})}
+                onChangeText={text => setPassword({value: text, error: ''})}
                 error={!!password.error}
                 errorText={password.error}
                 secureTextEntry
@@ -395,7 +395,7 @@ const Login = ({navigation}) => {
                 autoFocusOnLoad
                 codeInputFieldStyle={styles.underlineStyleBase}
                 codeInputHighlightStyle={styles.underlineStyleHighLighted}
-                onCodeFilled={(code) => {
+                onCodeFilled={code => {
                   _onOtpSubmit(code);
                 }}
               />
@@ -455,7 +455,7 @@ const Login = ({navigation}) => {
               <Text>Atau </Text>
               <TouchableOpacity
                 onPress={() => {
-                  sendOTP(phone.value).then((r) => {
+                  sendOTP(phone.value).then(r => {
                     if (r) {
                       modalPassword.current?.close();
                       setShowSendAgain(false);
@@ -479,7 +479,7 @@ const Login = ({navigation}) => {
                 label="Password"
                 returnKeyType="done"
                 value={password.value}
-                onChangeText={(text) => setPassword({value: text, error: ''})}
+                onChangeText={text => setPassword({value: text, error: ''})}
                 error={!!password.error}
                 errorText={password.error}
                 secureTextEntry

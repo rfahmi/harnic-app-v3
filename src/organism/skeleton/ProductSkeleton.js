@@ -1,6 +1,6 @@
 import React from 'react';
 import {ActivityIndicator, Dimensions, View} from 'react-native';
-import {Skeleton} from 'react-native-animated-skeleton';
+// import {Skeleton} from 'react-native-animated-skeleton';
 
 const ProductSkeleton = () => {
   const WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -9,7 +9,7 @@ const ProductSkeleton = () => {
   const SKELETON_COLOR = '#ddd';
   return (
     <View>
-      <Skeleton
+      {/* <Skeleton
         loaderStyle={{
           width: WINDOW_WIDTH,
           height: WINDOW_WIDTH,
@@ -55,7 +55,7 @@ const ProductSkeleton = () => {
           }}>
           <ActivityIndicator size="large" color={SKELETON_COLOR} />
         </View>
-      </View>
+      </View> */}
     </View>
   );
 };

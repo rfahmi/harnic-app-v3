@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useIsFocused} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {FlatList, RefreshControl, View} from 'react-native';
@@ -18,7 +18,7 @@ const UserBilling = ({navigation, route}) => {
   const [hasMore, setHasMore] = useState(false);
   const [data, setData] = useState([]);
 
-  const getData = async (p) => {
+  const getData = async p => {
     console.log('call page: ' + p);
     const api_token = await AsyncStorage.getItem('api_token');
     await api
@@ -27,7 +27,7 @@ const UserBilling = ({navigation, route}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           if (p > 1) {
             setData([...data, ...res.data.data]);
@@ -44,7 +44,7 @@ const UserBilling = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('false');
 
         RNToasty.Error({

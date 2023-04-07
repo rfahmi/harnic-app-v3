@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useIsFocused} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {FlatList, RefreshControl, TouchableOpacity} from 'react-native';
@@ -23,7 +23,7 @@ const Shoplist = ({navigation}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           setData(res.data.data);
         } else {
@@ -33,7 +33,7 @@ const Shoplist = ({navigation}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('false');
 
         RNToasty.Error({
@@ -42,7 +42,7 @@ const Shoplist = ({navigation}) => {
         });
       });
   };
-  const deleteData = async (id) => {
+  const deleteData = async id => {
     console.log('deleted');
     const api_token = await AsyncStorage.getItem('api_token');
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
@@ -53,7 +53,7 @@ const Shoplist = ({navigation}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           _handleRefresh();
         } else {
@@ -63,7 +63,7 @@ const Shoplist = ({navigation}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('false');
 
         RNToasty.Error({
@@ -96,7 +96,7 @@ const Shoplist = ({navigation}) => {
             params: {itemid: item.itemid},
           })
         }>
-        <ShopListItem item={item} deleteShoppingList={(id) => deleteData(id)} />
+        <ShopListItem item={item} deleteShoppingList={id => deleteData(id)} />
       </TouchableOpacity>
     );
   };

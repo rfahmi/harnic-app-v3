@@ -1,7 +1,8 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
+import {Platform} from 'react-native';
 import 'react-native-gesture-handler';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import PushNotification from 'react-native-push-notification';
@@ -29,7 +30,7 @@ PushNotification.configure({
 
     // process the notification
     notification.userInteraction &&
-      AsyncStorage.getItem('user_data').then((e) => {
+      AsyncStorage.getItem('user_data').then(e => {
         e = JSON.parse(e);
         RootNavigation.navigate('App', {
           screen: 'User',
@@ -71,7 +72,7 @@ PushNotification.configure({
    * - if you are not using remote notification or do not have Firebase installed, use this:
    *     requestPermissions: Platform.OS === 'ios'
    */
-  requestPermissions: true,
+  requestPermissions: Platform.OS === 'ios',
 });
 PushNotification.channelExists('general', function (exists) {
   if (!exists) {
@@ -85,7 +86,7 @@ PushNotification.channelExists('general', function (exists) {
         importance: 4, // (optional) default: 4. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
       },
-      (created) => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+      created => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
     );
   }
 });
@@ -129,7 +130,7 @@ const App = () => {
     <ReduxProvider store={store}>
       <PaperProvider
         settings={{
-          icon: (props) => <MaterialCommunityIcons {...props} />,
+          icon: props => <MaterialCommunityIcons {...props} />,
         }}
         theme={theme}>
         <NavigationContainer

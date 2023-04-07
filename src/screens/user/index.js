@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useIsFocused} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
 import {
@@ -45,7 +45,7 @@ const User = ({navigation}) => {
   const STATUSBAR_HEIGHT =
     Platform.OS === 'ios' ? getStatusBarHeight() : StatusBar.currentHeight;
   const modalizeRef = useRef(null);
-  const auth = useSelector((state) => state.auth);
+  const auth = useSelector(state => state.auth);
   const isFocused = useIsFocused();
   const [data, setData] = useState(null);
   const [info, setInfo] = useState(null);
@@ -61,7 +61,7 @@ const User = ({navigation}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         console.log(res.data.data);
         if (res.data.success) {
           setData(res.data.data);
@@ -72,7 +72,7 @@ const User = ({navigation}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('false');
 
         RNToasty.Error({
@@ -89,10 +89,10 @@ const User = ({navigation}) => {
       .catch(() => setLoading(false));
   };
 
-  const getInfo = async (name) => {
+  const getInfo = async name => {
     await api
       .get('/info/' + name)
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           setInfo(res.data.data);
           modalizeRef.current?.open();
@@ -103,7 +103,7 @@ const User = ({navigation}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'center',

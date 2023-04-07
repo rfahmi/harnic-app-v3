@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import qs from 'qs';
 import React, {memo, useEffect, useRef, useState} from 'react';
@@ -27,11 +27,11 @@ const PaymentDW = ({trx}) => {
   const [alert, setAlert] = useState(false);
 
   const [data, setData] = useState(null);
-  const _handleAlert = (bank) => {
+  const _handleAlert = bank => {
     setChannel(bank);
     setAlert(true);
   };
-  const _confirm = async (dw_code) => {
+  const _confirm = async dw_code => {
     setAlert(false);
     setLoading(true);
     const api_token = await AsyncStorage.getItem('api_token');
@@ -48,7 +48,7 @@ const PaymentDW = ({trx}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           const urlProtocol = res.data.data.split('://')[0];
           if (urlProtocol === 'http' || urlProtocol === 'https') {
@@ -85,7 +85,7 @@ const PaymentDW = ({trx}) => {
         }
         setLoading(false);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('catch');
         setLoading(false);
         RNToasty.Error({
@@ -106,7 +106,7 @@ const PaymentDW = ({trx}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           console.log(res.data.data);
           setData(res.data.data);
@@ -117,7 +117,7 @@ const PaymentDW = ({trx}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'center',

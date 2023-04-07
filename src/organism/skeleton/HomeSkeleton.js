@@ -1,16 +1,15 @@
 import React from 'react';
 import {Dimensions, View} from 'react-native';
-import {Skeleton} from 'react-native-animated-skeleton';
+// import {Skeleton} from 'react-native-animated-skeleton';
 
 const HomeSkeleton = () => {
-  const WINDOW_HEIGHT = Dimensions.get('window').height;
   const WINDOW_WIDTH = Dimensions.get('window').width;
   const CONTENT_WIDTH = Dimensions.get('window').width - 16;
   const SKELETON_COLOR = '#ddd';
   const GRID_SIZE = 4;
   return (
     <View>
-      <Skeleton
+      {/* <Skeleton
         loaderStyle={{
           width: WINDOW_WIDTH,
           height: WINDOW_WIDTH * 0.75,
@@ -59,7 +58,7 @@ const HomeSkeleton = () => {
           direction="row"
           numberOfItems={4}
         />
-      </View>
+      </View> */}
     </View>
   );
 };

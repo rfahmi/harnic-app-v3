@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState, useEffect} from 'react';
 import {FlatList, RefreshControl, TouchableOpacity} from 'react-native';
 import {FAB} from 'react-native-paper';
@@ -15,7 +15,7 @@ const UserShipping = ({navigation, route}) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
 
-  const getData = async (id) => {
+  const getData = async id => {
     const api_token = await AsyncStorage.getItem('api_token');
     await api
       .get('/user/' + id + '/shipping', {
@@ -23,7 +23,7 @@ const UserShipping = ({navigation, route}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           setData(res.data.data);
         } else {
@@ -34,7 +34,7 @@ const UserShipping = ({navigation, route}) => {
         }
         console.log(res.data);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('false');
 
         RNToasty.Error({

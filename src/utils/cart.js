@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import qs from 'qs';
 import {RNToasty} from 'react-native-toasty';
 import {api, app_version} from '../configs/api';
@@ -17,7 +17,7 @@ export const addCart = async (item_id, qty, note, toast) => {
         },
       },
     )
-    .then((res) => {
+    .then(res => {
       if (res.data.success) {
         toast &&
           RNToasty.Success({
@@ -35,7 +35,7 @@ export const addCart = async (item_id, qty, note, toast) => {
         return res.data.data;
       }
     })
-    .catch((err) => {
+    .catch(err => {
       console.log('false');
 
       RNToasty.Error({
@@ -61,7 +61,7 @@ export const updateCart = async (item_id, qty, note, toast) => {
         },
       },
     )
-    .then((res) => {
+    .then(res => {
       if (res.data.success) {
         toast &&
           RNToasty.Success({
@@ -78,7 +78,7 @@ export const updateCart = async (item_id, qty, note, toast) => {
         return res.data.data;
       }
     })
-    .catch((err) => {
+    .catch(err => {
       console.log('false');
 
       RNToasty.Error({
@@ -99,7 +99,7 @@ export const deleteCart = async (item_id, toast) => {
         Authorization: 'Bearer ' + api_token,
       },
     })
-    .then((res) => {
+    .then(res => {
       if (res.data.success) {
         toast &&
           RNToasty.Success({
@@ -116,7 +116,7 @@ export const deleteCart = async (item_id, toast) => {
         return res.data.data;
       }
     })
-    .catch((err) => {
+    .catch(err => {
       console.log('false');
 
       RNToasty.Error({

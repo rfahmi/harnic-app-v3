@@ -18,7 +18,7 @@ const Carousel = ({data}) => {
     return (
       <TouchableOpacity
         onPress={() => {
-          console.log(item);
+          // console.log(item);
           if (item.action) {
             switch (item.action) {
               case 'category':
@@ -47,11 +47,11 @@ const Carousel = ({data}) => {
                 navigation.push('HomePage', {name: item.param});
                 break;
               default:
-                console.log('Not action');
+                // console.log('Not action');
                 break;
             }
           } else {
-            console.log('Not action');
+            // console.log('Not action');
           }
         }}>
         <View

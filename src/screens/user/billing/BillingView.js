@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clipboard from '@react-native-community/clipboard';
 import {useIsFocused} from '@react-navigation/native';
 import moment from 'moment';
@@ -32,7 +32,7 @@ const BillingView = ({navigation, route}) => {
   const [totalDuration, setTotalDuration] = useState(0);
   const WINDOW_HEIGHT = Dimensions.get('window').height;
 
-  const getData = async (t) => {
+  const getData = async t => {
     const api_token = await AsyncStorage.getItem('api_token');
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
     await api
@@ -41,7 +41,7 @@ const BillingView = ({navigation, route}) => {
           Authorization: 'Bearer ' + api_token,
         },
       })
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           setData(res.data.data);
         } else {
@@ -51,7 +51,7 @@ const BillingView = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('false');
 
         RNToasty.Error({
@@ -74,7 +74,7 @@ const BillingView = ({navigation, route}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         setLoading(false);
         // console.log(res.data.data);
         if (res.data.success) {
@@ -88,7 +88,7 @@ const BillingView = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
         modalVA.current?.close();
         RNToasty.Error({
@@ -98,7 +98,7 @@ const BillingView = ({navigation, route}) => {
       });
   };
 
-  const getDuration = (t) => {
+  const getDuration = t => {
     // Coundown timer for a given expiry date-time
     let date = moment().utcOffset('+07:00').format('YYYY-MM-DD HH:mm:ss');
     console.log('d', date);
@@ -121,7 +121,7 @@ const BillingView = ({navigation, route}) => {
     setTotalDuration(d);
   };
 
-  const cancel = async (t) => {
+  const cancel = async t => {
     setLoading(true);
     const api_token = await AsyncStorage.getItem('api_token');
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
@@ -135,7 +135,7 @@ const BillingView = ({navigation, route}) => {
           },
         },
       )
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           navigation.replace('UserBilling', {user_id: user_data.user_id});
         } else {
@@ -145,7 +145,7 @@ const BillingView = ({navigation, route}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'bottom',
@@ -164,7 +164,7 @@ const BillingView = ({navigation, route}) => {
     getData(trxno).finally(() => setLoading(false));
   }, [isFocused]);
 
-  const getIcon = (num) => {
+  const getIcon = num => {
     const res =
       num == 0
         ? 'progress-alert'

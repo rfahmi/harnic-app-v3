@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import qs from 'qs';
 import React, {memo, useRef, useState} from 'react';
@@ -93,7 +93,7 @@ const Register = ({navigation}) => {
           gender: gender === 1 ? 'Male' : 'Female',
         }),
       )
-      .then(async (res) => {
+      .then(async res => {
         setLoading(false);
         if (res.data.success) {
           navigation.navigate('App', {screen: 'Home'});
@@ -114,7 +114,7 @@ const Register = ({navigation}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
         RNToasty.Error({
           title: err.message,
@@ -133,12 +133,12 @@ const Register = ({navigation}) => {
     }
     api
       .post('/auth/phone/check', qs.stringify({phone: phone.value}))
-      .then((res) => {
+      .then(res => {
         console.log(res.data);
         setLoading(false);
         if (res.data.success) {
           if (!res.data.registered) {
-            sendOTP(phone.value).then((r) => {
+            sendOTP(phone.value).then(r => {
               if (r) {
                 setShowSendAgain(false);
                 setWaitingTime(60 * 2);
@@ -155,7 +155,7 @@ const Register = ({navigation}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
         RNToasty.Error({
           title: err.message,
@@ -163,10 +163,10 @@ const Register = ({navigation}) => {
         });
       });
   };
-  const sendOTP = (p) => {
+  const sendOTP = p => {
     const result = api
       .post('/auth/phone/otp', qs.stringify({phone: p}))
-      .then((res) => {
+      .then(res => {
         if (res.data.success) {
           return true;
         } else {
@@ -177,7 +177,7 @@ const Register = ({navigation}) => {
           return false;
         }
       })
-      .catch((err) => {
+      .catch(err => {
         RNToasty.Error({
           title: err.message,
           position: 'center',
@@ -187,7 +187,7 @@ const Register = ({navigation}) => {
     return result;
   };
 
-  const _onOtpSubmit = (code) => {
+  const _onOtpSubmit = code => {
     setLoading(true);
     const phoneError = phoneValidator(phone.value);
 
@@ -207,7 +207,7 @@ const Register = ({navigation}) => {
           gender: gender === 1 ? 'Male' : 'Female',
         }),
       )
-      .then(async (res) => {
+      .then(async res => {
         setLoading(false);
         if (res.data.success) {
           modalOTP.current?.close();
@@ -229,7 +229,7 @@ const Register = ({navigation}) => {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoading(false);
         RNToasty.Error({
           title: err.message,
@@ -256,7 +256,7 @@ const Register = ({navigation}) => {
             <Header>Daftar sekarang, dapatkan penawaran terbaik</Header>
           </View>
           <SwitchButton
-            onValueChange={(val) => setMode(val)} // this is necessary for this component
+            onValueChange={val => setMode(val)} // this is necessary for this component
             text1="Nomor HP" // optional: first text in switch button --- default ON
             text2="Email" // optional: second text in switch button --- default OFF
             switchWidth={200} // optional: switch width --- default 44
@@ -274,19 +274,19 @@ const Register = ({navigation}) => {
           {mode === 1 ? (
             <>
               <TextInput
-                onLayout={(e) => {
+                onLayout={e => {
                   setInputWidth(e.nativeEvent.layout.width);
                 }}
                 label="Nama Lengkap"
                 value={name.value}
-                onChangeText={(text) => setName({value: text, error: ''})}
+                onChangeText={text => setName({value: text, error: ''})}
                 error={!!name.error}
                 errorText={name.error}
               />
               <TextInput
                 label="Nomor HP"
                 value={phone.value}
-                onChangeText={(text) => setPhone({value: text, error: ''})}
+                onChangeText={text => setPhone({value: text, error: ''})}
                 error={!!phone.error}
                 errorText={phone.error}
                 autoCapitalize="none"
@@ -324,7 +324,7 @@ const Register = ({navigation}) => {
                   </View>
                   <View style={{marginVertical: 16}}>
                     <SwitchButton
-                      onValueChange={(val) => setGender(val)} // this is necessary for this component
+                      onValueChange={val => setGender(val)} // this is necessary for this component
                       text1="Pria" // optional: first text in switch button --- default ON
                       text2="Wanita" // optional: second text in switch button --- default OFF
                       switchWidth={inputWidth} // optional: switch width --- default 44
@@ -358,12 +358,12 @@ const Register = ({navigation}) => {
           ) : (
             <>
               <TextInput
-                onLayout={(e) => {
+                onLayout={e => {
                   setInputWidth(e.nativeEvent.layout.width);
                 }}
                 label="Nama Lengkap"
                 value={name.value}
-                onChangeText={(text) => setName({value: text, error: ''})}
+                onChangeText={text => setName({value: text, error: ''})}
                 error={!!name.error}
                 errorText={name.error}
               />
@@ -371,7 +371,7 @@ const Register = ({navigation}) => {
                 label="Email"
                 returnKeyType="next"
                 value={email.value}
-                onChangeText={(text) => setEmail({value: text, error: ''})}
+                onChangeText={text => setEmail({value: text, error: ''})}
                 error={!!email.error}
                 errorText={email.error}
                 autoCapitalize="none"
@@ -383,7 +383,7 @@ const Register = ({navigation}) => {
                 label="Password"
                 returnKeyType="done"
                 value={password.value}
-                onChangeText={(text) => setPassword({value: text, error: ''})}
+                onChangeText={text => setPassword({value: text, error: ''})}
                 error={!!password.error}
                 errorText={password.error}
                 secureTextEntry
@@ -393,7 +393,7 @@ const Register = ({navigation}) => {
                 label="Ulangi Password"
                 returnKeyType="done"
                 value={password2.value}
-                onChangeText={(text) => setPassword2({value: text, error: ''})}
+                onChangeText={text => setPassword2({value: text, error: ''})}
                 error={!!password2.error}
                 errorText={password2.error}
                 secureTextEntry
@@ -432,7 +432,7 @@ const Register = ({navigation}) => {
 
                   <View style={{marginVertical: 16}}>
                     <SwitchButton
-                      onValueChange={(val) => setGender(val)} // this is necessary for this component
+                      onValueChange={val => setGender(val)} // this is necessary for this component
                       text1="Pria" // optional: first text in switch button --- default ON
                       text2="Wanita" // optional: second text in switch button --- default OFF
                       switchWidth={inputWidth} // optional: switch width --- default 44
@@ -488,7 +488,7 @@ const Register = ({navigation}) => {
               androidVariant="nativeAndroid"
               mode="date"
               date={dob.value || new Date()}
-              onDateChange={(e) => setDob({value: e, error: ''})}
+              onDateChange={e => setDob({value: e, error: ''})}
             />
           </View>
           <Button
@@ -538,7 +538,7 @@ const Register = ({navigation}) => {
                 autoFocusOnLoad
                 codeInputFieldStyle={styles.underlineStyleBase}
                 codeInputHighlightStyle={styles.underlineStyleHighLighted}
-                onCodeFilled={(code) => {
+                onCodeFilled={code => {
                   _onOtpSubmit(code);
                 }}
               />
