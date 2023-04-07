@@ -8,7 +8,7 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "version": "react-native-version"
+    "postversion": "react-native-version"
   },
   "dependencies": {
     "@freakycoder/react-native-bounceable": "^0.2.4",
