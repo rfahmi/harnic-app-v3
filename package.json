@@ -8,7 +8,9 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "postversion": "react-native-version"
+    "postversion": "react-native-version",
+    "android-build": "rm -rf ./android/app/build/outputs/bundle/release && cd ./android/ && gradlew bundleRelease",
+    "android-output": "cd ./android/app/build/outputs/bundle/release && explorer ."
   },
   "dependencies": {
     "@freakycoder/react-native-bounceable": "^0.2.4",
