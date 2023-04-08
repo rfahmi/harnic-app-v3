@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {memo, useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
@@ -29,7 +28,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import FooterBuy from '../../components/FooterBuy';
 import HeaderBackTransparent from '../../components/HeaderBackTransparent';
 import Separator from '../../components/Separator';
-import {api, api2} from '../../configs/api';
+import {api} from '../../configs/api';
 import {colors} from '../../constants/colors';
 import ProductPictures from '../../organism/product/ProductPictures';
 import SimilarProducts from '../../organism/product/SimilarProducts';
@@ -40,6 +39,7 @@ import {addCart} from '../../utils/cart';
 import {setCart} from '../../configs/redux/action/cartActions';
 import FastImage from 'react-native-fast-image';
 import VariantProducts from '../../organism/product/VariantProducts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Product = ({navigation, route}) => {
   const dispatch = useDispatch();
@@ -64,19 +64,11 @@ const Product = ({navigation, route}) => {
   const getData = async id => {
     const user_data = JSON.parse(await AsyncStorage.getItem('user_data'));
     const append_url = user_data ? '?user_id=' + user_data.user_id : '';
-
-    await api2('get', '/product/' + id + append_url)
-      .then(res => {
-        if (res.data.success) {
-          setData(res.data.data);
-        }
-      })
-      .catch(err => {
-        RNToasty.Error({
-          title: err.message,
-          position: 'bottom',
-        });
-      });
+    await api.get('/product/' + id + append_url).then(res => {
+      if (res.data.success) {
+        setData(res.data.data);
+      }
+    });
   };
 
   const _handleRefresh = () => {

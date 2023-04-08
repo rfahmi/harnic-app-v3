@@ -8,7 +8,7 @@ export let baseURL = __DEV__
   : // 'http://10.0.2.2:8000/v3'
     'https://api3.harnic.id/v3';
 
-const api = axios.create({
+export const api = axios.create({
   baseURL,
   headers: {
     Accept: 'application/json',
@@ -17,7 +17,7 @@ const api = axios.create({
   timeout: 5000,
 });
 
-const source = axios.CancelToken.source();
+export const source = axios.CancelToken.source();
 
 const debounceHttpCall = (httpFunction, debounceTime) => {
   const debouncedFunction = debounce(httpFunction, debounceTime);
@@ -29,5 +29,3 @@ const debounceHttpCall = (httpFunction, debounceTime) => {
 };
 
 const api2 = debounceHttpCall(api.request, 500);
-
-export {api, api2, source};

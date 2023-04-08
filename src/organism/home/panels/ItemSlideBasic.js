@@ -4,7 +4,6 @@ import {Dimensions, FlatList, TouchableOpacity, View} from 'react-native';
 import ProductCard from '../../../components/ProductCard';
 import ProductCardHorizontal from '../../../components/ProductCardHorizontal';
 import ProductCardTall from '../../../components/ProductCardTall';
-import debouncedNavigate from '../../../utils/debouncedNavigate';
 
 const ItemSlideBasic = ({data, parentScrollViewRef}) => {
   const navigation = useNavigation();
@@ -15,16 +14,11 @@ const ItemSlideBasic = ({data, parentScrollViewRef}) => {
   const _renderItems = ({item, index}) => {
     return (
       <TouchableOpacity
-        onPress={
-          () =>
-            debouncedNavigate(navigation.push, 'Search', {
-              screen: 'Product',
-              params: {itemid: item.itemid},
-            })
-          // navigation.push('Search', {
-          //   screen: 'Product',
-          //   params: {itemid: item.itemid},
-          // })
+        onPress={() =>
+          navigation.push('Search', {
+            screen: 'Product',
+            params: {itemid: item.itemid},
+          })
         }>
         {data.card_type === 'HORIZONTAL' ? (
           <ProductCardHorizontal

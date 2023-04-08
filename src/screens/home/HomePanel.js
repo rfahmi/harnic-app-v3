@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useScrollToTop} from '@react-navigation/native';
-import React, {useEffect, useRef, useState} from 'react';
-import {Animated, RefreshControl, View} from 'react-native';
+import React, {useEffect, useRef, useState, useCallback} from 'react';
+import {ActivityIndicator, Animated, RefreshControl, View} from 'react-native';
 import {FAB} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
 import HeaderBackSearch from '../../components/HeaderBackSearch';
@@ -15,6 +15,7 @@ const HomePage = ({navigation, route}) => {
   const limit = 8;
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const {name} = route.params;
   const [panel, setPanel] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
@@ -22,39 +23,41 @@ const HomePage = ({navigation, route}) => {
   const scroll = useRef(new Animated.Value(0)).current;
   useScrollToTop(refList);
 
-  const getPanel = async (n, p) => {
-    const api_token = await AsyncStorage.getItem('api_token');
-    console.log('aa');
-    await api
-      .get(`/panel/${n}?limit=${limit}&page=${p}`, {
-        headers: {
-          Authorization: 'Bearer ' + api_token,
-        },
-      })
-      .then(res => {
-        console.log('panels ', res.data.data);
-        if (res.data.success) {
-          if (p > 1) {
-            setPanel([...panel, ...res.data.data]);
+  const getPanel = useCallback(
+    (n, p) => {
+      AsyncStorage.getItem('api_token')
+        .then(api_token => {
+          return api.get(`/panel/${n}?limit=${limit}&page=${p}`, {
+            headers: {
+              Authorization: 'Bearer ' + api_token,
+            },
+          });
+        })
+        .then(res => {
+          if (res.data.success) {
+            if (p > 1) {
+              setPanel([...panel, ...res.data.data]);
+            } else {
+              setPanel(res.data.data);
+            }
+            if (res.data.data.length < limit) {
+              setHasMore(false);
+            }
           } else {
-            setPanel(res.data.data);
-          }
-          if (res.data.data.length < limit) {
             setHasMore(false);
           }
-        } else {
-          setHasMore(false);
-        }
-      })
-      .catch(err => {
-        RNToasty.Error({
-          title: err.message,
-          position: 'bottom',
+        })
+        .catch(err => {
+          RNToasty.Error({
+            title: err.message,
+            position: 'bottom',
+          });
         });
-      });
-  };
+    },
+    [panel],
+  );
+
   const _handleRefresh = () => {
-    console.log('ccc');
     setPanel(null);
     setPage(1);
     setHasMore(true);
@@ -62,22 +65,24 @@ const HomePage = ({navigation, route}) => {
     getPanel(name, 1)
       .then(() => {
         setRefreshing(false);
-        setPage(page + 1);
+        setPage(2);
       })
       .catch(() => setRefreshing(false));
   };
 
   const onLoadMore = () => {
+    setLoadingMore(true);
     getPanel(name, page)
       .then(() => {
         setRefreshing(false);
         setPage(page + 1);
       })
-      .catch(() => setRefreshing(false));
+      .finally(() => setLoadingMore(false));
   };
 
   useEffect(() => {
     setRefreshing(true);
+    setLoadingMore(true);
     setPage(1);
     setHasMore(true);
     getPanel(name, 1)
@@ -85,16 +90,17 @@ const HomePage = ({navigation, route}) => {
         setRefreshing(false);
         setPage(page + 1);
       })
-      .catch(() => setRefreshing(false));
+      .finally(() => setRefreshing(false) && setLoadingMore(false));
   }, []);
 
-  const _renderPanel = ({item, index}) => {
+  const _renderPanel = useCallback(({item, index}) => {
     return <Panels data={item} />;
-  };
+  }, []);
 
-  const keyExtractor = (item, index) => {
-    return String(`Panel${item.component_id}`);
-  };
+  const keyExtractor = useCallback(
+    item => String(`Panel${item.component_id}`),
+    [],
+  );
 
   return (
     <>
@@ -120,12 +126,28 @@ const HomePage = ({navigation, route}) => {
             renderItem={_renderPanel}
             keyExtractor={keyExtractor}
             onEndReached={onLoadMore}
-            ListFooterComponent={hasMore ? <ListSkeleton /> : <View />}
+            ListFooterComponent={
+              <View
+                style={{
+                  flex: 1,
+                  padding: 24,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                {hasMore ? (
+                  loadingMore ? (
+                    <ActivityIndicator size="large" color="#0000ff" />
+                  ) : (
+                    <ListSkeleton />
+                  )
+                ) : (
+                  <View />
+                )}
+              </View>
+            }
             nestedScrollEnabled
             onEndThreshold={0.5}
-            // removeClippedSubviews
-            // initialNumToRender={limit}
-            // maxToRenderPerBatch={limit}
+            contentContainerStyle={{paddingBottom: 50}}
           />
           <FAB
             style={{
