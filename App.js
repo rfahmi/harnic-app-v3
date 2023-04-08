@@ -15,7 +15,7 @@ import * as RootNavigation from './src/utils/RootNavigation';
 import {enableScreens} from 'react-native-screens';
 import {Text} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-enableScreens();
+// enableScreens();
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: async function (token) {

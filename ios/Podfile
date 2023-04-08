@@ -58,3 +58,5 @@ target 'harnicid' do
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
 end
+
+pod 'RNScreens', :path => '../node_modules/react-native-screens'
