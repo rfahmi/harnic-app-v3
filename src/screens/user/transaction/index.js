@@ -1,17 +1,20 @@
-import React, {memo} from 'react';
+import React, {memo, useRef} from 'react';
 import ScrollableTabView, {
   ScrollableTabBar,
-} from 'react-native-scrollable-tab-view';
+} from 'react-native-scrollable-tab-view-improved';
 import HeaderBack from '../../../components/HeaderBack';
 import TransactionList from './TransactionList';
 
 const UserTransaction = ({navigation, route}) => {
   const {user_id, init} = route.params;
 
+  const scrollableTabViewRef = useRef(null);
+
   return (
     <>
       <HeaderBack title="Pesanan" styles={{elevation: 0}} search={false} />
       <ScrollableTabView
+        ref={scrollableTabViewRef}
         initialPage={init || 0}
         renderTabBar={() => (
           <ScrollableTabBar

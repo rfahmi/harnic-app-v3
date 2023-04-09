@@ -2,7 +2,7 @@ import qs from 'qs';
 import React, {memo, useState, useEffect} from 'react';
 import ScrollableTabView, {
   ScrollableTabBar,
-} from 'react-native-scrollable-tab-view';
+} from 'react-native-scrollable-tab-view-improved';
 import Empty from '../../organism/empty';
 import {api} from '../../configs/api';
 import SearchResultItems from '../../organism/search/SearchResultItems';
@@ -30,11 +30,11 @@ const SearchResult = ({navigation, route}) => {
           brand,
         }),
       )
-      .then((res) => {
+      .then(res => {
         setLoading(false);
         setData(res.data.data);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err.message);
         setLoading(false);
       });
@@ -54,7 +54,7 @@ const SearchResult = ({navigation, route}) => {
               activeTextColor="#1100BB"
             />
           )}>
-          {data.map((i) => {
+          {data.map(i => {
             return (
               <SearchResultItems
                 key={`CatTab${i.id}`}
@@ -67,7 +67,7 @@ const SearchResult = ({navigation, route}) => {
           })}
         </ScrollableTabView>
       ) : data && data.length === 1 ? (
-        data.map((i) => {
+        data.map(i => {
           return (
             <SearchResultItems
               key={`CatTab${i.id}`}

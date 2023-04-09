@@ -55,13 +55,13 @@ const TitleTimer = ({data}) => {
         )}
       </View>
 
-      {totalDuration > 0 && (
+      {data && totalDuration > 0 && (
         <CountDown
-          until={totalDuration}
+          until={totalDuration || 0}
           timetoShow={('H', 'M', 'S')}
-          digitStyle={{backgroundColor: data.color1}}
-          digitTxtStyle={{color: data.color2}}
-          timeLabelStyle={{color: data.color1, fontWeight: 'bold'}}
+          digitStyle={{backgroundColor: data.color1 || '#000'}}
+          digitTxtStyle={{color: data.color2 || '#fff'}}
+          timeLabelStyle={{color: data.color1 || '#000', fontWeight: 'bold'}}
           size={14}
         />
       )}

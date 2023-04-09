@@ -1,6 +1,6 @@
 import React from 'react';
+import ContentLoader, {Rect} from 'react-content-loader/native';
 import {ActivityIndicator, Dimensions, View} from 'react-native';
-// import {Skeleton} from 'react-native-animated-skeleton';
 
 const ProductSkeleton = () => {
   const WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -9,44 +9,77 @@ const ProductSkeleton = () => {
   const SKELETON_COLOR = '#ddd';
   return (
     <View>
-      {/* <Skeleton
-        loaderStyle={{
-          width: WINDOW_WIDTH,
-          height: WINDOW_WIDTH,
-          backgroundColor: SKELETON_COLOR,
-        }}
-        numberOfItems={1}
-      />
+      <ContentLoader
+        speed={2}
+        width={WINDOW_WIDTH}
+        height={WINDOW_WIDTH}
+        backgroundColor={SKELETON_COLOR}
+        foregroundColor="#f3f3f3">
+        <Rect
+          x="0"
+          y="0"
+          rx="0"
+          ry="0"
+          width={WINDOW_WIDTH}
+          height={WINDOW_WIDTH}
+        />
+      </ContentLoader>
       <View style={{padding: 16}}>
-        <Skeleton
-          loaderStyle={{
-            width: CONTENT_WIDTH * 0.3,
-            height: 22,
-            marginVertical: 4,
-            backgroundColor: SKELETON_COLOR,
-          }}
-          numberOfItems={1}
-        />
-        <Skeleton
-          loaderStyle={{
-            width: CONTENT_WIDTH * 0.7,
-            height: 22,
-            marginVertical: 4,
-            backgroundColor: SKELETON_COLOR,
-          }}
-          numberOfItems={1}
-        />
-        <View style={{marginVertical: 8}}>
-          <Skeleton
-            loaderStyle={{
-              width: CONTENT_WIDTH,
-              height: 14,
-              marginVertical: 4,
-              backgroundColor: SKELETON_COLOR,
-            }}
-            direction="column"
-            numberOfItems={3}
+        <ContentLoader
+          speed={2}
+          width={CONTENT_WIDTH * 0.3}
+          height={22}
+          backgroundColor={SKELETON_COLOR}
+          foregroundColor="#f3f3f3">
+          <Rect
+            x="0"
+            y="0"
+            rx="0"
+            ry="0"
+            width={CONTENT_WIDTH * 0.3}
+            height="22"
           />
+        </ContentLoader>
+        <ContentLoader
+          speed={2}
+          width={CONTENT_WIDTH * 0.7}
+          height={22}
+          backgroundColor={SKELETON_COLOR}
+          foregroundColor="#f3f3f3">
+          <Rect
+            x="0"
+            y="0"
+            rx="0"
+            ry="0"
+            width={CONTENT_WIDTH * 0.7}
+            height="22"
+          />
+        </ContentLoader>
+        <View style={{marginVertical: 8}}>
+          <ContentLoader
+            speed={2}
+            width={CONTENT_WIDTH}
+            height={56}
+            backgroundColor={SKELETON_COLOR}
+            foregroundColor="#f3f3f3">
+            <Rect x="0" y="0" rx="0" ry="0" width={CONTENT_WIDTH} height="14" />
+            <Rect
+              x="0"
+              y="20"
+              rx="0"
+              ry="0"
+              width={CONTENT_WIDTH}
+              height="14"
+            />
+            <Rect
+              x="0"
+              y="40"
+              rx="0"
+              ry="0"
+              width={CONTENT_WIDTH}
+              height="14"
+            />
+          </ContentLoader>
         </View>
         <View
           style={{
@@ -55,7 +88,7 @@ const ProductSkeleton = () => {
           }}>
           <ActivityIndicator size="large" color={SKELETON_COLOR} />
         </View>
-      </View> */}
+      </View>
     </View>
   );
 };
