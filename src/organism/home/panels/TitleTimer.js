@@ -1,9 +1,9 @@
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import moment from 'moment';
-import React, {memo, useCallback, useState} from 'react';
+import React, {memo, useCallback, useEffect, useState} from 'react';
 import {Text, View} from 'react-native';
-import CountDown from 'react-native-countdown-component';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import Countdown from '../../../components/Countdown';
 
 const TitleTimer = ({data}) => {
   const [totalDuration, setTotalDuration] = useState(0);
@@ -32,6 +32,10 @@ const TitleTimer = ({data}) => {
     }, []),
   );
 
+  useEffect(()=>{
+    console.log(data)
+  },[data])
+
   const navigation = useNavigation();
   return (
     <View
@@ -56,8 +60,8 @@ const TitleTimer = ({data}) => {
       </View>
 
       {data && totalDuration > 0 && (
-        <CountDown
-          until={totalDuration || 0}
+        <Countdown
+          until={totalDuration || 2000000}
           timetoShow={('H', 'M', 'S')}
           digitStyle={{backgroundColor: data.color1 || '#000'}}
           digitTxtStyle={{color: data.color2 || '#fff'}}

@@ -17,7 +17,7 @@ const Title = ({data}) => {
         alignItems: 'center',
         backgroundColor: data.color2,
       }}>
-      <Text style={{fontSize: 16, fontWeight: 'bold', color: data.color1}}>
+      <Text style={{fontSize: 16, fontWeight: 'bold', color: data.color1, maxWidth: '65%'}}>
         {data.param1}
       </Text>
       {data.param2 && (
@@ -29,9 +29,8 @@ const Title = ({data}) => {
           }
           mode="contained"
           color={data.color1}
-          labelStyle={{fontSize: 11, margin: 0, textAlign: 'left'}}
+          labelStyle={{fontSize: 11}}
           contentStyle={{
-            height: 24,
             alignItems: 'center',
             justifyContent: 'flex-end',
           }}
