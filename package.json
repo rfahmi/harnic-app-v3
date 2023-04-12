@@ -12,7 +12,7 @@
     "android-build": "rm -rf ./android/app/build/outputs/bundle/release && cd ./android/ && gradlew bundleRelease",
     "android-output": "cd ./android/app/build/outputs/bundle/release && explorer .",
     "sync-version": "node ./scripts/sync_version_label.js",
-    "ios-build": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --assets-dest ./ios/assets --dev=false --platform='ios'"
+    "ios-build": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --assets-dest ./ios/ --dev=false --platform='ios'"
   },
   "dependencies": {
     "@freakycoder/react-native-bounceable": "^0.2.4",
