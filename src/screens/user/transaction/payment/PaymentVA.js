@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-// import CountDown from 'react-native-countdown-component';
+
 import {Modalize} from 'react-native-modalize';
 import {Button, Card, Dialog, Paragraph, Title} from 'react-native-paper';
 import HTML from 'react-native-render-html';

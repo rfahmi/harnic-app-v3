@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-// import CountDown from 'react-native-countdown-component';
+
 import {Modalize} from 'react-native-modalize';
 import {Button} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';

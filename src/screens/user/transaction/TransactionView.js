@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-// import CountDown from 'react-native-countdown-component';
+
 import FastImage from 'react-native-fast-image';
 import {Modalize} from 'react-native-modalize';
 import {Button, Card, Divider, List, Title} from 'react-native-paper';

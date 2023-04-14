@@ -4,7 +4,7 @@ import {useIsFocused} from '@react-navigation/native';
 import moment from 'moment';
 import React, {useEffect, useState, useRef} from 'react';
 import {Dimensions, RefreshControl, ScrollView, View} from 'react-native';
-// import CountDown from 'react-native-countdown-component';
+
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Modalize} from 'react-native-modalize';
 import {
