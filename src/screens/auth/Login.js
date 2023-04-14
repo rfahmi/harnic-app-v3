@@ -5,6 +5,7 @@ import React, {memo, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Dimensions,
+  Keyboard,
   ScrollView,
   StyleSheet,
   Text,
@@ -116,6 +117,7 @@ const Login = ({navigation}) => {
                 if (r) {
                   setShowSendAgain(false);
                   setWaitingTime(60 * 2);
+                  Keyboard.dismiss();
                   modalOTP.current?.open();
                 } else {
                   RNToasty.Success({
