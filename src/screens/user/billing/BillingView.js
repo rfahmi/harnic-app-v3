@@ -4,7 +4,7 @@ import {useIsFocused} from '@react-navigation/native';
 import moment from 'moment';
 import React, {useEffect, useState, useRef} from 'react';
 import {Dimensions, RefreshControl, ScrollView, View} from 'react-native';
-import CountDown from 'react-native-countdown-component';
+// import CountDown from 'react-native-countdown-component';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Modalize} from 'react-native-modalize';
 import {
@@ -21,6 +21,7 @@ import HeaderBack from '../../../components/HeaderBack';
 import {api} from '../../../configs/api';
 import {colors} from '../../../constants/colors';
 import {currencyFormat} from '../../../utils/formatter';
+import Countdown from '../../../components/Countdown';
 
 const BillingView = ({navigation, route}) => {
   const {trxno} = route.params;
@@ -305,7 +306,7 @@ const BillingView = ({navigation, route}) => {
                   marginVertical: 16,
                   justifyContent: 'center',
                 }}>
-                <CountDown
+                <Countdown
                   until={totalDuration}
                   timetoShow={('H', 'M', 'S')}
                   digitStyle={{backgroundColor: colors.primary}}

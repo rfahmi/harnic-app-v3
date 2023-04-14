@@ -158,7 +158,7 @@ const Home = ({navigation}) => {
         })}
       />
       {!config ? (
-        <HomeSkeleton />
+        <View />
       ) : (
         <>
           <Animated.FlatList

@@ -34,7 +34,8 @@ import {
   phoneValidator,
 } from '../../utils/validator';
 import {saveFcm} from '../../utils/fcm';
-import CountDown from 'react-native-countdown-component';
+import Countdown from '../../components/Countdown';
+// import CountDown from 'react-native-countdown-component';
 const Register = ({navigation}) => {
   const dispatch = useDispatch();
   const [waitingTime, setWaitingTime] = useState(0);
@@ -555,7 +556,7 @@ const Register = ({navigation}) => {
                     style={{fontSize: 11, color: '#555', marginVertical: 8}}>
                     Kirim ulang setelah:
                   </Text>
-                  <CountDown
+                  <Countdown
                     until={waitingTime}
                     timetoShow={['M', 'S']}
                     digitStyle={{backgroundColor: '#ddd'}}

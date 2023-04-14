@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import CountDown from 'react-native-countdown-component';
+// import CountDown from 'react-native-countdown-component';
 import {Modalize} from 'react-native-modalize';
 import {Button} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
@@ -32,6 +32,7 @@ import {
   passwordValidator,
   phoneValidator,
 } from '../../utils/validator';
+import Countdown from '../../components/Countdown';
 
 const Login = ({navigation}) => {
   const dispatch = useDispatch();
@@ -412,7 +413,7 @@ const Login = ({navigation}) => {
                     style={{fontSize: 11, color: '#555', marginVertical: 8}}>
                     Kirim ulang setelah:
                   </Text>
-                  <CountDown
+                  <Countdown
                     until={waitingTime}
                     timetoShow={['M', 'S']}
                     digitStyle={{backgroundColor: '#ddd'}}

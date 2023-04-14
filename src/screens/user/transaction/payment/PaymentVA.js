@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import CountDown from 'react-native-countdown-component';
+// import CountDown from 'react-native-countdown-component';
 import {Modalize} from 'react-native-modalize';
 import {Button, Card, Dialog, Paragraph, Title} from 'react-native-paper';
 import HTML from 'react-native-render-html';
@@ -23,6 +23,7 @@ import HeaderBack from '../../../../components/HeaderBack';
 import {api} from '../../../../configs/api';
 import {colors} from '../../../../constants/colors';
 import {currencyFormat} from '../../../../utils/formatter';
+import Countdown from '../../../../components/Countdown';
 
 const PaymentVA = ({trx}) => {
   const navigation = useNavigation();
@@ -207,7 +208,7 @@ const PaymentVA = ({trx}) => {
                   marginVertical: 16,
                   justifyContent: 'center',
                 }}>
-                <CountDown
+                <Countdown
                   until={totalDuration}
                   timetoShow={('H', 'M', 'S')}
                   digitStyle={{backgroundColor: colors.primary}}
