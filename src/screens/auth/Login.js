@@ -257,7 +257,7 @@ const Login = ({navigation}) => {
 
   return (
     <>
-      <BackButton goBack={() => navigation.goBack()} />
+      <BackButton goBack={() => navigation.replace('App')}/>
       <ScrollView style={{padding: 16, flex: 1}}>
         <Background>
           <FocusAwareStatusBar
