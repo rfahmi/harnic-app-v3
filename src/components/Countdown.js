@@ -12,7 +12,7 @@ const Countdown = ({ until, onFinish, digitStyle, digitTxtStyle, separatorStyle 
 
       return () => clearInterval(interval);
     } else {
-      onFinish();
+      onFinish && onFinish();
     }
   }, [seconds]);
 
