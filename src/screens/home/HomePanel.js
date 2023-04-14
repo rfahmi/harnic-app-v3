@@ -24,37 +24,33 @@ const HomePage = ({navigation, route}) => {
   useScrollToTop(refList);
 
   const getPanel = useCallback(
-    (n, p) => {
-      AsyncStorage.getItem('api_token')
-        .then(api_token => {
-          return api.get(`/panel/${n}?limit=${limit}&page=${p}`, {
-            headers: {
-              Authorization: 'Bearer ' + api_token,
-            },
-          });
-        })
-        .then(res => {
-          if (res.data.success) {
-            if (p > 1) {
-              setPanel([...panel, ...res.data.data]);
-            } else {
-              setPanel(res.data.data);
-            }
-            if (res.data.data.length < limit) {
-              setHasMore(false);
-            }
-          } else {
-            setHasMore(false);
-          }
-        })
-        .catch(err => {
-          RNToasty.Error({
-            title: err.message,
-            position: 'bottom',
-          });
-        });
+    async (n, p) => {
+      console.log('Page: ' + p);
+      const api_token = await AsyncStorage.getItem('api_token');
+
+      const res = await api.get(`/page/${n}?limit=${limit}&page=${p}`, {
+        headers: {
+          Authorization: 'Bearer ' + api_token,
+        },
+      });
+      if (res.data.success) {
+        if (p > 1) {
+          console.log('aaa');
+          setPanel(prevPanel => [...prevPanel, ...res.data.data]);
+        } else {
+          setPanel(res.data.data);
+        }
+        if (res.data.data.length < limit) {
+          setHasMore(false);
+          throw new Error('No more data');
+        }
+      } else {
+        setHasMore(false);
+        throw new Error('API error');
+      }
     },
-    [panel],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [name, page],
   );
 
   const _handleRefresh = () => {
