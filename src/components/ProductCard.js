@@ -81,7 +81,7 @@ const ProductCard = ({
         />
       </View>
       <View style={{padding: 4}}>
-        <View style={{marginBottom: 8, height: 20}}>
+        <View style={{marginBottom: 8}}>
           <Text style={{fontSize: 10}} numberOfLines={2}>
             {item && item.online_name}
           </Text>

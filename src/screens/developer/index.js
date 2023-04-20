@@ -15,8 +15,8 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {List, TextInput} from 'react-native-paper';
 import {FacebookWebView} from '../../components/FacebookWebView';
 import HeaderBack from '../../components/HeaderBack';
-import { colors } from '../../constants/colors';
-import { Modalize } from 'react-native-modalize';
+import {colors} from '../../constants/colors';
+import {Modalize} from 'react-native-modalize';
 
 const Developer = ({navigation}) => {
   const WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -40,7 +40,9 @@ const Developer = ({navigation}) => {
         uri={webviewUrl}
         onClose={() => console.log('closed')}
       />
-      <KeyboardAvoidingView style={{flex: 1,marginHorizontal:16}} behavior="height">
+      <KeyboardAvoidingView
+        style={{flex: 1, marginHorizontal: 16}}
+        behavior="height">
         <ScrollView>
           <List.Item
             title="Goto Test Panel"
@@ -163,7 +165,7 @@ const Developer = ({navigation}) => {
             }}
             onPress={() => {
               Keyboard.dismiss();
-              modalOTP.current?.open()
+              modalOTP.current?.open();
             }}>
             <Text>Open OTP</Text>
           </TouchableOpacity>
@@ -173,30 +175,29 @@ const Developer = ({navigation}) => {
         ref={modalOTP}
         modalHeight={WINDOW_HEIGHT * 0.5}
         modalStyle={{flex: 1, zIndex: 3}}>
-
-          <View style={{flex: 1, padding: 16}}>
-            <Text
-              style={{
-                marginTop: 16,
-                fontWeight: 'bold',
-                fontSize: 24,
-                width: WINDOW_WIDTH * 0.6,
-              }}>
-              Masukkan Kode OTP
-            </Text>
-            <View style={{alignItems: 'center'}}>
-              <OTPInputView
-                style={{width: '70%', height: 200}}
-                pinCount={4}
-                autoFocusOnLoad
-                codeInputFieldStyle={styles.underlineStyleBase}
-                codeInputHighlightStyle={styles.underlineStyleHighLighted}
-                onCodeFilled={code => {
-                  console.log(code);
-                }}
-              />
-            </View>
+        <View style={{flex: 1, padding: 16}}>
+          <Text
+            style={{
+              marginTop: 16,
+              fontWeight: 'bold',
+              fontSize: 24,
+              width: WINDOW_WIDTH * 0.6,
+            }}>
+            Masukkan Kode OTP
+          </Text>
+          <View style={{alignItems: 'center'}}>
+            <OTPInputView
+              style={{width: '70%', height: 200}}
+              pinCount={4}
+              autoFocusOnLoad
+              codeInputFieldStyle={styles.underlineStyleBase}
+              codeInputHighlightStyle={styles.underlineStyleHighLighted}
+              onCodeFilled={code => {
+                console.log(code);
+              }}
+            />
           </View>
+        </View>
       </Modalize>
     </>
   );
