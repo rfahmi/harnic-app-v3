@@ -28,7 +28,6 @@ import {
 import HTML from 'react-native-render-html';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {RNToasty} from 'react-native-toasty';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {authentication} from '../../assets/images';
@@ -39,7 +38,6 @@ import {setAuth} from '../../configs/redux/action/authActions';
 import {colors} from '../../constants/colors';
 import ListSkeleton from '../../organism/skeleton/ListSkeleton';
 import {deleteFcm} from '../../utils/fcm';
-
 const User = ({navigation}) => {
   const dispatch = useDispatch();
   const STATUSBAR_HEIGHT =
@@ -225,7 +223,7 @@ const User = ({navigation}) => {
                         alignItems: 'center',
                         paddingHorizontal: 16,
                       }}>
-                      <FontAwesome5 name="coins" color="#EFC910" size={16} />
+                      <Icon name="transition-masked" color="#EFC910" size={28} />
                       <View style={{marginLeft: 8}}>
                         <Text style={{fontSize: 16, fontWeight: 'bold'}}>
                           {Math.floor(data?.total_point)} Point
