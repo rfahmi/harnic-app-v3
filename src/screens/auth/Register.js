@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   Dimensions,
   Keyboard,
+  KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet,
@@ -242,7 +243,7 @@ const Register = ({navigation}) => {
   };
 
   return (
-    <>
+    <KeyboardAvoidingView behavior='padding' style={{flex:1}}>
       <BackButton goBack={() => navigation.goBack()} />
       <ScrollView style={{padding: 16, flex: 1}}>
         <Background>
@@ -573,7 +574,7 @@ const Register = ({navigation}) => {
           </View>
         )}
       </Modalize>
-    </>
+    </KeyboardAvoidingView>
   );
 };
 

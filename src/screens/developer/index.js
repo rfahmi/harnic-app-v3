@@ -40,9 +40,7 @@ const Developer = ({navigation}) => {
         uri={webviewUrl}
         onClose={() => console.log('closed')}
       />
-      <KeyboardAvoidingView
-        style={{flex: 1, marginHorizontal: 16}}
-        behavior="height">
+      <KeyboardAvoidingView behavior="height">
         <ScrollView>
           <List.Item
             title="Goto Test Panel"
@@ -170,35 +168,35 @@ const Developer = ({navigation}) => {
             <Text>Open OTP</Text>
           </TouchableOpacity>
         </ScrollView>
-      </KeyboardAvoidingView>
-      <Modalize
-        ref={modalOTP}
-        modalHeight={WINDOW_HEIGHT * 0.5}
-        modalStyle={{flex: 1, zIndex: 3}}>
-        <View style={{flex: 1, padding: 16}}>
-          <Text
-            style={{
-              marginTop: 16,
-              fontWeight: 'bold',
-              fontSize: 24,
-              width: WINDOW_WIDTH * 0.6,
-            }}>
-            Masukkan Kode OTP
-          </Text>
-          <View style={{alignItems: 'center'}}>
-            <OTPInputView
-              style={{width: '70%', height: 200}}
-              pinCount={4}
-              autoFocusOnLoad
-              codeInputFieldStyle={styles.underlineStyleBase}
-              codeInputHighlightStyle={styles.underlineStyleHighLighted}
-              onCodeFilled={code => {
-                console.log(code);
-              }}
-            />
+        <Modalize
+          ref={modalOTP}
+          modalHeight={WINDOW_HEIGHT * 0.5}
+          modalStyle={{flex: 1, zIndex: 3}}>
+          <View style={{flex: 1, padding: 16}}>
+            <Text
+              style={{
+                marginTop: 16,
+                fontWeight: 'bold',
+                fontSize: 24,
+                width: WINDOW_WIDTH * 0.6,
+              }}>
+              Masukkan Kode OTP
+            </Text>
+            <View style={{alignItems: 'center'}}>
+              <OTPInputView
+                style={{width: '70%', height: 200}}
+                pinCount={4}
+                autoFocusOnLoad
+                codeInputFieldStyle={styles.underlineStyleBase}
+                codeInputHighlightStyle={styles.underlineStyleHighLighted}
+                onCodeFilled={code => {
+                  console.log(code);
+                }}
+              />
+            </View>
           </View>
-        </View>
-      </Modalize>
+        </Modalize>
+      </KeyboardAvoidingView>
     </>
   );
 };

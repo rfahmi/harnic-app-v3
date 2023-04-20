@@ -1,8 +1,10 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Dimensions,
   FlatList,
+  KeyboardAvoidingView,
   RefreshControl,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -12,19 +14,19 @@ import ScreenTitle from '../../components/ScreenTitle';
 import CartItem from './CartItem';
 import Empty from '../../organism/empty';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {api} from '../../configs/api';
-import {RNToasty} from 'react-native-toasty';
-import {useDispatch, useSelector} from 'react-redux';
-import {setCart} from '../../configs/redux/action/cartActions';
-import {useIsFocused} from '@react-navigation/native';
-import {colors} from '../../constants/colors';
+import { api } from '../../configs/api';
+import { RNToasty } from 'react-native-toasty';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCart } from '../../configs/redux/action/cartActions';
+import { useIsFocused } from '@react-navigation/native';
+import { colors } from '../../constants/colors';
 import ProductCard from '../../components/ProductCard';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Modalize} from 'react-native-modalize';
-import {Title} from 'react-native-paper';
+import { Modalize } from 'react-native-modalize';
+import { Title } from 'react-native-paper';
 import CartItemEdit from './CartItemEdit';
 
-const Cart = ({navigation}) => {
+const Cart = ({ navigation }) => {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const modalizeRef = useRef(null);
@@ -85,13 +87,13 @@ const Cart = ({navigation}) => {
       .catch(() => setLoading(false));
   }, [isFocused]);
 
-  const _renderItems = ({item, index}) => {
+  const _renderItems = ({ item, index }) => {
     return (
       <TouchableOpacity
         onPress={() =>
           navigation.push('Search', {
             screen: 'Product',
-            params: {itemid: item.itemmst},
+            params: { itemid: item.itemmst },
           })
         }>
         <CartItem
@@ -113,7 +115,7 @@ const Cart = ({navigation}) => {
   const _renderRecomendation = recomendations => {
     return (
       <>
-        <View style={{alignItems: 'center', paddingVertical: 16}}>
+        <View style={{ alignItems: 'center', paddingVertical: 16 }}>
           <Icon name="dots-horizontal" size={48} color={colors.grayLight} />
         </View>
         <View
@@ -147,17 +149,17 @@ const Cart = ({navigation}) => {
           </View>
         </View>
         <FlatList
-          style={{paddingHorizontal: 8, backgroundColor: 'orange'}}
+          style={{ paddingHorizontal: 8, backgroundColor: 'orange' }}
           data={recomendations}
           showsHorizontalScrollIndicator={false}
           horizontal={true}
           keyExtractor={keyExtractor2}
-          renderItem={({item, index}) => (
+          renderItem={({ item, index }) => (
             <TouchableOpacity
               onPress={() =>
                 navigation.push('Search', {
                   screen: 'Product',
-                  params: {itemid: item.itemid},
+                  params: { itemid: item.itemid },
                 })
               }>
               <ProductCard
@@ -175,13 +177,13 @@ const Cart = ({navigation}) => {
   };
 
   return (
-    <>
+    <KeyboardAvoidingView behavior="padding" style={{ flex:1 }}>
       <ScreenTitle title="Keranjang Belanja" search />
       <FlatList
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={_handleRefresh} />
         }
-        contentContainerStyle={{flexGrow: 1, backgroundColor: '#fff'}}
+        contentContainerStyle={{ backgroundColor: '#fff' }}
         ListEmptyComponent={
           !loading && (
             <Empty
@@ -207,9 +209,9 @@ const Cart = ({navigation}) => {
       )}
       <Modalize
         ref={modalizeRef}
-        modalHeight={Dimensions.get('window').height / 2.5}
-        modalStyle={{flex: 1, zIndex: 99}}>
-        <View style={{padding: 16}}>
+        modalHeight={Dimensions.get('window').height / 1.5}
+        modalStyle={{ flex: 1, zIndex: 99 }}>
+        <View style={{ padding: 16 }}>
           <Title>Edit Keranjang</Title>
           <CartItemEdit
             item={selectedItem}
@@ -217,8 +219,9 @@ const Cart = ({navigation}) => {
           />
         </View>
       </Modalize>
-    </>
+    </KeyboardAvoidingView>
   );
 };
+
 
 export default Cart;

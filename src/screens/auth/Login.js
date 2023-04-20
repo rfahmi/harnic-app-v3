@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   Dimensions,
   Keyboard,
+  KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
   Text,
@@ -256,9 +257,9 @@ const Login = ({navigation}) => {
   };
 
   return (
-    <>
+    <KeyboardAvoidingView behavior='padding' style={{flex:1}}>
       <BackButton goBack={() => navigation.replace('App')}/>
-      <ScrollView style={{padding: 16, flex: 1}}>
+      <ScrollView style={{padding: 16}}>
         <Background>
           <FocusAwareStatusBar
             translucent
@@ -366,12 +367,11 @@ const Login = ({navigation}) => {
       </ScrollView>
       <Modalize
         ref={modalOTP}
-        modalHeight={WINDOW_HEIGHT * 0.5}
+        modalHeight={WINDOW_HEIGHT * 0.7}
         modalStyle={{flex: 1, zIndex: 3}}>
         {loading ? (
           <View
             style={{
-              height: WINDOW_HEIGHT * 0.5,
               justifyContent: 'center',
               alignItems: 'center',
             }}>
@@ -432,12 +432,11 @@ const Login = ({navigation}) => {
       </Modalize>
       <Modalize
         ref={modalPassword}
-        modalHeight={WINDOW_HEIGHT * 0.5}
+        modalHeight={WINDOW_HEIGHT * 0.7}
         modalStyle={{flex: 1, zIndex: 3}}>
         {loading ? (
           <View
             style={{
-              height: WINDOW_HEIGHT * 0.5,
               justifyContent: 'center',
               alignItems: 'center',
             }}>
@@ -459,18 +458,17 @@ const Login = ({navigation}) => {
               <TouchableOpacity
                 onPress={() => {
                   sendOTP(phone.value).then(r => {
-                    if (r) {
-                      modalPassword.current?.close();
-                      setShowSendAgain(false);
-                      setWaitingTime(60 * 2);
-                      modalOTP.current?.open();
-                    } else {
+                    if (!r) {
                       RNToasty.Success({
                         title: r.data.message,
                         position: 'bottom',
                       });
                     }
                   });
+                  modalPassword.current?.close();
+                  setShowSendAgain(false);
+                  setWaitingTime(60 * 2);
+                  modalOTP.current?.open();
                 }}>
                 <Text style={{color: colors.primary, fontWeight: 'bold'}}>
                   login dengan OTP
@@ -499,7 +497,7 @@ const Login = ({navigation}) => {
           </View>
         )}
       </Modalize>
-    </>
+    </KeyboardAvoidingView>
   );
 };
 
