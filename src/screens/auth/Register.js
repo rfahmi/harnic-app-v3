@@ -243,7 +243,7 @@ const Register = ({navigation}) => {
   };
 
   return (
-    <KeyboardAvoidingView behavior='padding' style={{flex:1}}>
+    <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : null} style={{flex:1}}>
       <BackButton goBack={() => navigation.goBack()} />
       <ScrollView style={{padding: 16, flex: 1}}>
         <Background>

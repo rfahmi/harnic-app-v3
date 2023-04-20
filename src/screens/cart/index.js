@@ -3,6 +3,7 @@ import {
   Dimensions,
   FlatList,
   KeyboardAvoidingView,
+  Platform,
   RefreshControl,
   StyleSheet,
   Text,
@@ -177,7 +178,7 @@ const Cart = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView behavior="padding" style={{ flex:1 }}>
+    <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : null} style={{flex:1}}>
       <ScreenTitle title="Keranjang Belanja" search />
       <FlatList
         refreshControl={

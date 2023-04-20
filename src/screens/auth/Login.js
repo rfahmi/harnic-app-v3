@@ -7,6 +7,7 @@ import {
   Dimensions,
   Keyboard,
   KeyboardAvoidingView,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -257,7 +258,7 @@ const Login = ({navigation}) => {
   };
 
   return (
-    <KeyboardAvoidingView behavior='padding' style={{flex:1}}>
+    <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : null} style={{flex:1}}>
       <BackButton goBack={() => navigation.replace('App')}/>
       <ScrollView style={{padding: 16}}>
         <Background>
