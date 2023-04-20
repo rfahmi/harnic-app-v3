@@ -9,7 +9,7 @@
     "start": "react-native start",
     "test": "jest",
     "postversion": "react-native-version && npm run sync-version",
-    "postinstall": "patch-package",
+    "postinstall": "npx patch-package",
     "android-build": "rm -rf ./android/app/build/outputs/bundle/release && cd ./android/ && gradlew bundleRelease",
     "android-output": "cd ./android/app/build/outputs/bundle/release && explorer .",
     "sync-version": "node ./scripts/sync_version_label.js",
