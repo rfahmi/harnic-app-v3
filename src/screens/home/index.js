@@ -1,5 +1,5 @@
-import {useScrollToTop} from '@react-navigation/native';
-import React, {useEffect, useRef, useState, useCallback} from 'react';
+import { useScrollToTop } from '@react-navigation/native';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import {
   Animated,
   Image,
@@ -8,24 +8,24 @@ import {
   Text,
   View,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {api} from '../../configs/api';
-import {setAuth, setPriceType} from '../../configs/redux/action/authActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { api } from '../../configs/api';
+import { setAuth, setPriceType } from '../../configs/redux/action/authActions';
 import Banners from '../../organism/home/banners';
 import Categories from '../../organism/home/categories';
 import HomeIcons from '../../organism/home/icons';
 import Panels from '../../organism/home/panels';
 import TopBar from '../../organism/home/topbar';
 import HomeSkeleton from '../../organism/skeleton/HomeSkeleton';
-import {isLogin} from '../../utils/auth';
-import {setCart} from '../../configs/redux/action/cartActions';
-import {setSuggestion} from '../../configs/redux/action/suggestionActions';
+import { isLogin } from '../../utils/auth';
+import { setCart } from '../../configs/redux/action/cartActions';
+import { setSuggestion } from '../../configs/redux/action/suggestionActions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {FAB} from 'react-native-paper';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {colors} from '../../constants/colors';
+import { FAB } from 'react-native-paper';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { colors } from '../../constants/colors';
 
-const Home = ({navigation}) => {
+const Home = ({ navigation }) => {
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
   const [config, setConfig] = useState(null);
@@ -104,7 +104,7 @@ const Home = ({navigation}) => {
 
   const _renderTop = () => {
     return (
-      <View style={{alignItems: 'stretch', justifyContent: 'center'}}>
+      <View style={{ alignItems: 'stretch', justifyContent: 'center' }}>
         <Banners
           banners={config && config.banners}
           parentScrollView={refList.current}
@@ -123,13 +123,13 @@ const Home = ({navigation}) => {
               onPress={() =>
                 navigation.navigate('User', {
                   screen: 'UserPassword',
-                  params: {user_id: config.user.user_id},
+                  params: { user_id: config.user.user_id },
                 })
               }>
-              <Text style={{fontWeight: 'bold', fontSize: 16}}>
+              <Text style={{ fontWeight: 'bold', fontSize: 16 }}>
                 Anda belum membuat password!
               </Text>
-              <Text style={{fontSize: 11}}>
+              <Text style={{ fontSize: 11 }}>
                 Tekan disini untuk membuat password baru
               </Text>
             </TouchableOpacity>
@@ -143,7 +143,7 @@ const Home = ({navigation}) => {
       </View>
     );
   };
-  const _renderPanel = useCallback(({item, index}) => {
+  const _renderPanel = useCallback(({ item, index }) => {
     return <Panels data={item} parentScrollViewRef={refList.current} />;
   }, []);
 
@@ -164,7 +164,7 @@ const Home = ({navigation}) => {
           outputRange: [0, 1],
         })}
       />
-      {!config || true ? (
+      {!config? (
         <HomeSkeleton />
       ) : (
         <>
@@ -177,39 +177,39 @@ const Home = ({navigation}) => {
               />
             }
             onScroll={Animated.event(
-              [{nativeEvent: {contentOffset: {y: scroll}}}],
-              {useNativeDriver: true},
+              [{ nativeEvent: { contentOffset: { y: scroll } } }],
+              { useNativeDriver: true },
             )}
             scrollEventThrottle={16}
             data={config.panels}
             ListHeaderComponent={_renderTop}
             ListFooterComponent={() =>
               config.panels && (
-                <View style={{alignItems: 'center', paddingVertical: 16}}>
-                  <Text style={{color: '#555'}}>Supported Payments:</Text>
-                  <View style={{flexDirection: 'row', paddingHorizontal: 32}}>
+                <View style={{ alignItems: 'center', paddingVertical: 16 }}>
+                  <Text style={{ color: '#555' }}>Supported Payments:</Text>
+                  <View style={{ flexDirection: 'row', paddingHorizontal: 32 }}>
                     <Image
-                      style={{flex: 1}}
+                      style={{ flex: 1 }}
                       resizeMode="contain"
                       source={require('../../assets/images/payment/cod.png')}
                     />
                     <Image
-                      style={{flex: 1}}
+                      style={{ flex: 1 }}
                       resizeMode="contain"
                       source={require('../../assets/images/payment/va.png')}
                     />
                     <Image
-                      style={{flex: 1}}
+                      style={{ flex: 1 }}
                       resizeMode="contain"
                       source={require('../../assets/images/payment/visa.png')}
                     />
                     <Image
-                      style={{flex: 1}}
+                      style={{ flex: 1 }}
                       resizeMode="contain"
                       source={require('../../assets/images/payment/mc.png')}
                     />
                   </View>
-                  <Text style={{color: '#555'}}>PT. Harnic Online Store</Text>
+                  <Text style={{ color: '#555' }}>PT. Harnic Online Store</Text>
                 </View>
               )
             }
@@ -250,7 +250,7 @@ const Home = ({navigation}) => {
             small
             icon="chevron-up"
             onPress={() =>
-              refList.current.scrollToOffset({animated: true, offset: 0})
+              refList.current.scrollToOffset({ animated: true, offset: 0 })
             }
           />
         </>
