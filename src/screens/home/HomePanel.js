@@ -142,7 +142,7 @@ const HomePage = ({navigation, route}) => {
               </View>
             }
             nestedScrollEnabled
-            onEndThreshold={0.5}
+            onEndReachedThreshold={0.5}
             contentContainerStyle={{paddingBottom: 50}}
           />
           <FAB

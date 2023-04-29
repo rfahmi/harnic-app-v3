@@ -237,7 +237,7 @@ const UserNotification = ({navigation, route}) => {
         keyExtractor={keyExtractor}
         ListFooterComponent={hasMore ? <ListSkeleton /> : <View />}
         onEndReached={onLoadMore}
-        onEndThreshold={0.3}
+        onEndReachedThreshold={0.3}
         removeClippedSubviews
         initialNumToRender={limit}
         maxToRenderPerBatch={limit}

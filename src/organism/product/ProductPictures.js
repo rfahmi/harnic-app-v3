@@ -21,7 +21,7 @@ const ProductPictures = ({pictures, parentScrollView, video}) => {
   const [selected, setSelected] = useState(0);
 
   useEffect(() => {
-    const arr = pictures.map((a) => ({url: a.imagePath}));
+    const arr = pictures.map(a => ({url: a.imagePath}));
     setPicArr(arr);
   }, [pictures]);
 
@@ -29,77 +29,72 @@ const ProductPictures = ({pictures, parentScrollView, video}) => {
     Platform.OS === 'ios' ? getStatusBarHeight() : StatusBar.currentHeight;
   const HEADER_MAX_HEIGHT = Dimensions.get('window').width;
 
-  const _renderItems = ({item, index}) => {
-    return (
-      <TouchableWithoutFeedback
+  const _renderItem = ({item, index}) => (
+    <TouchableWithoutFeedback
+      style={{
+        width: HEADER_MAX_HEIGHT,
+        height: HEADER_MAX_HEIGHT,
+      }}
+      onPress={() => {
+        setSelected(index);
+        setModal(true);
+      }}>
+      <FastImage
         style={{
+          flex: 1,
           width: HEADER_MAX_HEIGHT,
           height: HEADER_MAX_HEIGHT,
         }}
-        onPress={() => {
-          setSelected(index);
-          setModal(true);
-        }}>
-        <FastImage
+        source={{
+          uri: item.imagePath,
+          priority: FastImage.priority.normal,
+        }}
+        resizeMode={FastImage.resizeMode.cover}
+      />
+    </TouchableWithoutFeedback>
+  );
+
+  const keyExtractor = (item, index) => `Img${index}`;
+
+  const ListHeader = React.useMemo(
+    () =>
+      video ? (
+        <View
           style={{
-            flex: 1,
             width: HEADER_MAX_HEIGHT,
             height: HEADER_MAX_HEIGHT,
-          }}
-          source={{
-            uri: item.imagePath,
-            priority: FastImage.priority.normal,
-          }}
-          resizeMode={FastImage.resizeMode.cover}
-        />
-      </TouchableWithoutFeedback>
-    );
-  };
-
-  const keyExtractor = (item, index) => {
-    return String('Img' + index);
-  };
+            backgroundColor: 'red',
+          }}>
+          <WebView
+            style={{flex: 1}}
+            javaScriptEnabled={true}
+            source={{
+              uri: `https://www.youtube.com/embed/${video}?rel=0&autoplay=0&showinfo=0&controls=0`,
+            }}
+          />
+        </View>
+      ) : null,
+    [video, HEADER_MAX_HEIGHT],
+  );
 
   return (
     <>
       <FlatList
         parentScrollView={parentScrollView}
         data={pictures}
-        style={{marginVertical: 8}}
         showsHorizontalScrollIndicator={false}
         disableScrollViewPanResponder
         disableIntervalMomentum={true}
         keyExtractor={keyExtractor}
-        ListHeaderComponent={() =>
-          video ? (
-            <View
-              style={{
-                width: HEADER_MAX_HEIGHT,
-                height: HEADER_MAX_HEIGHT,
-                backgroundColor: 'red',
-              }}>
-              <WebView
-                style={{flex: 1}}
-                javaScriptEnabled={true}
-                source={{
-                  uri:
-                    'https://www.youtube.com/embed/' +
-                    video +
-                    '?rel=0&autoplay=0&showinfo=0&controls=0',
-                }}
-              />
-            </View>
-          ) : null
-        }
+        ListHeaderComponent={ListHeader}
+        renderItem={_renderItem}
+        horizontal
         snapToInterval={HEADER_MAX_HEIGHT}
         snapToAlignment="center"
-        renderItem={_renderItems}
-        horizontal
       />
       <Modal
         visible={modal}
         onRequestClose={() => setModal(false)}
-        transparent
         statusBarTranslucent
         presentationStyle="fullScreen">
         <TouchableOpacity

@@ -1,6 +1,13 @@
 import {useScrollToTop} from '@react-navigation/native';
 import React, {useEffect, useRef, useState, useCallback} from 'react';
-import {Animated, Image, RefreshControl, Text, View} from 'react-native';
+import {
+  Animated,
+  Image,
+  RefreshControl,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {api} from '../../configs/api';
 import {setAuth, setPriceType} from '../../configs/redux/action/authActions';
@@ -157,8 +164,8 @@ const Home = ({navigation}) => {
           outputRange: [0, 1],
         })}
       />
-      {!config ? (
-        <View />
+      {!config || true ? (
+        <HomeSkeleton />
       ) : (
         <>
           <Animated.FlatList

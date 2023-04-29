@@ -3,7 +3,6 @@ import ContentLoader, {Rect} from 'react-content-loader/native';
 import {ActivityIndicator, Dimensions, View} from 'react-native';
 
 const ProductSkeleton = () => {
-  const WINDOW_HEIGHT = Dimensions.get('window').height;
   const WINDOW_WIDTH = Dimensions.get('window').width;
   const CONTENT_WIDTH = Dimensions.get('window').width - 32;
   const SKELETON_COLOR = '#ddd';
@@ -24,7 +23,7 @@ const ProductSkeleton = () => {
           height={WINDOW_WIDTH}
         />
       </ContentLoader>
-      <View style={{padding: 16}}>
+      <View style={{padding: 16, gap: 8}}>
         <ContentLoader
           speed={2}
           width={CONTENT_WIDTH * 0.3}

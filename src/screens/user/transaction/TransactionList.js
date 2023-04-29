@@ -203,7 +203,7 @@ const TransactionList = ({user, status}) => {
       keyExtractor={keyExtractor}
       onEndReached={onLoadMore}
       ListFooterComponent={hasMore ? <ListSkeleton /> : <View />}
-      onEndThreshold={0.3}
+      onEndReachedThreshold={0.3}
       removeClippedSubviews
       initialNumToRender={limit}
       maxToRenderPerBatch={limit}

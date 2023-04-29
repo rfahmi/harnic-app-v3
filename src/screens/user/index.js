@@ -435,26 +435,7 @@ const User = ({navigation}) => {
                   onPress={() =>
                     navigation.push('UserNotification', {user_id: data.user_id})
                   }
-                  // right={() => (
-                  //   <View
-                  //     style={{
-                  //       marginRight: 16,
-                  //       justifyContent: 'center',
-                  //       alignItems: 'center',
-                  //     }}>
-                  //     <Badge
-                  //       visible={true}
-                  //       style={{backgroundColor: 'orange', color: '#fff'}}>
-                  //       5
-                  //     </Badge>
-                  //   </View>
-                  // )}
                 />
-                {/* <Divider />
-            <List.Item
-              title="Aktivasi Akun"
-              left={() => <List.Icon icon="check" />}
-            /> */}
               </List.Section>
               <Separator color="#1100BB" />
               <List.Section>

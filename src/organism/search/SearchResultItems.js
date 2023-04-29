@@ -136,7 +136,7 @@ const SearchResultItems = ({keyword, category, tabLabel, brand}) => {
         keyExtractor={keyExtractor}
         onEndReached={onLoadMore}
         ListFooterComponent={hasMore ? <ListSkeleton /> : <View />}
-        onEndThreshold={0.5}
+        onEndReachedThreshold={0.5}
         removeClippedSubviews
         initialNumToRender={limit}
         maxToRenderPerBatch={limit}

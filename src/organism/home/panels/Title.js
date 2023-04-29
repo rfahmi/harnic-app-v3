@@ -3,7 +3,6 @@ import React, {memo} from 'react';
 import {Text, View} from 'react-native';
 import {Button} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {colors} from '../../../constants/colors';
 
 const Title = ({data}) => {
   const navigation = useNavigation();
@@ -15,9 +14,15 @@ const Title = ({data}) => {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: data.color2,
+        backgroundColor: data.color2 || '#fff',
       }}>
-      <Text style={{fontSize: 16, fontWeight: 'bold', color: data.color1, maxWidth: '65%'}}>
+      <Text
+        style={{
+          fontSize: 16,
+          fontWeight: 'bold',
+          color: data.color1 || '#000',
+          maxWidth: '65%',
+        }}>
         {data.param1}
       </Text>
       {data.param2 && (
@@ -28,7 +33,7 @@ const Title = ({data}) => {
             })
           }
           mode="contained"
-          color={data.color1}
+          color={data.color1 || '#000'}
           labelStyle={{fontSize: 11}}
           contentStyle={{
             alignItems: 'center',

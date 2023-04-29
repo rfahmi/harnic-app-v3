@@ -136,7 +136,7 @@ const UserBilling = ({navigation, route}) => {
         horizontal={false}
         ListFooterComponent={hasMore ? <ListSkeleton /> : <View />}
         onEndReached={onLoadMore}
-        onEndThreshold={0.3}
+        onEndReachedThreshold={0.3}
         style={{backgroundColor: '#fff'}}
         keyExtractor={keyExtractor}
       />

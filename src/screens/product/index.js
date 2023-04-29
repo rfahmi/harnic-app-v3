@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {memo, useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
@@ -5,22 +6,22 @@ import {
   Dimensions,
   Image,
   RefreshControl,
+  SafeAreaView,
   ScrollView,
   StatusBar,
   Text,
   TouchableOpacity,
   View,
-  SafeAreaView,
-  Platform,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {Modalize} from 'react-native-modalize';
 import {
+  Button,
   Divider,
   IconButton,
   List,
-  Title,
-  Button,
   TextInput,
+  Title,
 } from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -29,17 +30,15 @@ import FooterBuy from '../../components/FooterBuy';
 import HeaderBackTransparent from '../../components/HeaderBackTransparent';
 import Separator from '../../components/Separator';
 import {api} from '../../configs/api';
+import {setCart} from '../../configs/redux/action/cartActions';
 import {colors} from '../../constants/colors';
 import ProductPictures from '../../organism/product/ProductPictures';
 import SimilarProducts from '../../organism/product/SimilarProducts';
+import VariantProducts from '../../organism/product/VariantProducts';
 import ProductSkeleton from '../../organism/skeleton/ProductSkeleton';
-import {currencyFormat} from '../../utils/formatter';
 import {isLogin} from '../../utils/auth';
 import {addCart} from '../../utils/cart';
-import {setCart} from '../../configs/redux/action/cartActions';
-import FastImage from 'react-native-fast-image';
-import VariantProducts from '../../organism/product/VariantProducts';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {currencyFormat} from '../../utils/formatter';
 
 const Product = ({navigation, route}) => {
   const dispatch = useDispatch();
@@ -192,10 +191,7 @@ const Product = ({navigation, route}) => {
                   {data && (
                     <FastImage
                       source={{
-                        uri:
-                          Platform.OS === 'ios'
-                            ? data.picture_ios
-                            : data.picture,
+                        uri: data.picture,
                       }}
                       style={{
                         flex: 1,
@@ -404,7 +400,7 @@ const Product = ({navigation, route}) => {
               [{nativeEvent: {contentOffset: {y: scroll}}}],
               {useNativeDriver: true},
             )}
-            style={{backgroundColor: '#fff', flex: 1}}>
+            style={{backgroundColor: '#fff'}}>
             <View
               style={{
                 aspectRatio: 1 / 1,
@@ -436,11 +432,7 @@ const Product = ({navigation, route}) => {
               )}
               {data ? (
                 <ProductPictures
-                  pictures={
-                    Platform.OS === 'ios' && data.media_ios
-                      ? data.media_ios
-                      : data.media
-                  }
+                  pictures={data.media}
                   video={data.youtube_video}
                   parentScrollView={scrollRef.current}
                 />

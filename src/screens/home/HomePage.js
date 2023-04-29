@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useScrollToTop} from '@react-navigation/native';
-import React, {useEffect, useRef, useState, useCallback, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Animated,
@@ -12,7 +12,6 @@ import {FAB} from 'react-native-paper';
 import HeaderBackSearch from '../../components/HeaderBackSearch';
 import {api} from '../../configs/api';
 import Panels from '../../organism/home/panels';
-import ListSkeleton from '../../organism/skeleton/ListSkeleton';
 import PageSkeleton from '../../organism/skeleton/PageSkeleton';
 
 const HomePage = ({route}) => {
@@ -42,7 +41,7 @@ const HomePage = ({route}) => {
         .then(res => {
           if (res.data.success) {
             if (p > 1) {
-              console.log('aaa');
+              console.debug('Append data on page: ' + p);
               setPanel(prevPanel => [...prevPanel, ...res.data.data]);
             } else {
               setPanel(res.data.data);
@@ -61,10 +60,10 @@ const HomePage = ({route}) => {
           throw error;
         });
     },
-    [name, page],
+    [limit],
   );
 
-  const _handleRefresh = () => {
+  const _handleRefresh = useCallback(() => {
     setPanel(null);
     setPage(1);
     setHasMore(true);
@@ -75,9 +74,9 @@ const HomePage = ({route}) => {
       })
       .catch(() => console.log())
       .finally(() => setRefreshing(false));
-  };
+  }, [getPanel, name]);
 
-  const onLoadMore = () => {
+  const onLoadMore = useCallback(() => {
     console.log('load more', page);
     setLoadingMore(true);
     getPanel(name, page)
@@ -86,7 +85,7 @@ const HomePage = ({route}) => {
       })
       .catch(() => console.log())
       .finally(() => setLoadingMore(false));
-  };
+  }, [getPanel, name, page]);
 
   useEffect(() => {
     setRefreshing(true);
@@ -105,7 +104,7 @@ const HomePage = ({route}) => {
   }, []);
 
   const keyExtractor = useCallback(
-    item => String(`Panel${item.component_id}`),
+    item => String(`Panel${item.component_id}}`),
     [],
   );
 
@@ -141,8 +140,14 @@ const HomePage = ({route}) => {
             data={panel}
             renderItem={_renderPanel}
             keyExtractor={keyExtractor}
-            onEndReached={onLoadMore}
-            onEndThreshold={0.5}
+            onEndReached={
+              hasMore && !loadingMore
+                ? onLoadMore
+                : console.log(
+                    'hasMore:' + hasMore + ', loadingMore: ' + loadingMore,
+                  )
+            }
+            onEndReachedThreshold={0.5}
             ListFooterComponent={
               <View
                 style={{
@@ -151,12 +156,8 @@ const HomePage = ({route}) => {
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                {hasMore ? (
-                  loadingMore ? (
-                    <ActivityIndicator size="large" color="#0000ff" />
-                  ) : (
-                    <ListSkeleton />
-                  )
+                {hasMore || loadingMore ? (
+                  <ActivityIndicator size="large" color="#0000ff" />
                 ) : (
                   <Text style={{fontWeight: 'bold'}}>No More Products</Text>
                 )}

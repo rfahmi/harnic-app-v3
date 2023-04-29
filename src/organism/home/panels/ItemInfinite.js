@@ -1,14 +1,14 @@
 import {useNavigation} from '@react-navigation/native';
 import qs from 'qs';
-import React, {memo, useEffect, useState, useCallback} from 'react';
+import React, {memo, useCallback, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Dimensions,
   FlatList,
+  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import {RNToasty} from 'react-native-toasty';
 import ProductCard from '../../../components/ProductCard';
 import ProductCardHorizontal from '../../../components/ProductCardHorizontal';
 import ProductCardTall from '../../../components/ProductCardTall';
@@ -20,21 +20,16 @@ const ItemInfinite = ({data, parentScrollViewRef}) => {
     .replace('product/infinite/', '')
     .split('/');
   const limit = 10;
-  const limit_page = 3;
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [items, setitems] = useState([]);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [items, setItems] = useState([]);
 
-  const getItems = async p => {
-    // console.log({
-    //   keyword: null,
-    //   category: category_id[0],
-    //   brand: null,
-    // });
-    // console.log(`/product/find?page=${p}&limit=${limit}`);
-    p < limit_page &&
-      (await api
-        .post(
+  const getItems = useCallback(
+    async p => {
+      console.log('Page: ' + p);
+      return api
+        .get(
           `/product/find?page=${p}&limit=${limit}`,
           qs.stringify({
             keyword: null,
@@ -43,56 +38,54 @@ const ItemInfinite = ({data, parentScrollViewRef}) => {
           }),
         )
         .then(res => {
-          // console.log('--------------------------');
           if (res.data.success) {
             if (p > 1) {
-              // console.log('>>append');
-              setitems([...items, ...res.data.data.products]);
+              console.debug('Append data on page: ' + p);
+              setItems(prevItems => [...prevItems, ...res.data.data.products]);
             } else {
-              // console.log('>>new');
-              setitems(res.data.data.products);
+              setItems(res.data.data.products);
             }
             if (res.data.data.length < limit) {
-              // console.log('>>no more');
               setHasMore(false);
-            } else {
-              // console.log('>>has more');
+              throw new Error('No more data');
             }
           } else {
-            // console.log('failed');
-            RNToasty.Error({
-              title: res.data.message,
-              position: 'bottom',
-            });
+            setHasMore(false);
+            throw new Error('API error');
           }
-          // console.log('--------------------------');
         })
-        .catch(err => {
-          RNToasty.Error({
-            title: err.message,
-            position: 'center',
-          });
-        }));
-  };
+        .catch(error => {
+          console.log(error);
+          throw error;
+        });
+    },
+    [category_id],
+  );
+
+  const onLoadMore = useCallback(() => {
+    console.log('load more', page);
+    setLoadingMore(true);
+    getItems(page)
+      .then(() => {
+        setPage(prevPage => prevPage + 1);
+      })
+      .catch(() => console.log())
+      .finally(() => setLoadingMore(false));
+  }, [getItems, page]);
 
   useEffect(() => {
     let isSubscribed = true;
-    // console.log('+++++++++++++++++++++ kena effect ++++++++++++++++++++++++');
     setPage(1);
     setHasMore(true);
-    getItems(1).then(() => {
-      if (isSubscribed) {
-        setPage(page + 1);
-      }
-    });
+    getItems(1)
+      .then(() => {
+        if (isSubscribed) {
+          setPage(page + 1);
+        }
+      })
+      .catch(e => console.error(e));
     return () => (isSubscribed = false);
   }, []);
-
-  const onLoadMore = () => {
-    getItems(page).then(() => {
-      setPage(page + 1);
-    });
-  };
 
   const keyExtractor = (item, index) => {
     return `ItemInfinite${data.panel_id}-${data.component_id}-${item.itemid}-${index}`;
@@ -148,23 +141,29 @@ const ItemInfinite = ({data, parentScrollViewRef}) => {
         numColumns={data.param1}
         horizontal={false}
         keyExtractor={keyExtractor}
-        onEndReached={onLoadMore}
-        ListFooterComponent={
-          hasMore ? (
-            <View
-              style={{
-                flex: 1,
-                height: 100,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <ActivityIndicator size="large" color="#1100BB" />
-            </View>
-          ) : (
-            <View />
-          )
+        onEndReached={
+          hasMore && !loadingMore
+            ? onLoadMore
+            : console.log(
+                'hasMore:' + hasMore + ', loadingMore: ' + loadingMore,
+              )
         }
-        onEndThreshold={0.5}
+        ListFooterComponent={
+          <View
+            style={{
+              flex: 1,
+              padding: 24,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            {loadingMore ? (
+              <ActivityIndicator size="large" color="#0000ff" />
+            ) : (
+              <Text style={{fontWeight: 'bold'}}>No More Products</Text>
+            )}
+          </View>
+        }
+        onEndReachedThreshold={0.5}
         removeClippedSubviews
         initialNumToRender={limit}
         maxToRenderPerBatch={limit}
