@@ -183,7 +183,7 @@ const AddShipping = ({navigation, route}) => {
   const updateShipping = async () => {
     const api_token = await AsyncStorage.getItem('api_token');
     await api
-      .post(`/user/${user_id}/shipping`, qs.stringify(data), {
+      .put(`/user/${user_id}/shipping/${id}`, qs.stringify(data), {
         headers: {
           Authorization: 'Bearer ' + api_token,
         },
