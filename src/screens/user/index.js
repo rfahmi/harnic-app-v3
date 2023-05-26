@@ -375,6 +375,15 @@ const User = ({navigation}) => {
                     })
                   }
                 />
+                <List.Item
+                  title="Claim Garansi Harnic"
+                  left={() => <List.Icon icon="check" />}
+                  onPress={() =>
+                    navigation.push('UserWarranty', {
+                      user_id: data.user_id,
+                    })
+                  }
+                />
               </List.Section>
               <Separator color="#1100BB" />
               <List.Section>

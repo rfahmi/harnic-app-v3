@@ -7,6 +7,7 @@ import UserNotification from '../../../../screens/user/notification';
 import UserPassword from '../../../../screens/user/password';
 import UserPoint from '../../../../screens/user/point';
 import UserVoucher from '../../../../screens/user/voucher';
+import UserWarranty from '../../../../screens/user/warranty';
 const Stack = createStackNavigator();
 
 const UserStack = () => {
@@ -19,6 +20,7 @@ const UserStack = () => {
       <Stack.Screen name="UserPoint" component={UserPoint} />
       <Stack.Screen name="UserVoucher" component={UserVoucher} />
       <Stack.Screen name="UserNotification" component={UserNotification} />
+      <Stack.Screen name="UserWarranty" component={UserWarranty} />
     </Stack.Navigator>
   );
 };
