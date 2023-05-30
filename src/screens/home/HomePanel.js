@@ -25,10 +25,10 @@ const HomePage = ({navigation, route}) => {
 
   const getPanel = useCallback(
     async (n, p) => {
-      console.log('Page: ' + p);
+      // console.log('Page: ' + p + ' Limit:' + limit + ' Name:' + n);
       const api_token = await AsyncStorage.getItem('api_token');
 
-      const res = await api.get(`/page/${n}?limit=${limit}&page=${p}`, {
+      const res = await api.get(`/panel/${n}?limit=${limit}&page=${p}`, {
         headers: {
           Authorization: 'Bearer ' + api_token,
         },
@@ -46,7 +46,7 @@ const HomePage = ({navigation, route}) => {
         }
       } else {
         setHasMore(false);
-        throw new Error('API error');
+        // throw new Error('API error, AAAAAAAAAAAAAAAAAAAAAA');
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

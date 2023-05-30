@@ -375,7 +375,7 @@ const User = ({navigation}) => {
                     })
                   }
                 />
-                <List.Item
+                {/* <List.Item
                   title="Claim Garansi Harnic"
                   left={() => <List.Icon icon="check" />}
                   onPress={() =>
@@ -383,7 +383,7 @@ const User = ({navigation}) => {
                       user_id: data.user_id,
                     })
                   }
-                />
+                /> */}
               </List.Section>
               <Separator color="#1100BB" />
               <List.Section>
