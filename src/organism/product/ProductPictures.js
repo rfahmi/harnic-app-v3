@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {getStatusBarHeight} from 'react-native-safearea-height';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import WebView from 'react-native-webview';
 

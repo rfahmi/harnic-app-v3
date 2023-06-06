@@ -26,7 +26,7 @@ import {
   TouchableRipple,
 } from 'react-native-paper';
 import HTML from 'react-native-render-html';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {getStatusBarHeight} from 'react-native-safearea-height';
 import {RNToasty} from 'react-native-toasty';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';

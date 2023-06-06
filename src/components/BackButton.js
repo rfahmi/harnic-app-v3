@@ -6,7 +6,7 @@ import {
   StatusBar,
   Platform,
 } from 'react-native';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {getStatusBarHeight} from 'react-native-safearea-height';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const BackButton = ({goBack, style}) => (

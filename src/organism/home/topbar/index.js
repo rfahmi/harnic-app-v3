@@ -9,7 +9,7 @@ import {
   View,
   Platform,
 } from 'react-native';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {getStatusBarHeight} from 'react-native-safearea-height';
 import {IconButton} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FocusAwareStatusBar from '../../../components/FocusAwareStatusBar';

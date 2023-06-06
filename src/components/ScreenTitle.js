@@ -3,7 +3,7 @@ import React from 'react';
 import {StatusBar, View, Platform} from 'react-native';
 import {IconButton, Title} from 'react-native-paper';
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {getStatusBarHeight} from 'react-native-safearea-height';
 
 const ScreenTitle = ({title, search}) => {
   const navigation = useNavigation();

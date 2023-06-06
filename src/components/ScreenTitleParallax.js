@@ -3,7 +3,7 @@ import {Animated, Dimensions, StatusBar} from 'react-native';
 import {Caption, Title} from 'react-native-paper';
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 import {colors} from '../constants/colors';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { getStatusBarHeight } from 'react-native-safearea-height';
 
 const ScreenTitleParallax = ({title, description, style, opacity}) => {
   const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? getStatusBarHeight() : StatusBar.currentHeight;

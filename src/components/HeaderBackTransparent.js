@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {getStatusBarHeight} from 'react-native-safearea-height';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CartCounter from './CartCounter';
 import Share from 'react-native-share';

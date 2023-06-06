@@ -3,7 +3,7 @@ import React from 'react';
 import {Text, TouchableOpacity, View, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CartCounter from './CartCounter';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {getStatusBarHeight} from 'react-native-safearea-height';
 import Share from 'react-native-share';
 
 const HeaderBackSearch = ({shareData}) => {
