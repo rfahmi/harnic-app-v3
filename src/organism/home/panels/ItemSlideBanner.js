@@ -9,6 +9,7 @@ import ProductCardTall from '../../../components/ProductCardTall';
 const ItemSlideBanner = ({data, parentScrollViewRef}) => {
   const navigation = useNavigation();
   const scroll = useRef(new Animated.Value(0)).current;
+  const CARD_WIDTH = Dimensions.get('window').width / 3;
 
   const keyExtractor = (item, index) => {
     return String(`ItemSlideBanner${item.itemid}-${index}`);
@@ -22,42 +23,28 @@ const ItemSlideBanner = ({data, parentScrollViewRef}) => {
             params: {itemid: item.itemid},
           })
         }>
-        {data.card_type === 'HORIZONTAL' ? (
-          <ProductCardHorizontal
-            item={item}
-            style={{
-              width: Dimensions.get('window').width / data.param1,
-              margin: 4,
-            }}
-          />
-        ) : data.card_type === 'TALL' ? (
-          <ProductCardTall
-            item={item}
-            style={{
-              width: Dimensions.get('window').width / data.param1,
-              margin: 4,
-            }}
-          />
-        ) : (
-          <ProductCard
-            item={item}
-            style={{
-              width: Dimensions.get('window').width / data.param1,
-              margin: 4,
-            }}
-          />
-        )}
+        <ProductCard
+          item={item}
+          style={{
+            width: CARD_WIDTH,
+            margin: 4,
+          }}
+        />
       </TouchableOpacity>
     );
   };
   return (
-    <View style={{backgroundColor: data.color2, flexDirection: 'row'}}>
+    <View
+      style={{
+        backgroundColor: data.color2,
+        flexDirection: 'row',
+        paddingVertical: 8,
+      }}>
       <Animated.View
         style={{
           flex: 1,
-          position: 'absolute',
-          height: '100%',
-          aspectRatio: 1 / 2,
+          paddingLeft: 4,
+          paddingVertical: 4,
           transform: [
             {
               translateX: scroll.interpolate({
@@ -73,13 +60,15 @@ const ItemSlideBanner = ({data, parentScrollViewRef}) => {
         }}>
         <FastImage
           style={{
+            height: '100%',
+            width: CARD_WIDTH,
             flex: 1,
           }}
           source={{
             uri: data.image,
             priority: FastImage.priority.normal,
           }}
-          resizeMode={FastImage.resizeMode.contain}
+          resizeMode={FastImage.resizeMode.cover}
         />
       </Animated.View>
 
@@ -90,8 +79,7 @@ const ItemSlideBanner = ({data, parentScrollViewRef}) => {
           {useNativeDriver: true},
         )}
         contentContainerStyle={{
-          paddingLeft: 100,
-          marginVertical: 8,
+          paddingLeft: CARD_WIDTH + 8,
         }}
         data={data.items}
         renderItem={_renderItems}
