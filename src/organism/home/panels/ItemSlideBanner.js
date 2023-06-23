@@ -1,10 +1,15 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {memo, useRef} from 'react';
-import {Animated, Dimensions, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  Animated,
+  Dimensions,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import ProductCard from '../../../components/ProductCard';
-import ProductCardHorizontal from '../../../components/ProductCardHorizontal';
-import ProductCardTall from '../../../components/ProductCardTall';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const ItemSlideBanner = ({data, parentScrollViewRef}) => {
   const navigation = useNavigation();
@@ -71,25 +76,71 @@ const ItemSlideBanner = ({data, parentScrollViewRef}) => {
           resizeMode={FastImage.resizeMode.cover}
         />
       </Animated.View>
-
-      <Animated.FlatList
-        parentScrollViewRef={parentScrollViewRef}
-        onScroll={Animated.event(
-          [{nativeEvent: {contentOffset: {x: scroll}}}],
-          {useNativeDriver: true},
-        )}
-        contentContainerStyle={{
-          paddingLeft: CARD_WIDTH + 8,
+      <TouchableWithoutFeedback
+        style={{
+          height: '100%',
+          flex: 1,
+          zIndex: 99,
         }}
-        data={data.items}
-        renderItem={_renderItems}
-        showsHorizontalScrollIndicator={false}
-        horizontal={true}
-        removeClippedSubviews={true}
-        initialNumToRender={3}
-        maxToRenderPerBatch={3}
-        keyExtractor={keyExtractor}
-      />
+        disabled={!data.param2}
+        onPress={() => {
+          if (data.param2) {
+            switch (data.param3) {
+              case 'category':
+                navigation.push('Search', {
+                  screen: 'SearchResult',
+                  params: {
+                    category: data.param2,
+                  },
+                });
+                break;
+              case 'brand':
+                navigation.push('Search', {
+                  screen: 'SearchResult',
+                  params: {
+                    brand: data.param2,
+                  },
+                });
+                break;
+              case 'product':
+                navigation.push('Search', {
+                  screen: 'Product',
+                  params: {itemid: data.param2},
+                });
+                break;
+              case 'page':
+                navigation.push('HomePage', {name: data.param2});
+                break;
+              case 'panel':
+                navigation.push('HomePanel', {name: data.param2});
+                break;
+              case 'screen':
+                navigation.push(data.param2);
+                break;
+              default:
+                break;
+            }
+          }
+        }}>
+        <Animated.FlatList
+          parentScrollViewRef={parentScrollViewRef}
+          onScroll={Animated.event(
+            [{nativeEvent: {contentOffset: {x: scroll}}}],
+            {useNativeDriver: true},
+          )}
+          contentContainerStyle={{
+            paddingLeft: CARD_WIDTH + 8,
+          }}
+          data={data.items}
+          renderItem={_renderItems}
+          showsHorizontalScrollIndicator={false}
+          horizontal={true}
+          removeClippedSubviews={true}
+          initialNumToRender={3}
+          maxToRenderPerBatch={3}
+          keyExtractor={keyExtractor}
+        />
+      </TouchableWithoutFeedback>
     </View>
   );
 };
