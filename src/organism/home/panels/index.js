@@ -1,9 +1,10 @@
 import React, {memo, lazy, Suspense} from 'react';
-import {View} from 'react-native';
+import {Platform, View} from 'react-native';
 // import {Skeleton} from 'react-native-animated-skeleton';
 import BannerGridSlide from './BannerGridSlide';
 import Title from './Title';
 import BannerGridV2 from './BannerGridV2';
+import ItemSlideBannerIOS from './ItemSlideBannerIOS';
 
 const YoutubeVideo = lazy(() => import('./YoutubeVideo'));
 const YoutubeVideoWebview = lazy(() => import('./YoutubeVideoWebview'));
@@ -42,10 +43,19 @@ const Panels = ({data, parentScrollViewRef}) => {
             parentScrollViewRef={parentScrollViewRef}
           />
         ) : data.component_type === 'ITEM_SLIDE_BANNER' ? (
-          <ItemSlideBanner
-            data={data}
-            parentScrollViewRef={parentScrollViewRef}
-          />
+          <>
+            {Platform.OS === 'ios' ? (
+              <ItemSlideBannerIOS
+                data={data}
+                parentScrollViewRef={parentScrollViewRef}
+              />
+            ) : (
+              <ItemSlideBanner
+                data={data}
+                parentScrollViewRef={parentScrollViewRef}
+              />
+            )}
+          </>
         ) : data.component_type === 'ITEM_GRID' ? (
           <ItemGrid data={data} parentScrollViewRef={parentScrollViewRef} />
         ) : data.component_type === 'ITEM_VS' ? (

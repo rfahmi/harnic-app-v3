@@ -32,44 +32,9 @@ const ItemSlideBanner = ({data, parentScrollViewRef}) => {
       </TouchableOpacity>
     );
   };
-  return (
-    <View
-      style={{
-        backgroundColor: data.color2,
-        flexDirection: 'row',
-        paddingVertical: 8,
-      }}>
-      <Animated.View
-        style={{
-          flex: 1,
-          paddingLeft: 4,
-          paddingVertical: 4,
-          transform: [
-            {
-              translateX: scroll.interpolate({
-                inputRange: [0, 100],
-                outputRange: [0, -10],
-              }),
-            },
-          ],
-          opacity: scroll.interpolate({
-            inputRange: [0, 100],
-            outputRange: [1, 0.5],
-          }),
-        }}>
-        <FastImage
-          style={{
-            height: '100%',
-            width: CARD_WIDTH,
-            flex: 1,
-          }}
-          source={{
-            uri: data.image,
-            priority: FastImage.priority.normal,
-          }}
-          resizeMode={FastImage.resizeMode.cover}
-        />
-      </Animated.View>
+
+  const _banner = () => {
+    return (
       <TouchableWithoutFeedback
         style={{
           height: '100%',
@@ -116,25 +81,48 @@ const ItemSlideBanner = ({data, parentScrollViewRef}) => {
             }
           }
         }}>
-        <Animated.FlatList
-          parentScrollViewRef={parentScrollViewRef}
-          onScroll={Animated.event(
-            [{nativeEvent: {contentOffset: {x: scroll}}}],
-            {useNativeDriver: true},
-          )}
-          contentContainerStyle={{
-            paddingLeft: CARD_WIDTH + 8,
+        <FastImage
+          style={{
+            height: '100%',
+            width: CARD_WIDTH,
+            flex: 1,
           }}
-          data={data.items}
-          renderItem={_renderItems}
-          showsHorizontalScrollIndicator={false}
-          horizontal={true}
-          removeClippedSubviews={true}
-          initialNumToRender={3}
-          maxToRenderPerBatch={3}
-          keyExtractor={keyExtractor}
+          source={{
+            uri: data.image,
+            priority: FastImage.priority.normal,
+          }}
+          resizeMode={FastImage.resizeMode.cover}
         />
       </TouchableWithoutFeedback>
+    );
+  };
+
+  return (
+    <View
+      style={{
+        backgroundColor: data.color2,
+        flexDirection: 'row',
+        paddingVertical: 8,
+      }}>
+      <Animated.FlatList
+        ListHeaderComponent={_banner}
+        parentScrollViewRef={parentScrollViewRef}
+        onScroll={Animated.event(
+          [{nativeEvent: {contentOffset: {x: scroll}}}],
+          {useNativeDriver: true},
+        )}
+        contentContainerStyle={{
+          paddingLeft: CARD_WIDTH + 8,
+        }}
+        data={data.items}
+        renderItem={_renderItems}
+        showsHorizontalScrollIndicator={false}
+        horizontal={true}
+        removeClippedSubviews={true}
+        initialNumToRender={3}
+        maxToRenderPerBatch={3}
+        keyExtractor={keyExtractor}
+      />
     </View>
   );
 };
