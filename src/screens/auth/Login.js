@@ -185,14 +185,14 @@ const Login = ({navigation}) => {
       .then(async res => {
         setLoading(false);
         if (res.data.success) {
-          modalOTP.current?.close();
-          navigation.navigate('App', {screen: 'Home'});
           dispatch(setAuth(true));
           dispatch(setPriceType(res.data.data.user.price_type));
           AsyncStorage.setItem('api_token', res.data.data.api_token);
           AsyncStorage.setItem('user_data', JSON.stringify(res.data.data.user));
           const fcm_token = await AsyncStorage.getItem('fcm_token');
           saveFcm(fcm_token);
+          modalOTP.current?.close();
+          navigation.navigate('App', {screen: 'Home'});
           RNToasty.Success({
             title: res.data.message,
             position: 'bottom',
@@ -229,14 +229,14 @@ const Login = ({navigation}) => {
       .then(async res => {
         setLoading(false);
         if (res.data.success) {
-          modalPassword.current?.close();
-          navigation.navigate('App', {screen: 'Home'});
           dispatch(setAuth(true));
           dispatch(setPriceType(res.data.data.user.price_type));
           AsyncStorage.setItem('api_token', res.data.data.api_token);
           AsyncStorage.setItem('user_data', JSON.stringify(res.data.data.user));
           const fcm_token = await AsyncStorage.getItem('fcm_token');
           saveFcm(fcm_token);
+          modalPassword.current?.close();
+          navigation.navigate('App', {screen: 'Home'});
           RNToasty.Success({
             title: res.data.message,
             position: 'bottom',
