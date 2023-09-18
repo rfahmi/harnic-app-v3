@@ -133,39 +133,40 @@ const Payment = ({navigation, route}) => {
               ))}
             </View>
           )}
-          {data.map(i => (
-            <React.Fragment key={i.payment_code}>
-              <List.Item
-                title={i.payment_name}
-                onPress={() =>
-                  navigation.replace('Pay', {code: i.payment_code, trx})
-                }
-                right={() => (
-                  <View
-                    style={{
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    {Number(i.is_new) === 1 ? (
-                      <View
-                        style={{
-                          backgroundColor: 'orange',
-                          paddingHorizontal: 6,
-                          paddingVertical: 2,
-                          borderRadius: 2,
-                        }}>
-                        <Text style={{color: '#fff', fontSize: 9}}>New</Text>
-                      </View>
-                    ) : (
-                      <View />
-                    )}
-                  </View>
-                )}
-              />
-              <Divider />
-            </React.Fragment>
-          ))}
+          {data &&
+            data.map(i => (
+              <React.Fragment key={i.payment_code}>
+                <List.Item
+                  title={i.payment_name}
+                  onPress={() =>
+                    navigation.replace('Pay', {code: i.payment_code, trx})
+                  }
+                  right={() => (
+                    <View
+                      style={{
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      {Number(i.is_new) === 1 ? (
+                        <View
+                          style={{
+                            backgroundColor: 'orange',
+                            paddingHorizontal: 6,
+                            paddingVertical: 2,
+                            borderRadius: 2,
+                          }}>
+                          <Text style={{color: '#fff', fontSize: 9}}>New</Text>
+                        </View>
+                      ) : (
+                        <View />
+                      )}
+                    </View>
+                  )}
+                />
+                <Divider />
+              </React.Fragment>
+            ))}
         </>
       )}
     </View>

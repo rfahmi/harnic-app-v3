@@ -11,7 +11,14 @@ import {
 } from 'react-native';
 // import {Skeleton} from 'react-native-animated-skeleton';
 import {Modalize} from 'react-native-modalize';
-import {Button, Divider, List, TextInput, Title} from 'react-native-paper';
+import {
+  Button,
+  Checkbox,
+  Divider,
+  List,
+  TextInput,
+  Title,
+} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
 import FooterCheckout from '../../components/FooterCheckout';
 import {api} from '../../configs/api';
@@ -46,6 +53,7 @@ const Checkout = ({navigation, route}) => {
   const [selectedExpedition, setSelectedExpedition] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
+  const [timeAgreement, setTimeAgreement] = useState(true);
   const [selectedVoucher, setSelectedVoucher] = useState(null);
 
   const getShipping = async () => {
@@ -439,41 +447,72 @@ const Checkout = ({navigation, route}) => {
             />
           )}
           {time && (
-            <Card
-              title="Jam Terima Paket"
-              description={
-                loading4 ? (
-                  // <Skeleton
-                  //   loaderStyle={{
-                  //     width: 200,
-                  //     height: 16,
-                  //     marginVertical: 4,
-                  //     backgroundColor: '#ddd',
-                  //   }}
-                  //   direction="column"
-                  //   numberOfItems={1}
-                  // />
-                  <View />
-                ) : selectedTime ? (
-                  `${selectedTime.day}${'\n'}${selectedTime.start} - ${
-                    selectedTime.end
-                  }`
-                ) : (
-                  <Text style={{color: 'red', fontWeight: 'bold'}}>
-                    Pilih Jam Terima Paket!
-                  </Text>
-                )
-              }
-              iconType="MaterialCommunityIcons"
-              iconName="clock"
-              iconBackgroundColor="orange"
-              onPress={() => {
-                sheet_time.current?.open();
-              }}
-              style={{
-                marginHorizontal: 16,
-              }}
-            />
+            <>
+              <Card
+                title="Jam Terima Paket"
+                description={
+                  loading4 ? (
+                    // <Skeleton
+                    //   loaderStyle={{
+                    //     width: 200,
+                    //     height: 16,
+                    //     marginVertical: 4,
+                    //     backgroundColor: '#ddd',
+                    //   }}
+                    //   direction="column"
+                    //   numberOfItems={1}
+                    // />
+                    <View />
+                  ) : selectedTime ? (
+                    `${selectedTime.day}${'\n'}${selectedTime.start} - ${
+                      selectedTime.end
+                    }`
+                  ) : (
+                    <Text style={{color: 'red', fontWeight: 'bold'}}>
+                      Pilih Jam Terima Paket!
+                    </Text>
+                  )
+                }
+                iconType="MaterialCommunityIcons"
+                iconName="clock"
+                iconBackgroundColor="orange"
+                onPress={() => {
+                  sheet_time.current?.open();
+                }}
+                style={{
+                  marginHorizontal: 16,
+                }}
+              />
+              {selectedTime?.start === '05:30' && (
+                <View
+                  style={{
+                    margin: 16,
+                    padding: 8,
+                    flexDirection: 'row',
+                    alignItems: 'flex-start',
+                    backgroundColor: '#FFFACD', // Light pastel yellow color
+                    borderRadius: 8,
+                    borderWidth: 1,
+                    borderColor: '#FFD700', // Light pastel gold border color
+                  }}>
+                  <Checkbox
+                    color={colors.primary}
+                    status={timeAgreement ? 'unchecked' : 'checked'}
+                    onPress={() => {
+                      console.log(timeAgreement);
+                      setTimeAgreement(!timeAgreement);
+                    }}
+                  />
+                  <View style={{flex: 1}}>
+                    <Text>
+                      Saya menyetujui apabila pengiriman pada pukul 05.30, dan
+                      customer tidak menjawab panggilan dari kurir Harnic, maka
+                      paket akan diletakkan di gerbang rumah/lokasi pengiriman.
+                    </Text>
+                  </View>
+                </View>
+              )}
+            </>
           )}
           <View style={{alignItems: 'center', marginVertical: 8}}>
             <Text
@@ -551,7 +590,8 @@ const Checkout = ({navigation, route}) => {
               loading ||
               !selectedShipping ||
               !selectedType ||
-              (selectedType.has_time && !selectedTime)
+              (selectedType.has_time && !selectedTime) ||
+              timeAgreement
             }
           />
         </KeyboardAvoidingView>
@@ -643,6 +683,7 @@ const Checkout = ({navigation, route}) => {
                     description={`${item.start} hingga ${item.end}`}
                     onPress={() => {
                       setSelectedTime(item);
+                      setTimeAgreement(item.start === '05:30');
                       sheet_time.current?.close();
                     }}
                   />
