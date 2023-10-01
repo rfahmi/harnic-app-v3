@@ -3,7 +3,7 @@ import {Platform, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Divider, IconButton, List} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import {setCart} from '../../configs/redux/action/cartActions';
+import {setCart} from '../../configs/redux/slice/cartSlice';
 import {colors} from '../../constants/colors';
 import {deleteCart, updateCart} from '../../utils/cart';
 import {currencyFormat} from '../../utils/formatter';

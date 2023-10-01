@@ -18,7 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {api} from '../../configs/api';
 import {RNToasty} from 'react-native-toasty';
 import {useDispatch, useSelector} from 'react-redux';
-import {setCart} from '../../configs/redux/action/cartActions';
+import {setCart} from '../../configs/redux/slice/cartSlice';
 import {useIsFocused} from '@react-navigation/native';
 import {colors} from '../../constants/colors';
 import ProductCard from '../../components/ProductCard';

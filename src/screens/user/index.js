@@ -34,7 +34,7 @@ import {authentication} from '../../assets/images';
 import FocusAwareStatusBar from '../../components/FocusAwareStatusBar';
 import Separator from '../../components/Separator';
 import {api, app_version_name} from '../../configs/api';
-import {setAuth} from '../../configs/redux/action/authActions';
+import {setAuth} from '../../configs/redux/slice/authSlice';
 import {colors} from '../../constants/colors';
 import ListSkeleton from '../../organism/skeleton/ListSkeleton';
 import {deleteFcm} from '../../utils/fcm';

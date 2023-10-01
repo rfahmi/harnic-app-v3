@@ -27,7 +27,7 @@ import Header from '../../components/Header';
 import Logo from '../../components/Logo';
 import TextInput from '../../components/TextInput';
 import {api} from '../../configs/api';
-import {setAuth, setPriceType} from '../../configs/redux/action/authActions';
+import {setAuth, setPriceType} from '../../configs/redux/slice/authSlice';
 import {colors} from '../../constants/colors';
 import {saveFcm} from '../../utils/fcm';
 import {

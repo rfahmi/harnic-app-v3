@@ -5,7 +5,7 @@ import FastImage from 'react-native-fast-image';
 import {Button, IconButton, List, TextInput} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
 import {useDispatch} from 'react-redux';
-import {setCart} from '../../configs/redux/action/cartActions';
+import {setCart} from '../../configs/redux/slice/cartSlice';
 import {colors} from '../../constants/colors';
 import {isLogin} from '../../utils/auth';
 import {updateCart} from '../../utils/cart';

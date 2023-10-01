@@ -30,7 +30,7 @@ import FooterBuy from '../../components/FooterBuy';
 import HeaderBackTransparent from '../../components/HeaderBackTransparent';
 import Separator from '../../components/Separator';
 import {api} from '../../configs/api';
-import {setCart} from '../../configs/redux/action/cartActions';
+import {setCart} from '../../configs/redux/slice/cartSlice';
 import {colors} from '../../constants/colors';
 import ProductPictures from '../../organism/product/ProductPictures';
 import SimilarProducts from '../../organism/product/SimilarProducts';

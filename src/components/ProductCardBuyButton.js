@@ -4,7 +4,7 @@ import {Text, View} from 'react-native';
 import {Button, IconButton} from 'react-native-paper';
 import {RNToasty} from 'react-native-toasty';
 import {useDispatch, useSelector} from 'react-redux';
-import {setCart, setCount} from '../configs/redux/action/cartActions';
+import {setCart, setCount} from '../configs/redux/slice/cartSlice';
 import {colors} from '../constants/colors';
 import {isLogin} from '../utils/auth';
 import {addCart, deleteCart, updateCart} from '../utils/cart';
