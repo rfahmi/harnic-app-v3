@@ -2,7 +2,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
-  isLogin: 0,
+  isLogin: false,
   priceType: 'sellprice',
 };
 

@@ -14,6 +14,7 @@ import UserShippingStack from './app/user/UserShipping';
 import AuthStack from './auth';
 import CheckoutStack from './checkout';
 import SearchStack from './search';
+import CashierStack from './app/cashier';
 
 const Stack = createStackNavigator();
 
@@ -35,6 +36,7 @@ const RootStack = () => {
       <Stack.Screen name="UserShipping" component={UserShippingStack} />
       <Stack.Screen name="Developer" component={Developer} />
       <Stack.Screen name="Billing" component={BillingStack} />
+      <Stack.Screen name="Cashier" component={CashierStack} />
     </Stack.Navigator>
   );
 };

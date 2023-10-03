@@ -223,7 +223,11 @@ const User = ({navigation}) => {
                         alignItems: 'center',
                         paddingHorizontal: 16,
                       }}>
-                      <Icon name="transition-masked" color="#EFC910" size={28} />
+                      <Icon
+                        name="transition-masked"
+                        color="#EFC910"
+                        size={28}
+                      />
                       <View style={{marginLeft: 8}}>
                         <Text style={{fontSize: 16, fontWeight: 'bold'}}>
                           {Math.floor(data?.total_point)} Point
@@ -384,6 +388,18 @@ const User = ({navigation}) => {
                     })
                   }
                 /> */}
+                <List.Item
+                  title="Kasir Waling"
+                  left={() => <List.Icon icon="store" />}
+                  onPress={() => {
+                    try {
+                      navigation.navigate('Cashier');
+                      console.log('aaa');
+                    } catch (e) {
+                      console.error(e);
+                    }
+                  }}
+                />
               </List.Section>
               <Separator color="#1100BB" />
               <List.Section>
