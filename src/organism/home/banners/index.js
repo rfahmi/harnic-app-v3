@@ -1,9 +1,11 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {memo, useCallback} from 'react';
 import {
+  Alert,
   Dimensions,
   FlatList,
   Image,
+  Linking,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -23,10 +25,16 @@ const Banners = memo(({banners, parentScrollView, warning}) => {
     [],
   );
 
-  const keyExtractor = useCallback((item) => item.id.toString(), []);
+  const keyExtractor = useCallback(item => item.id.toString(), []);
 
   const onBannerPress = useCallback(
-    (b) => {
+    b => {
+      if (!b || !b.action || !b.param) {
+        // Handle invalid input
+        console.error('Invalid banner data:', b);
+        return;
+      }
+
       switch (b.action) {
         case 'category':
           navigation.push('Search', {
@@ -55,6 +63,17 @@ const Banners = memo(({banners, parentScrollView, warning}) => {
           break;
         case 'screen':
           navigation.push(b.param);
+          break;
+        case 'external':
+          Linking.canOpenURL(b.url).then(supported => {
+            if (supported) {
+              Linking.openURL(b.url).catch(err => {
+                Alert.alert('Error opening URL:', err);
+              });
+            } else {
+              Alert.alert('URL Not supported:', b.url);
+            }
+          });
           break;
         default:
           break;
