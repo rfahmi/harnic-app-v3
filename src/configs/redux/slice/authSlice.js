@@ -11,6 +11,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setAuth: (state, action) => {
+      console.log('SET AUTH', action.payload);
       state.isLogin = action.payload;
     },
     setPriceType: (state, action) => {

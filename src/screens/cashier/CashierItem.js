@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Platform, Text, View } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Platform, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { Divider, IconButton, List } from 'react-native-paper';
-import { colors } from '../../constants/colors';
-import { deleteCart } from '../../utils/cart';
-import { currencyFormat } from '../../utils/formatter';
+import {Divider, IconButton, List} from 'react-native-paper';
+import {colors} from '../../constants/colors';
+import {deleteCart} from '../../utils/cart';
+import {currencyFormat} from '../../utils/formatter';
 
-const CashierItem = ({item, edit, onUpdateQty}) => {
+const CashierItem = ({item, edit, onUpdateQty, onDelete}) => {
   const [data, setData] = useState(item);
 
   const minCart = () => {
@@ -130,7 +130,7 @@ const CashierItem = ({item, edit, onUpdateQty}) => {
               <IconButton
                 mode="outlined"
                 onPress={() => {
-                  deleteCart(data.itemmst);
+                  onDelete(data.itemmst);
                 }}
                 color={colors.red}
                 icon="delete"

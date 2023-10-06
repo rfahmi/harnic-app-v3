@@ -388,18 +388,20 @@ const User = ({navigation}) => {
                     })
                   }
                 /> */}
-                <List.Item
-                  title="Kasir Waling"
-                  left={() => <List.Icon icon="store" />}
-                  onPress={() => {
-                    try {
-                      navigation.navigate('Cashier');
-                      console.log('aaa');
-                    } catch (e) {
-                      console.error(e);
-                    }
-                  }}
-                />
+                {data && data.user_group == 5 && (
+                  <List.Item
+                    title="Kasir Waling"
+                    left={() => <List.Icon icon="store" />}
+                    onPress={() => {
+                      try {
+                        navigation.navigate('Cashier');
+                        console.log('aaa');
+                      } catch (e) {
+                        console.error(e);
+                      }
+                    }}
+                  />
+                )}
               </List.Section>
               <Separator color="#1100BB" />
               <List.Section>

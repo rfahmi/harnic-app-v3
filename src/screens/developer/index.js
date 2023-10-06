@@ -17,6 +17,7 @@ import {FacebookWebView} from '../../components/FacebookWebView';
 import HeaderBack from '../../components/HeaderBack';
 import {colors} from '../../constants/colors';
 import {Modalize} from 'react-native-modalize';
+import {NativeModules} from 'react-native';
 
 const Developer = ({navigation}) => {
   const WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -42,6 +43,10 @@ const Developer = ({navigation}) => {
       />
       <KeyboardAvoidingView behavior="height">
         <ScrollView>
+          <List.Item
+            title="Open Dev Menu"
+            onPress={() => NativeModules.DevMenu.show()}
+          />
           <List.Item
             title="Goto Test Panel"
             onPress={() =>
