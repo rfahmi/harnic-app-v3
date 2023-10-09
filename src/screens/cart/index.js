@@ -178,51 +178,52 @@ const Cart = ({navigation}) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS == 'ios' ? 'padding' : null}
-      style={{flex: 1}}>
-      <ScreenTitle title="Keranjang Belanja" search />
-      <FlatList
-        refreshControl={
-          <RefreshControl refreshing={loading} onRefresh={_handleRefresh} />
-        }
-        contentContainerStyle={{backgroundColor: '#fff', flex: 1}}
-        ListEmptyComponent={
-          !loading && (
-            <Empty
-              image="shopping"
-              title="Keranjang kosong"
-              caption="Tambahkan beberapa produk"
-              actionLabel="Cari Produk"
-              action={() => navigation.navigate('Search')}
+    <>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : null}
+        style={{flex: 1, backgroundColor: '#fff'}}>
+        <ScreenTitle title="Keranjang Belanja" search />
+        <FlatList
+          refreshControl={
+            <RefreshControl refreshing={loading} onRefresh={_handleRefresh} />
+          }
+          ListEmptyComponent={
+            !loading && (
+              <Empty
+                image="shopping"
+                title="Keranjang kosong"
+                caption="Tambahkan beberapa produk"
+                actionLabel="Cari Produk"
+                action={() => navigation.navigate('Search')}
+              />
+            )
+          }
+          ListFooterComponent={() =>
+            data.length > 0 && attr && _renderRecomendation(attr.recomendation)
+          }
+          // ListFooterComponentStyle={{backgroundColor: 'orange', marginTop: 80}}
+          data={auth.isLogin ? data : []}
+          renderItem={_renderItems}
+          horizontal={false}
+          keyExtractor={keyExtractor}
+        />
+        {auth.isLogin && data && data.length > 0 && attr && (
+          <FooterCart products={data} attribute={attr} />
+        )}
+        <Modalize
+          ref={modalizeRef}
+          modalHeight={Dimensions.get('window').height / 1.5}
+          modalStyle={{flex: 1, zIndex: 99}}>
+          <View style={{padding: 16}}>
+            <Title>Edit Keranjang</Title>
+            <CartItemEdit
+              item={selectedItem}
+              closeModal={() => modalizeRef.current?.close()}
             />
-          )
-        }
-        ListFooterComponent={() =>
-          data.length > 0 && attr && _renderRecomendation(attr.recomendation)
-        }
-        // ListFooterComponentStyle={{backgroundColor: 'orange', marginTop: 80}}
-        data={auth.isLogin ? data : []}
-        renderItem={_renderItems}
-        horizontal={false}
-        keyExtractor={keyExtractor}
-      />
-      {auth.isLogin && data && data.length > 0 && attr && (
-        <FooterCart products={data} attribute={attr} />
-      )}
-      <Modalize
-        ref={modalizeRef}
-        modalHeight={Dimensions.get('window').height / 1.5}
-        modalStyle={{flex: 1, zIndex: 99}}>
-        <View style={{padding: 16}}>
-          <Title>Edit Keranjang</Title>
-          <CartItemEdit
-            item={selectedItem}
-            closeModal={() => modalizeRef.current?.close()}
-          />
-        </View>
-      </Modalize>
-    </KeyboardAvoidingView>
+          </View>
+        </Modalize>
+      </KeyboardAvoidingView>
+    </>
   );
 };
 
