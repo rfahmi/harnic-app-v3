@@ -16,11 +16,7 @@ import {IconButton} from 'react-native-paper';
 import {captureRef} from 'react-native-view-shot';
 import {useDispatch, useSelector} from 'react-redux';
 import Button from '../../components/Button';
-import {
-  getTrxData,
-  resetTrxList,
-  voidTrx,
-} from '../../configs/redux/slice/cashierSlice';
+import {getTrxData, voidTrx} from '../../configs/redux/slice/cashierSlice';
 import {currencyFormat} from '../../utils/formatter';
 
 const Table = ({data}) => {
@@ -144,6 +140,7 @@ const CashierReceipt = ({navigation}) => {
       await RNFS.copyFile(uri, imagePath);
 
       if (Platform.OS === 'android' && !(await hasAndroidPermission())) {
+        Alert.alert('Permission required');
         return;
       }
       Alert.alert('Receipt Saved', imagePath);
