@@ -483,6 +483,7 @@ const Checkout = ({navigation, route}) => {
                   marginHorizontal: 16,
                 }}
               />
+              
               {selectedTime?.start === '05:30' && (
                 <View
                   style={{
@@ -495,7 +496,7 @@ const Checkout = ({navigation, route}) => {
                     borderWidth: 1,
                     borderColor: '#FFD700', // Light pastel gold border color
                   }}>
-                  <Checkbox
+                  <Checkbox.Android
                     color={colors.primary}
                     status={timeAgreement ? 'unchecked' : 'checked'}
                     onPress={() => {

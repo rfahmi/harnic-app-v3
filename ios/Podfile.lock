@@ -443,6 +443,8 @@ PODS:
     - React-Core
   - react-native-camera/RN (4.2.1):
     - React-Core
+  - react-native-cameraroll (5.10.0):
+    - React-Core
   - react-native-date-picker (3.4.3):
     - React-Core
   - react-native-netinfo (9.3.8):
@@ -451,9 +453,15 @@ PODS:
     - React-Core
   - react-native-restart (0.0.24):
     - React-Core
-  - react-native-safe-area-context (3.4.1):
+  - react-native-safe-area-context (4.6.3):
+    - RCT-Folly
+    - RCTRequired
+    - RCTTypeSafety
     - React-Core
+    - ReactCommon/turbomodule/core
   - react-native-select-contact (1.6.3):
+    - React-Core
+  - react-native-view-shot (3.7.0):
     - React-Core
   - react-native-viewpager (5.0.11):
     - React-Core
@@ -566,6 +574,8 @@ PODS:
     - Firebase/InAppMessaging (= 7.11.0)
     - React-Core
     - RNFBApp
+  - RNFS (2.20.0):
+    - React-Core
   - RNGestureHandler (1.9.0):
     - React-Core
   - RNReanimated (3.0.2):
@@ -663,12 +673,14 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-camera (from `../node_modules/react-native-camera`)
+  - "react-native-cameraroll (from `../node_modules/@react-native-camera-roll/camera-roll`)"
   - react-native-date-picker (from `../node_modules/react-native-date-picker`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-render-html (from `../node_modules/react-native-render-html`)
   - react-native-restart (from `../node_modules/react-native-restart`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-select-contact (from `../node_modules/react-native-select-contact`)
+  - react-native-view-shot (from `../node_modules/react-native-view-shot`)
   - "react-native-viewpager (from `../node_modules/@react-native-community/viewpager`)"
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -692,6 +704,7 @@ DEPENDENCIES:
   - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBInAppMessaging (from `../node_modules/@react-native-firebase/in-app-messaging`)"
+  - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -779,6 +792,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   react-native-camera:
     :path: "../node_modules/react-native-camera"
+  react-native-cameraroll:
+    :path: "../node_modules/@react-native-camera-roll/camera-roll"
   react-native-date-picker:
     :path: "../node_modules/react-native-date-picker"
   react-native-netinfo:
@@ -791,6 +806,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-select-contact:
     :path: "../node_modules/react-native-select-contact"
+  react-native-view-shot:
+    :path: "../node_modules/react-native-view-shot"
   react-native-viewpager:
     :path: "../node_modules/@react-native-community/viewpager"
   react-native-webview:
@@ -837,6 +854,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBInAppMessaging:
     :path: "../node_modules/@react-native-firebase/in-app-messaging"
+  RNFS:
+    :path: "../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
@@ -901,12 +920,14 @@ SPEC CHECKSUMS:
   React-jsinspector: 14a342151ab810862998dfc99e2720746734e9b3
   React-logger: 94ec392ae471683635e4bf874d4e82f675399d2d
   react-native-camera: 3eae183c1d111103963f3dd913b65d01aef8110f
+  react-native-cameraroll: 4701ae7c3dbcd3f5e9e150ca17f250a276154b35
   react-native-date-picker: 201b481c94dcb7678f4712477ad026dd7793305b
   react-native-netinfo: fbc23bc2fe217155d85f2f7e0644b1654df8029b
   react-native-render-html: 012780b92993ab33b3ae0240b90e585d00c70808
   react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
-  react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
+  react-native-safe-area-context: 36cc67648134e89465663b8172336a19eeda493d
   react-native-select-contact: f88ccd9dbee6c4d1c32507291b431cf558a2ed42
+  react-native-view-shot: f5507655f122e6b104888a11130f267a427f0d57
   react-native-viewpager: b99b53127d830885917ef84809c5065edd614a78
   react-native-webview: 9f111dfbcfc826084d6c507f569e5e03342ee1c1
   React-perflogger: 883a55a9a899535eaf06d0029108ef9ef22cce92
@@ -930,6 +951,7 @@ SPEC CHECKSUMS:
   RNFBAnalytics: 3e250066a98d6ea0a7816c52de75f2633f726580
   RNFBApp: 9c90f9d576861947ba75fe0830567c570bcbcf6d
   RNFBInAppMessaging: beddb2f5f10d6e691c3125af6194437e10d85ae9
+  RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: 9b7e605a741412e20e13c512738a31bd1611759b
   RNReanimated: f0dd6b881808e635ef0673f89642937d6c141314
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
@@ -945,4 +967,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: d6ede8b8679c74f0f3e4953f1cc998c97882179c
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.13.0
