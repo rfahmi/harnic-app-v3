@@ -46,7 +46,7 @@ const AppStack = () => {
         options={{
           tabBarLabel: 'Feed',
           tabBarIcon: ({color}) => (
-            <Icon name="checkbox-multiple-blank" color={color} size={26} />
+            <Icon name="cellphone-play" color={color} size={26} />
           ),
         }}
       />
