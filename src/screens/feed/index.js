@@ -1,4 +1,4 @@
-import {useIsFocused} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Dimensions,
@@ -10,34 +10,65 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {getStatusBarHeight} from 'react-native-safearea-height';
 import Video from 'react-native-video';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchFeedVideo} from '../../configs/redux/slice/feedSlice';
+import {currencyFormat} from '../../utils/formatter';
+import {ActivityIndicator} from 'react-native-paper';
+
+const STATUSBAR_HEIGHT = getStatusBarHeight();
 
 const FeedItem = ({item, idPlayed, pauseAll}) => {
+  const navigation = useNavigation();
+  const auth = useSelector(state => state.auth);
   const videoRef = useRef(null);
-  const [isPaused, setIsPaused] = useState(idPlayed !== item.id);
+  const [isPaused, setIsPaused] = useState(idPlayed !== item.itemid);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     videoRef.current?.seek(0);
-    setIsPaused(idPlayed !== item.id);
-    console.log('is paused?', idPlayed !== item.id, idPlayed);
+    setIsPaused(idPlayed !== item.itemid);
+    // console.log('is paused?', idPlayed !== item.itemid, idPlayed);
   }, [idPlayed, item, pauseAll]);
 
   const handleTogglePause = () => {
     setIsPaused(!isPaused);
   };
 
+  const handleBuffer = ({isBuffering}) => {
+    setIsLoading(isBuffering);
+  };
+
+  const handleError = error => {
+    console.error('Video Error:', error);
+    setIsLoading(false);
+  };
+
   return (
     <TouchableOpacity
-      onPress={handleTogglePause}
+      onPress={() => {
+        handleTogglePause();
+      }}
       activeOpacity={1}
       style={styles.container}>
       <Video
         ref={videoRef}
-        source={{uri: item.youtube_url}}
+        source={{uri: item.feed_video}}
         style={styles.video}
         resizeMode="cover"
         repeat
         paused={isPaused || pauseAll}
+        onBuffer={handleBuffer}
+        onError={handleError}
       />
+
+      {isLoading && (
+        <ActivityIndicator
+          style={{position: 'absolute', top: '45%', left: '45%'}}
+          size="large"
+          color="#fff"
+        />
+      )}
 
       <View
         style={{
@@ -56,8 +87,15 @@ const FeedItem = ({item, idPlayed, pauseAll}) => {
             flex: 1,
             flexDirection: 'row',
           }}>
-          <View
+          <TouchableOpacity
+            onPress={() =>
+              navigation.push('Search', {
+                screen: 'Product',
+                params: {itemid: item.itemid},
+              })
+            }
             style={{
+              flex: 1,
               width: 80,
               height: 80,
             }}>
@@ -66,24 +104,42 @@ const FeedItem = ({item, idPlayed, pauseAll}) => {
                 flex: 1,
               }}
               source={{
-                uri: 'https://fiorellaindia.com/wp-content/uploads/2021/05/Santorini-Box-min-scaled.jpg',
+                uri: item.picture,
                 priority: FastImage.priority.normal,
               }}
-              resizeMode={FastImage.resizeMode.contain}
+              resizeMode={FastImage.resizeMode.cover}
             />
-          </View>
-          <View style={{flex: 1, padding: 8, gap: 6}}>
-            <Text>Nama Produk Akan Ada Disini Nama Produk Akan Ada Disini</Text>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: 'bold',
-                color: 'orange',
-                marginBottom: 2,
-              }}>
-              Rp. 200,000
-            </Text>
-          </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.push('Search', {
+                screen: 'Product',
+                params: {itemid: item.itemid},
+              })
+            }
+            style={{
+              flex: 1,
+              width: 300 - 80,
+              padding: 8,
+            }}>
+            <View style={{flex: 1, gap: 6}}>
+              <Text style={{fontSize: 10, height: 38}} numberOfLines={2}>
+                {item.online_name}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                  color: 'orange',
+                  marginBottom: 2,
+                }}>
+                Rp.{' '}
+                {item && item.is_promo
+                  ? currencyFormat(item.sellprice)
+                  : currencyFormat(item[auth.priceType] || item.sellprice)}
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableOpacity>
@@ -94,62 +150,31 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height - 54,
+    height: Dimensions.get('window').height - (STATUSBAR_HEIGHT - 14),
   },
   video: {
+    // backgroundColor:'red',
     flex: 1,
   },
 });
 
+const PAGE_SIZE = 5;
+
 const Feed = () => {
   const isFocus = useIsFocused();
+  const dispatch = useDispatch();
   const [page, setPage] = useState(1);
-  const [data, setData] = useState([]);
   const [pauseAll, setPauseAll] = useState(false);
-
-  const DATA_DUMMY = [
-    {
-      id: 1,
-      youtube_url:
-        'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
-    },
-    {
-      id: 2,
-      youtube_url:
-        'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4',
-    },
-    {
-      id: 3,
-      youtube_url:
-        'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-    },
-    {
-      id: 4,
-      youtube_url:
-        'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
-    },
-  ];
-
-  const fetchData = p => {
-    console.log('current page', p);
-    setPage(p);
-    if (p === 1) {
-      setData(DATA_DUMMY);
-    } else {
-      setTimeout(() => {
-        setData(prevData => [...prevData, ...DATA_DUMMY]);
-      }, 1000);
-    }
-  };
+  const {videos, loading, error} = useSelector(state => state.feed);
 
   const [idPlayed, setIdPlayed] = useState(0);
   const onViewableItemsChanged = useRef(({viewableItems}) => {
-    console.log('vis 1', viewableItems);
+    // console.log('vis 1', viewableItems);
     if (viewableItems.length > 0) {
       const visibleItem = viewableItems.find(a => a.isViewable);
-      console.log('vis 2', visibleItem.item.id);
+      // console.log('vis 2', visibleItem.item.itemid);
       if (visibleItem.item) {
-        setIdPlayed(visibleItem.item.id);
+        setIdPlayed(visibleItem.item.itemid);
       } else {
         setIdPlayed(0);
       }
@@ -161,16 +186,25 @@ const Feed = () => {
   });
 
   useEffect(() => {
+    setPage(1);
     setPauseAll(!isFocus);
   }, [isFocus]);
 
   useEffect(() => {
-    console.log('data now has ', data.length);
-  }, [data]);
+    console.log('videos length', videos.length);
+  }, [videos]);
 
   useEffect(() => {
-    fetchData(1);
-  }, []);
+    console.log('page', page);
+    dispatch(fetchFeedVideo({page: page, limit: PAGE_SIZE}));
+  }, [dispatch, page]);
+
+  const handleLoadMore = () => {
+    // Fetch more feed videos when reaching the end of the list
+    if (!loading && !error) {
+      setPage(page + 1);
+    }
+  };
 
   return (
     <>
@@ -180,17 +214,18 @@ const Feed = () => {
         backgroundColor="rgba(0,0,0,0.1)"
       />
       <FlatList
-        data={data}
+        style={{backgroundColor: '#000'}}
+        data={videos}
         renderItem={({item}) => (
           <FeedItem idPlayed={idPlayed} item={item} pauseAll={pauseAll} />
         )}
-        keyExtractor={item => `video${item.id}`}
+        keyExtractor={item => `video${item.itemid}`}
         showsVerticalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged.current}
         viewabilityConfig={viewabilityConfig.current}
         pagingEnabled
-        // onEndReached={() => fetchData(page + 1)}
         onEndReachedThreshold={0.5}
+        onEndReached={handleLoadMore}
       />
     </>
   );

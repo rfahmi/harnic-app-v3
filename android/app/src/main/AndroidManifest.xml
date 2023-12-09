@@ -11,7 +11,18 @@
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <queries>
+        <intent>
+            <action android:name="com.google.android.youtube.api.service.START" />
+        </intent>
+    </queries>
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <data android:mimeType="vnd.android.cursor.dir/contact" />
+        </intent>
+    </queries>
     <application
       android:name=".MainApplication"
       android:label="@string/app_name"
@@ -62,11 +73,4 @@
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" android:exported="false"/>
       <meta-data android:name="com.google.android.youtube.api.key" android:value="AIzaSyBX3NxU1_YZq0I6f6B3hrZfeKpnC6opb68" />
     </application>
-    <queries>
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.DEFAULT" />
-            <data android:mimeType="vnd.android.cursor.dir/contact" />
-        </intent>
-    </queries>
 </manifest>
