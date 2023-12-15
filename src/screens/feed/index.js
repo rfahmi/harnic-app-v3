@@ -216,20 +216,21 @@ const Feed = () => {
 
   const handleLoadMore = () => {
     if (!loading && !error) {
-      console.log('next page', page + 1, videos.length, PAGE_SIZE);
-      setPage(prevPage => prevPage + 1);
+      // Check if the current page has already been fetched
+      const isLastPage = videos.length > 0 && videos.length % PAGE_SIZE !== 0;
+
+      const sisa = videos.length % PAGE_SIZE;
+
+      if (isLastPage) {
+        console.log('loop');
+        setPage(1);
+        console.log('cutting', sisa);
+        dispatch(cutFirstVideo(sisa));
+      } else {
+        console.log('next page', page + 1, videos.length, PAGE_SIZE);
+        setPage(prevPage => prevPage + 1);
+      }
     }
-
-    // Check if the current page has already been fetched
-    const isLastPage = videos.length > 0 && videos.length % PAGE_SIZE !== 0;
-
-    const sisa = videos.length % PAGE_SIZE;
-
-    if (isLastPage) {
-      console.log('loop');
-      setPage(1);
-    }
-    dispatch(cutFirstVideo(sisa));
   };
 
   const keyExtractor = item => 'video' + item.uniqueId;
