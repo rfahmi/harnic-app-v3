@@ -5,8 +5,8 @@ import {api} from '../../api';
 export const fetchFeedVideo = createAsyncThunk(
   'feed/videos',
   async ({page, limit}, {rejectWithValue}) => {
+    // console.log('fetching', {page, limit});
     try {
-      // console.log({page, limit});
       const response = await api.get('/feed/videos/', {
         params: {page, limit},
       });
@@ -25,6 +25,14 @@ const feedSlice = createSlice({
     videos: [],
     error: null,
     loading: false,
+  },
+  reducers: {
+    resetVideos: state => {
+      state.videos = [];
+    },
+    cutFirstVideo: (state, action) => {
+      state.videos = state.videos.slice(action.payload);
+    },
   },
   extraReducers: builder => {
     builder
@@ -47,5 +55,6 @@ const feedSlice = createSlice({
       });
   },
 });
+export const {resetVideos, cutFirstVideo} = feedSlice.actions;
 
 export default feedSlice.reducer;

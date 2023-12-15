@@ -13,7 +13,11 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {getStatusBarHeight} from 'react-native-safearea-height';
 import Video from 'react-native-video';
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchFeedVideo} from '../../configs/redux/slice/feedSlice';
+import {
+  cutFirstVideo,
+  fetchFeedVideo,
+  resetVideos,
+} from '../../configs/redux/slice/feedSlice';
 import {currencyFormat} from '../../utils/formatter';
 import {ActivityIndicator} from 'react-native-paper';
 
@@ -156,7 +160,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 4;
 
 const Feed = () => {
   const isFocus = useIsFocused();
@@ -183,14 +187,27 @@ const Feed = () => {
   });
 
   useEffect(() => {
-    console.log('should reload');
-    setPage(1);
+    if (isFocus) {
+      console.log('should reload');
+      setPage(1);
+    } else {
+      console.log('reset');
+      setPage(0);
+      dispatch(resetVideos());
+    }
     setPauseAll(!isFocus);
   }, [isFocus]);
 
   useEffect(() => {
-    console.log('videos length', videos.length);
+    console.log('now we have', videos.length);
   }, [videos]);
+
+  // useEffect(() => {
+  //   // console.log('videos length', videos.length);
+  //   if (idPlayed !== 0) {
+  //     handleLoadMore();
+  //   }
+  // }, [idPlayed]);
 
   useEffect(() => {
     console.log('page', page);
@@ -198,13 +215,21 @@ const Feed = () => {
   }, [dispatch, page]);
 
   const handleLoadMore = () => {
-    // Fetch more feed videos when reaching the end of the list
-    if (!loading && !error && videos.length % PAGE_SIZE === 0) {
-      console.log('next page');
-      setPage(page + 1);
-    } else {
+    if (!loading && !error) {
+      console.log('next page', page + 1, videos.length, PAGE_SIZE);
+      setPage(prevPage => prevPage + 1);
+    }
+
+    // Check if the current page has already been fetched
+    const isLastPage = videos.length > 0 && videos.length % PAGE_SIZE !== 0;
+
+    const sisa = videos.length % PAGE_SIZE;
+
+    dispatch(cutFirstVideo(sisa));
+
+    if (isLastPage) {
       console.log('loop');
-      setPage(1);
+      setPage(1); // Reset to the first page
     }
   };
 
@@ -228,8 +253,8 @@ const Feed = () => {
         onViewableItemsChanged={onViewableItemsChanged.current}
         viewabilityConfig={viewabilityConfig.current}
         pagingEnabled
-        // onEndReachedThreshold={0.7}
-        // onEndReached={handleLoadMore}
+        onEndReachedThreshold={2}
+        onEndReached={handleLoadMore}
       />
     </>
   );
