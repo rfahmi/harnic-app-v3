@@ -23,12 +23,11 @@ const FeedItem = ({item, idPlayed, pauseAll}) => {
   const navigation = useNavigation();
   const auth = useSelector(state => state.auth);
   const videoRef = useRef(null);
-  const [isPaused, setIsPaused] = useState(idPlayed !== item.itemid);
+  const [isPaused, setIsPaused] = useState(idPlayed !== item.uniqueId);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     videoRef.current?.seek(0);
-    setIsPaused(idPlayed !== item.itemid);
-    // console.log('is paused?', idPlayed !== item.itemid, idPlayed);
+    setIsPaused(idPlayed !== item.uniqueId);
   }, [idPlayed, item, pauseAll]);
 
   const handleTogglePause = () => {
@@ -153,7 +152,6 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height - (STATUSBAR_HEIGHT - 14),
   },
   video: {
-    // backgroundColor:'red',
     flex: 1,
   },
 });
@@ -169,12 +167,11 @@ const Feed = () => {
 
   const [idPlayed, setIdPlayed] = useState(0);
   const onViewableItemsChanged = useRef(({viewableItems}) => {
-    // console.log('vis 1', viewableItems);
     if (viewableItems.length > 0) {
       const visibleItem = viewableItems.find(a => a.isViewable);
-      // console.log('vis 2', visibleItem.item.itemid);
+
       if (visibleItem.item) {
-        setIdPlayed(visibleItem.item.itemid);
+        setIdPlayed(visibleItem.item.uniqueId);
       } else {
         setIdPlayed(0);
       }
@@ -186,6 +183,7 @@ const Feed = () => {
   });
 
   useEffect(() => {
+    console.log('should reload');
     setPage(1);
     setPauseAll(!isFocus);
   }, [isFocus]);
@@ -201,10 +199,16 @@ const Feed = () => {
 
   const handleLoadMore = () => {
     // Fetch more feed videos when reaching the end of the list
-    if (!loading && !error) {
+    if (!loading && !error && videos.length % PAGE_SIZE === 0) {
+      console.log('next page');
       setPage(page + 1);
+    } else {
+      console.log('loop');
+      setPage(1);
     }
   };
+
+  const keyExtractor = item => 'video' + item.uniqueId;
 
   return (
     <>
@@ -219,13 +223,13 @@ const Feed = () => {
         renderItem={({item}) => (
           <FeedItem idPlayed={idPlayed} item={item} pauseAll={pauseAll} />
         )}
-        keyExtractor={item => `video${item.itemid}`}
+        keyExtractor={keyExtractor}
         showsVerticalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged.current}
         viewabilityConfig={viewabilityConfig.current}
         pagingEnabled
-        onEndReachedThreshold={0.5}
-        onEndReached={handleLoadMore}
+        // onEndReachedThreshold={0.7}
+        // onEndReached={handleLoadMore}
       />
     </>
   );

@@ -29,10 +29,10 @@ const feedSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchFeedVideo.pending, (state, {meta}) => {
-        if (meta.arg.page === 1) {
-          console.log('reset');
-          state.videos = [];
-        }
+        // if (meta.arg.page === 1) {
+        //   console.log('reset');
+        //   state.videos = [];
+        // }
         state.loading = true;
         state.error = null;
       })
