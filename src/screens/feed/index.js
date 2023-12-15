@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 3;
 
 const Feed = () => {
   const isFocus = useIsFocused();
@@ -225,12 +225,11 @@ const Feed = () => {
 
     const sisa = videos.length % PAGE_SIZE;
 
-    dispatch(cutFirstVideo(sisa));
-
     if (isLastPage) {
       console.log('loop');
-      setPage(1); // Reset to the first page
+      setPage(1);
     }
+    dispatch(cutFirstVideo(sisa));
   };
 
   const keyExtractor = item => 'video' + item.uniqueId;
