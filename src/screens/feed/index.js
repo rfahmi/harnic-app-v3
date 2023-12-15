@@ -202,13 +202,6 @@ const Feed = () => {
     console.log('now we have', videos.length);
   }, [videos]);
 
-  // useEffect(() => {
-  //   // console.log('videos length', videos.length);
-  //   if (idPlayed !== 0) {
-  //     handleLoadMore();
-  //   }
-  // }, [idPlayed]);
-
   useEffect(() => {
     console.log('page', page);
     dispatch(fetchFeedVideo({page: page, limit: PAGE_SIZE}));
