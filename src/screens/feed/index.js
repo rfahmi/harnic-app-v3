@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {getStatusBarHeight} from 'react-native-safearea-height';
 import Video from 'react-native-video';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -20,8 +19,72 @@ import {
 } from '../../configs/redux/slice/feedSlice';
 import {currencyFormat} from '../../utils/formatter';
 import {ActivityIndicator} from 'react-native-paper';
-
-const STATUSBAR_HEIGHT = getStatusBarHeight();
+const FeedItemCard = ({item, auth, onPress}) => {
+  return (
+    <View
+      style={{
+        backgroundColor: '#fff',
+        height: 80,
+        width: 300,
+        borderRadius: 8,
+        overflow: 'hidden',
+        position: 'absolute',
+        bottom: 16,
+        right: 16,
+        zIndex: 20,
+      }}>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+        }}>
+        <TouchableOpacity
+          onPress={onPress}
+          style={{
+            flex: 1,
+            width: 80,
+            height: 80,
+          }}>
+          <FastImage
+            style={{
+              flex: 1,
+            }}
+            source={{
+              uri: item.picture,
+              priority: FastImage.priority.normal,
+            }}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={onPress}
+          style={{
+            flex: 1,
+            width: 300 - 80,
+            padding: 8,
+          }}>
+          <View style={{flex: 1, gap: 6}}>
+            <Text style={{fontSize: 10, height: 38}} numberOfLines={2}>
+              {item.online_name}
+            </Text>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: 'bold',
+                color: 'orange',
+                marginBottom: 2,
+              }}>
+              Rp.{' '}
+              {item && item.is_promo
+                ? currencyFormat(item.sellprice)
+                : currencyFormat(item[auth.priceType] || item.sellprice)}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
 
 const FeedItem = ({item, idPlayed, pauseAll}) => {
   const navigation = useNavigation();
@@ -72,79 +135,16 @@ const FeedItem = ({item, idPlayed, pauseAll}) => {
           color="#fff"
         />
       )}
-
-      <View
-        style={{
-          backgroundColor: '#fff',
-          height: 80,
-          width: 300,
-          borderRadius: 8,
-          overflow: 'hidden',
-          position: 'absolute',
-          bottom: 16,
-          right: 16,
-          zIndex: 20,
-        }}>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-          }}>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.push('Search', {
-                screen: 'Product',
-                params: {itemid: item.itemid},
-              })
-            }
-            style={{
-              flex: 1,
-              width: 80,
-              height: 80,
-            }}>
-            <FastImage
-              style={{
-                flex: 1,
-              }}
-              source={{
-                uri: item.picture,
-                priority: FastImage.priority.normal,
-              }}
-              resizeMode={FastImage.resizeMode.cover}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.push('Search', {
-                screen: 'Product',
-                params: {itemid: item.itemid},
-              })
-            }
-            style={{
-              flex: 1,
-              width: 300 - 80,
-              padding: 8,
-            }}>
-            <View style={{flex: 1, gap: 6}}>
-              <Text style={{fontSize: 10, height: 38}} numberOfLines={2}>
-                {item.online_name}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: 'bold',
-                  color: 'orange',
-                  marginBottom: 2,
-                }}>
-                Rp.{' '}
-                {item && item.is_promo
-                  ? currencyFormat(item.sellprice)
-                  : currencyFormat(item[auth.priceType] || item.sellprice)}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <FeedItemCard
+        item={item}
+        auth={auth}
+        onPress={() =>
+          navigation.push('Search', {
+            screen: 'Product',
+            params: {itemid: item.itemid},
+          })
+        }
+      />
     </TouchableOpacity>
   );
 };
@@ -153,19 +153,41 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height - (STATUSBAR_HEIGHT - 14),
+    height: Dimensions.get('window').height - 54,
   },
   video: {
     flex: 1,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height - 54,
   },
 });
 
-const PAGE_SIZE = 3;
+const LoadingFooter = () => (
+  <View
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#eee',
+      width: Dimensions.get('window').width,
+      height: 100,
+      gap: 8,
+    }}>
+    <ActivityIndicator size="small" color="#aaa" />
+    <Text style={{color: '#aaa', fontWeight: 'bold', fontSize: 11}}>
+      Loading Content
+    </Text>
+  </View>
+);
+
+const PAGE_SIZE = 1;
 
 const Feed = () => {
   const isFocus = useIsFocused();
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
+  const [isLast, setIsLast] = useState(false);
   const [pauseAll, setPauseAll] = useState(false);
   const {videos, loading, error} = useSelector(state => state.feed);
 
@@ -196,7 +218,7 @@ const Feed = () => {
       dispatch(resetVideos());
     }
     setPauseAll(!isFocus);
-  }, [isFocus]);
+  }, [dispatch, isFocus]);
 
   useEffect(() => {
     console.log('now we have', videos.length);
@@ -211,14 +233,14 @@ const Feed = () => {
     if (!loading && !error) {
       // Check if the current page has already been fetched
       const isLastPage = videos.length > 0 && videos.length % PAGE_SIZE !== 0;
-
-      const sisa = videos.length % PAGE_SIZE;
+      setIsLast(isLastPage);
+      // const sisa = videos.length % PAGE_SIZE;
 
       if (isLastPage) {
-        console.log('loop');
-        setPage(1);
-        console.log('cutting', sisa);
-        dispatch(cutFirstVideo(sisa));
+        // console.log('loop');
+        // setPage(1);
+        // console.log('cutting', sisa);
+        // dispatch(cutFirstVideo(sisa));
       } else {
         console.log('next page', page + 1, videos.length, PAGE_SIZE);
         setPage(prevPage => prevPage + 1);
@@ -248,6 +270,7 @@ const Feed = () => {
         pagingEnabled
         onEndReachedThreshold={2}
         onEndReached={handleLoadMore}
+        ListFooterComponent={loading && LoadingFooter}
       />
     </>
   );
