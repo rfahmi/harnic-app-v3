@@ -152,6 +152,7 @@ const Checkout = ({navigation, route}) => {
         if (res.data.success) {
           setType(res.data.data);
           setSelectedType(res.data.data[0]);
+          setTimeAgreement(Boolean(res.data.data[0].has_time));
           if (res.data.data[0].has_time) {
             getTime(shipping_id, expedition_id, res.data.data[0].id);
           } else {
@@ -483,7 +484,7 @@ const Checkout = ({navigation, route}) => {
                   marginHorizontal: 16,
                 }}
               />
-              
+
               {selectedTime?.start === '05:30' && (
                 <View
                   style={{
@@ -591,7 +592,7 @@ const Checkout = ({navigation, route}) => {
               loading ||
               !selectedShipping ||
               !selectedType ||
-              (selectedType.has_time && !selectedTime) ||
+              (Boolean(selectedType.has_time) && !selectedTime) ||
               timeAgreement
             }
           />
@@ -651,6 +652,8 @@ const Checkout = ({navigation, route}) => {
                     }}
                     onPress={() => {
                       setSelectedType(item);
+                      console.log('JENIS', item);
+                      setTimeAgreement(Boolean(item.has_time));
                       if (item.has_time) {
                         getTime(
                           selectedShipping.shipping_id,

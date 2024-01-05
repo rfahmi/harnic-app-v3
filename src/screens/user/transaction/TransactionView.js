@@ -659,7 +659,21 @@ const TransactionView = ({navigation, route}) => {
                 </View>
                 <View style={{padding: 16}}>
                   <Timeline
-                    data={data.tracking}
+                    data={data.tracking.map((item, index) => ({
+                      ...item,
+                      time: item.time.replace(
+                        /{{ORDERDATE}}/g,
+                        moment(data.orderdate).format('DD/MM HH:mm'),
+                      ),
+                      titleStyle: {
+                        color:
+                          index === data.tracking.length - 1 ? '#111' : '#aaa',
+                      },
+                      descriptionStyle: {
+                        color:
+                          index === data.tracking.length - 1 ? '#111' : '#aaa',
+                      },
+                    }))}
                     showTime
                     timeStyle={{color: '#111'}}
                     timeContainerStyle={{width: 60}}
@@ -689,7 +703,6 @@ const TransactionView = ({navigation, route}) => {
                     style={{
                       alignItems: 'center',
                       justifyContent: 'center',
-                      paddingRight: 16,
                     }}>
                     <Text>{data.shipping.pic_name}</Text>
                   </View>
@@ -704,7 +717,6 @@ const TransactionView = ({navigation, route}) => {
                       flex: 1,
                       alignItems: 'center',
                       justifyContent: 'center',
-                      paddingRight: 16,
                     }}>
                     <Text style={{fontSize: 12, textAlign: 'right'}}>
                       {data.shipping.full_address}
@@ -720,7 +732,6 @@ const TransactionView = ({navigation, route}) => {
                     style={{
                       alignItems: 'center',
                       justifyContent: 'center',
-                      paddingRight: 16,
                     }}>
                     <Text>{data.shipping.expedition_name}</Text>
                   </View>
@@ -734,7 +745,6 @@ const TransactionView = ({navigation, route}) => {
                     style={{
                       alignItems: 'center',
                       justifyContent: 'center',
-                      paddingRight: 16,
                     }}>
                     <Text>{data.shipping.expedition_type_name}</Text>
                   </View>
@@ -748,7 +758,6 @@ const TransactionView = ({navigation, route}) => {
                     style={{
                       alignItems: 'center',
                       justifyContent: 'center',
-                      paddingRight: 16,
                     }}>
                     <Text>{data.shipping.delivery_time_start}</Text>
                   </View>
