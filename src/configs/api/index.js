@@ -1,8 +1,8 @@
 import axios from 'axios';
 import debounce from 'debounce';
 
-export const app_version = 196;
-export const app_version_name = '3.9.1';
+export const app_version = 197;
+export const app_version_name = '3.9.2';
 export let baseURL = __DEV__
   ? 'https://api3.harnic.id/v3'
   : // 'http://10.0.2.2:8000/v3'
