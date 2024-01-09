@@ -8,7 +8,6 @@ import Cart from './cart';
 import User from './user';
 import Feed from './feed';
 import CartCounter from '../../../components/CartCounter';
-import {Platform} from 'react-native';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -23,7 +22,6 @@ const AppStack = () => {
       inactiveColor={colors.gray}
       barStyle={{
         backgroundColor: '#fff',
-        paddingBottom: Platform.OS === 'ios' ? 24 : 0,
       }}>
       <Tab.Screen
         name="Home"
