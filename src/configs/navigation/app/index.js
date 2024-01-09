@@ -8,10 +8,11 @@ import Cart from './cart';
 import User from './user';
 import Feed from './feed';
 import CartCounter from '../../../components/CartCounter';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Tab = createMaterialBottomTabNavigator();
-
 const AppStack = () => {
+  const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
       headerMode="none"
@@ -20,6 +21,7 @@ const AppStack = () => {
       initialRouteName="Home"
       activeColor={colors.primary}
       inactiveColor={colors.gray}
+      safeAreaInsets={{bottom: insets.bottom}}
       barStyle={{
         backgroundColor: '#fff',
       }}>

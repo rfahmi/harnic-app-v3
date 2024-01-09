@@ -45,31 +45,11 @@ const Feed = () => {
   const [pauseAll, setPauseAll] = useState(false);
   const {videos, loading, error} = useSelector(state => state.feed);
 
-  const [idPlayed, setIdPlayed] = useState(0);
-  const onViewableItemsChanged = useRef(({viewableItems}) => {
-    console.log('viewable', viewableItems);
-    if (viewableItems.length > 0) {
-      const visibleItem = viewableItems.find(a => a.isViewable);
-
-      if (visibleItem.item) {
-        setIdPlayed(visibleItem.item.uniqueId);
-      } else {
-        setIdPlayed(0);
-      }
-    }
-  });
-
-  const viewabilityConfig = useRef({
-    itemVisiblePercentThreshold: 70,
-  });
-
-  useEffect(() => {
-    if (flatListContainer.current) {
-      flatListContainer.current?.measure((_, __, width, height, x, y) => {
-        setFlatListContainterHeight(height);
-      });
-    }
-  }, []);
+  const handleLayout = event => {
+    const {height} = event.nativeEvent.layout;
+    console.log('updating video height to', height);
+    setFlatListContainterHeight(height);
+  };
 
   useEffect(() => {
     if (isFocus) {
@@ -111,7 +91,7 @@ const Feed = () => {
     }
   };
 
-  const keyExtractor = item => 'video' + item.uniqueId;
+  const keyExtractor = item => 'video' + item.itemid;
 
   return (
     <View
@@ -126,6 +106,7 @@ const Feed = () => {
       />
       <View
         ref={flatListContainer}
+        onLayout={handleLayout}
         style={{
           flex: 1,
         }}>
@@ -137,16 +118,15 @@ const Feed = () => {
           data={videos}
           renderItem={({item}) => (
             <FeedVideo
-              idPlayed={idPlayed}
               item={item}
               pauseAll={pauseAll}
-              containerHeight={flatlistContainerHeight}
+              containerHeight={
+                flatlistContainerHeight || Dimensions.get('window').height
+              }
             />
           )}
           keyExtractor={keyExtractor}
           showsVerticalScrollIndicator={false}
-          onViewableItemsChanged={onViewableItemsChanged.current}
-          viewabilityConfig={viewabilityConfig.current}
           pagingEnabled
           onEndReachedThreshold={2}
           onEndReached={handleLoadMore}
