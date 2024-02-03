@@ -4,7 +4,7 @@ import React, {useState} from 'react';
 import {Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Button, Card, Paragraph, Title} from 'react-native-paper';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import HeaderBackSearch from '../../components/HeaderBackSearch';
 import {api} from '../../configs/api';
 import {colors} from '../../constants/colors';
@@ -42,7 +42,7 @@ const BillingCheckout = ({navigation, route}) => {
       })
       .catch(err => {
         setLoading(false);
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'bottom',
         });

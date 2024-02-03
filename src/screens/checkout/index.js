@@ -19,7 +19,7 @@ import {
   TextInput,
   Title,
 } from 'react-native-paper';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import FooterCheckout from '../../components/FooterCheckout';
 import {api} from '../../configs/api';
 import {colors} from '../../constants/colors';
@@ -77,13 +77,13 @@ const Checkout = ({navigation, route}) => {
             setSelectedShipping(res.data.data[0]);
             getExpedition(res.data.data[0].shipping_id);
           } else {
-            RNToasty.Warn({
+            RNToasty.Show({
               title: 'Silahkan tambah alamat terlebih dahulu',
               position: 'center',
             });
           }
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -92,7 +92,7 @@ const Checkout = ({navigation, route}) => {
       .catch(err => {
         setLoading(false);
         setLoading1(false);
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -116,7 +116,7 @@ const Checkout = ({navigation, route}) => {
           setSelectedExpedition(res.data.data[0]);
           getType(shipping_id, res.data.data[0].id);
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -125,7 +125,7 @@ const Checkout = ({navigation, route}) => {
       .catch(err => {
         setLoading(false);
         setLoading2(false);
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -162,14 +162,14 @@ const Checkout = ({navigation, route}) => {
         } else {
           setLoading(false);
           setLoading3(false);
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'center',
           });
         }
       })
       .catch(err => {
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -200,7 +200,7 @@ const Checkout = ({navigation, route}) => {
           // setSelectedTime(res.data.data[0]);
         } else {
           setTime(null);
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -209,7 +209,7 @@ const Checkout = ({navigation, route}) => {
       .catch(err => {
         setLoading(false);
         setLoading4(false);
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -231,7 +231,7 @@ const Checkout = ({navigation, route}) => {
         if (res.data.success) {
           setVouchers(res.data.data);
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -239,7 +239,7 @@ const Checkout = ({navigation, route}) => {
       })
       .catch(err => {
         setLoading(false);
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -248,7 +248,7 @@ const Checkout = ({navigation, route}) => {
 
   const applyVoucher = async code => {
     if (!code) {
-      RNToasty.Warn({
+      RNToasty.Show({
         title: 'Kode voucher kosong',
         position: 'center',
       });
@@ -270,7 +270,7 @@ const Checkout = ({navigation, route}) => {
             setSelectedVoucher(res.data.data);
           } else {
             setSelectedVoucher(null);
-            RNToasty.Warn({
+            RNToasty.Show({
               title: 'Kode voucher tidak dapat digunakan',
               position: 'center',
             });
@@ -278,12 +278,12 @@ const Checkout = ({navigation, route}) => {
         } else {
           setSelectedVoucher(null);
           if (res.data.success) {
-            RNToasty.Error({
+            RNToasty.Show({
               title: 'Kode tidak dikenal',
               position: 'center',
             });
           } else {
-            RNToasty.Error({
+            RNToasty.Show({
               title: res.data.message,
               position: 'center',
             });
@@ -293,7 +293,7 @@ const Checkout = ({navigation, route}) => {
       .catch(err => {
         setLoading(false);
         setSelectedVoucher(null);
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });

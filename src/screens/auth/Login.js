@@ -17,7 +17,7 @@ import {
 
 import {Modalize} from 'react-native-modalize';
 import {Button} from 'react-native-paper';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import {useDispatch} from 'react-redux';
 import SwitchButton from 'switch-button-react-native';
 import BackButton from '../../components/BackButton';
@@ -78,12 +78,12 @@ const Login = ({navigation}) => {
           AsyncStorage.setItem('user_data', JSON.stringify(res.data.data.user));
           const fcm_token = await AsyncStorage.getItem('fcm_token');
           saveFcm(fcm_token);
-          RNToasty.Success({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -91,7 +91,7 @@ const Login = ({navigation}) => {
       })
       .catch(err => {
         setLoading(false);
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -122,7 +122,7 @@ const Login = ({navigation}) => {
                   Keyboard.dismiss();
                   modalOTP.current?.open();
                 } else {
-                  RNToasty.Success({
+                  RNToasty.Show({
                     title: res.data.message,
                     position: 'bottom',
                   });
@@ -133,7 +133,7 @@ const Login = ({navigation}) => {
             setPhone({...phone, error: res.data.message});
           }
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -141,7 +141,7 @@ const Login = ({navigation}) => {
       })
       .catch(err => {
         setLoading(false);
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -154,7 +154,7 @@ const Login = ({navigation}) => {
         if (res.data.success) {
           return true;
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -162,7 +162,7 @@ const Login = ({navigation}) => {
         }
       })
       .catch(err => {
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -193,12 +193,12 @@ const Login = ({navigation}) => {
           saveFcm(fcm_token);
           modalOTP.current?.close();
           navigation.navigate('App', {screen: 'Home'});
-          RNToasty.Success({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -206,7 +206,7 @@ const Login = ({navigation}) => {
       })
       .catch(err => {
         setLoading(false);
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -237,12 +237,12 @@ const Login = ({navigation}) => {
           saveFcm(fcm_token);
           modalPassword.current?.close();
           navigation.navigate('App', {screen: 'Home'});
-          RNToasty.Success({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -250,7 +250,7 @@ const Login = ({navigation}) => {
       })
       .catch(err => {
         setLoading(false);
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -460,7 +460,7 @@ const Login = ({navigation}) => {
                 onPress={() => {
                   sendOTP(phone.value).then(r => {
                     if (!r) {
-                      RNToasty.Success({
+                      RNToasty.Show({
                         title: r.data.message,
                         position: 'bottom',
                       });

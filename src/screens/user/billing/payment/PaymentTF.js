@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import {Button, Card} from 'react-native-paper';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import HeaderBack from '../../../../components/HeaderBack';
 import {api} from '../../../../configs/api';
 import {colors} from '../../../../constants/colors';
@@ -38,12 +38,12 @@ const PaymentTF = ({trx}) => {
       .then(res => {
         setLoading(false);
         if (res.data.success) {
-          RNToasty.Success({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -52,7 +52,7 @@ const PaymentTF = ({trx}) => {
       .catch(err => {
         setLoading(false);
         console.log(err);
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });

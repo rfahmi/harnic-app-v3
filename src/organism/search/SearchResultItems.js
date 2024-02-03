@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {Modalize} from 'react-native-modalize';
 import {Caption, Chip, FAB, Title} from 'react-native-paper';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import ProductCard from '../../components/ProductCard';
 import {api} from '../../configs/api';
 import ListSkeleton from '../skeleton/ListSkeleton';
@@ -54,14 +54,14 @@ const SearchResultItems = ({keyword, category, tabLabel, brand}) => {
             setHasMore(false);
           }
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
         }
       })
       .catch((err) => {
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });

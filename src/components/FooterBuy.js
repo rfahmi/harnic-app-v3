@@ -2,7 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {ActivityIndicator, View, Linking} from 'react-native';
 import {Appbar, Button, IconButton} from 'react-native-paper';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import {useDispatch} from 'react-redux';
 import {setCart} from '../configs/redux/slice/cartSlice';
 import {colors} from '../constants/colors';
@@ -32,7 +32,7 @@ const FooterBuy = ({item, openModal}) => {
       } else {
         setLoading(false);
         navigation.navigate('Auth');
-        RNToasty.Error({
+        RNToasty.Show({
           title: 'Login Untuk Belanja',
           position: 'center',
         });

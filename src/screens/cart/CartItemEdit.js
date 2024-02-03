@@ -3,7 +3,7 @@ import React, {useRef, useState} from 'react';
 import {Text, View, TextInput as TextInputRN, Platform} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Button, IconButton, List, TextInput} from 'react-native-paper';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import {useDispatch} from 'react-redux';
 import {setCart} from '../../configs/redux/slice/cartSlice';
 import {colors} from '../../constants/colors';
@@ -27,7 +27,7 @@ const CartItemEdit = ({item, closeModal}) => {
         closeModal();
       } else {
         navigation.navigate('Auth');
-        RNToasty.Error({
+        RNToasty.Show({
           title: 'Login Untuk Belanja',
           position: 'center',
         });

@@ -16,7 +16,7 @@ import {
   Title,
 } from 'react-native-paper';
 import HTML from 'react-native-render-html';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import HeaderBack from '../../../components/HeaderBack';
 import {api} from '../../../configs/api';
 import {colors} from '../../../constants/colors';
@@ -46,7 +46,7 @@ const BillingView = ({navigation, route}) => {
         if (res.data.success) {
           setData(res.data.data);
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -55,7 +55,7 @@ const BillingView = ({navigation, route}) => {
       .catch(err => {
         console.log('false');
 
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -83,7 +83,7 @@ const BillingView = ({navigation, route}) => {
           setPaymentData(res.data.data);
         } else {
           modalVA.current?.close();
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -92,7 +92,7 @@ const BillingView = ({navigation, route}) => {
       .catch(err => {
         setLoading(false);
         modalVA.current?.close();
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -140,14 +140,14 @@ const BillingView = ({navigation, route}) => {
         if (res.data.success) {
           navigation.replace('UserBilling', {user_id: user_data.user_id});
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
         }
       })
       .catch(err => {
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'bottom',
         });

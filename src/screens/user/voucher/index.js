@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState} from 'react';
 import {FlatList, RefreshControl, View} from 'react-native';
 import {Divider, List} from 'react-native-paper';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import HeaderBack from '../../../components/HeaderBack';
 import VoucherCard from '../../../components/VoucherCard';
 import {api} from '../../../configs/api';
@@ -25,7 +25,7 @@ const UserVoucher = ({navigation, route}) => {
         if (res.data.success) {
           setData(res.data.data);
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -35,7 +35,7 @@ const UserVoucher = ({navigation, route}) => {
       .catch(err => {
         console.log('false');
 
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });

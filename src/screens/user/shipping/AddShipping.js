@@ -13,7 +13,7 @@ import Button from '../../../components/Button';
 import HeaderBack from '../../../components/HeaderBack';
 import {Modalize} from 'react-native-modalize';
 import {api} from '../../../configs/api';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import {colors} from '../../../constants/colors';
 import qs from 'qs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -48,7 +48,7 @@ const AddShipping = ({navigation, route}) => {
         if (res.data.success) {
           setAreas(res.data.data);
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -56,7 +56,7 @@ const AddShipping = ({navigation, route}) => {
         console.log(res.data);
       })
       .catch(err => {
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -69,7 +69,7 @@ const AddShipping = ({navigation, route}) => {
         if (res.data.success) {
           setAreas(res.data.data);
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -77,7 +77,7 @@ const AddShipping = ({navigation, route}) => {
         console.log(res.data);
       })
       .catch(err => {
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -92,7 +92,7 @@ const AddShipping = ({navigation, route}) => {
         if (res.data.success) {
           setAreas(res.data.data);
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -100,7 +100,7 @@ const AddShipping = ({navigation, route}) => {
         console.log(res.data);
       })
       .catch(err => {
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -115,7 +115,7 @@ const AddShipping = ({navigation, route}) => {
         if (res.data.success) {
           setAreas(res.data.data);
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -123,7 +123,7 @@ const AddShipping = ({navigation, route}) => {
         console.log(res.data);
       })
       .catch(err => {
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -138,7 +138,7 @@ const AddShipping = ({navigation, route}) => {
         if (res.data.success) {
           setAreas(res.data.data);
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -146,7 +146,7 @@ const AddShipping = ({navigation, route}) => {
         console.log(res.data);
       })
       .catch(err => {
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -163,13 +163,13 @@ const AddShipping = ({navigation, route}) => {
       })
       .then(res => {
         if (res.data.success) {
-          RNToasty.Success({
+          RNToasty.Show({
             title: res.data.message,
             position: 'center',
           });
           navigation.goBack();
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -177,7 +177,7 @@ const AddShipping = ({navigation, route}) => {
         console.log(res);
       })
       .catch(err => {
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });

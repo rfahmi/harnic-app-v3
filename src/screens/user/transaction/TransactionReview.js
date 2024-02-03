@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import qs from 'qs';
 import React, {useState} from 'react';
 import {RefreshControl, ScrollView} from 'react-native';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import HeaderBack from '../../../components/HeaderBack';
 import {api} from '../../../configs/api';
 import ReviewItem from './ReviewItem';
@@ -28,13 +28,13 @@ const TransactionReview = ({navigation, route}) => {
       .then(res => {
         setLoading(false);
         if (res.data.success) {
-          RNToasty.Success({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
           setLoading(false);
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -44,7 +44,7 @@ const TransactionReview = ({navigation, route}) => {
         setLoading(false);
 
         console.log(err);
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });

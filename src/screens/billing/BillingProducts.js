@@ -13,7 +13,7 @@ import FastImage from 'react-native-fast-image';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import {Button, Text, TextInput} from 'react-native-paper';
 import {selectContactPhone} from 'react-native-select-contact';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import HeaderBackSearch from '../../components/HeaderBackSearch';
 import {api} from '../../configs/api';
 import {currencyFormat} from '../../utils/formatter';
@@ -48,7 +48,7 @@ const BillingProducts = ({navigation, route}) => {
         }
       })
       .catch(err => {
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'bottom',
         });

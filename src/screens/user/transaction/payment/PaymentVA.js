@@ -17,7 +17,7 @@ import {
 import {Modalize} from 'react-native-modalize';
 import {Button, Card, Dialog, Paragraph, Title} from 'react-native-paper';
 import HTML from 'react-native-render-html';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import * as assets from '../../../../assets/images/banks';
 import HeaderBack from '../../../../components/HeaderBack';
 import {api} from '../../../../configs/api';
@@ -65,7 +65,7 @@ const PaymentVA = ({trx}) => {
           setPayment(res.data.data);
         } else {
           modal.current?.close();
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -74,7 +74,7 @@ const PaymentVA = ({trx}) => {
       .catch(err => {
         setLoading(false);
         modal.current?.close();
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -119,14 +119,14 @@ const PaymentVA = ({trx}) => {
           console.log(res.data.data);
           setData(res.data.data);
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
         }
       })
       .catch(err => {
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });

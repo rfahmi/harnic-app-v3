@@ -17,7 +17,7 @@ import FastImage from 'react-native-fast-image';
 import {Modalize} from 'react-native-modalize';
 import {Button, Card, Divider, List, Title} from 'react-native-paper';
 import Timeline from 'react-native-timeline-flatlist';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import HeaderBack from '../../../components/HeaderBack';
 import {api} from '../../../configs/api';
 import {colors} from '../../../constants/colors';
@@ -52,7 +52,7 @@ const TransactionView = ({navigation, route}) => {
         if (res.data.success) {
           setData(res.data.data);
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -60,7 +60,7 @@ const TransactionView = ({navigation, route}) => {
       })
       .catch(err => {
         setLoading(false);
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -84,13 +84,13 @@ const TransactionView = ({navigation, route}) => {
         setLoading(false);
         if (res.data.success) {
           getData();
-          RNToasty.Success({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
           setLoading(false);
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -99,7 +99,7 @@ const TransactionView = ({navigation, route}) => {
       .catch(err => {
         setLoading(false);
 
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -125,13 +125,13 @@ const TransactionView = ({navigation, route}) => {
         setLoading(false);
         if (res.data.success) {
           getData();
-          RNToasty.Success({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
           setLoading(false);
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -140,7 +140,7 @@ const TransactionView = ({navigation, route}) => {
       .catch(e => {
         setLoading(false);
 
-        RNToasty.Error({
+        RNToasty.Show({
           title: e.message,
           position: 'center',
         });
@@ -169,7 +169,7 @@ const TransactionView = ({navigation, route}) => {
           });
         } else {
           setLoading(false);
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -178,7 +178,7 @@ const TransactionView = ({navigation, route}) => {
       .catch(err => {
         setLoading(false);
 
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -205,13 +205,13 @@ const TransactionView = ({navigation, route}) => {
           navigation.replace('App', {
             screen: 'Cart',
           });
-          RNToasty.Success({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
           setLoading(false);
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -220,7 +220,7 @@ const TransactionView = ({navigation, route}) => {
       .catch(err => {
         setLoading(false);
 
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });

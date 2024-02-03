@@ -3,7 +3,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, RefreshControl, TouchableOpacity} from 'react-native';
 import {Modalize} from 'react-native-modalize';
 import {Divider, List} from 'react-native-paper';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import CreditCard from '../../../components/CreditCard';
 import HeaderBack from '../../../components/HeaderBack';
 import {api} from '../../../configs/api';
@@ -28,7 +28,7 @@ const UserCard = ({navigation, route}) => {
         if (res.data.success) {
           setData(res.data.data);
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -38,7 +38,7 @@ const UserCard = ({navigation, route}) => {
       .catch(err => {
         console.log('false');
 
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -55,19 +55,19 @@ const UserCard = ({navigation, route}) => {
       })
       .then(res => {
         if (res.data.success) {
-          RNToasty.Success({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
         }
       })
       .catch(err => {
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });

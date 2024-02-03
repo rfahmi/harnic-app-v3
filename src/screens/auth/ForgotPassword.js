@@ -2,7 +2,7 @@ import qs from 'qs';
 import React, {memo, useState} from 'react';
 import {ActivityIndicator, View} from 'react-native';
 import {Button} from 'react-native-paper';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import BackButton from '../../components/BackButton';
 import Background from '../../components/Background';
 import Header from '../../components/Header';
@@ -34,12 +34,12 @@ const ForgotPassword = ({navigation}) => {
         setLoading(false);
         if (res.data.success) {
           navigation.goBack();
-          RNToasty.Success({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -48,7 +48,7 @@ const ForgotPassword = ({navigation}) => {
       .catch((err) => {
         console.log(err);
         setLoading(false);
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });

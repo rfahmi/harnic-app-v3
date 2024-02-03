@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {KeyboardAvoidingView, View} from 'react-native';
 import {RNCamera, Camera} from 'react-native-camera';
 import BarcodeMask from 'react-native-barcode-mask';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import {api} from '../../configs/api';
 import {useIsFocused} from '@react-navigation/native';
 
@@ -13,7 +13,7 @@ const Scan = ({navigation}) => {
   const getPermission = async () => {
     const {status} = await Camera.requestCameraPermissions();
     if (status !== 'granted') {
-      RNToasty.Warn({
+      RNToasty.Show({
         title: 'Izin kamera dibutuhkan untuk menggunakan fitur ini.',
         position: 'center',
       });
@@ -28,7 +28,7 @@ const Scan = ({navigation}) => {
           navigation.push('Product', {itemid: res.data.data.itemmst});
         } else {
           navigation.goBack();
-          RNToasty.Warn({
+          RNToasty.Show({
             title: 'Produk tidak ditemukan',
             position: 'center',
           });

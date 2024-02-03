@@ -18,6 +18,8 @@ import HeaderBack from '../../components/HeaderBack';
 import {colors} from '../../constants/colors';
 import {Modalize} from 'react-native-modalize';
 import {NativeModules} from 'react-native';
+import Clipboard from '@react-native-community/clipboard';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 
 const Developer = ({navigation}) => {
   const WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -43,6 +45,16 @@ const Developer = ({navigation}) => {
       />
       <KeyboardAvoidingView behavior="height">
         <ScrollView>
+          <List.Item
+            title="Clipboard and Toast"
+            onPress={() => {
+              Clipboard.setString('Hello World!');
+              RNToasty.Show({
+                title: 'success',
+                position: 'bottom',
+              });
+            }}
+          />
           <List.Item
             title="Open Dev Menu"
             onPress={() => NativeModules.DevMenu.show()}

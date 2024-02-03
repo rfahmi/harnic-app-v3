@@ -27,7 +27,7 @@ import {
 } from 'react-native-paper';
 import HTML from 'react-native-render-html';
 import {getStatusBarHeight} from 'react-native-safearea-height';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {authentication} from '../../assets/images';
@@ -64,7 +64,7 @@ const User = ({navigation}) => {
         if (res.data.success) {
           setData(res.data.data);
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -73,7 +73,7 @@ const User = ({navigation}) => {
       .catch(err => {
         console.log('false');
 
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -95,14 +95,14 @@ const User = ({navigation}) => {
           setInfo(res.data.data);
           modalizeRef.current?.open();
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'center',
           });
         }
       })
       .catch(err => {
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });

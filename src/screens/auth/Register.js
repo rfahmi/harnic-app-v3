@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import {Modalize} from 'react-native-modalize';
 import {Button, IconButton} from 'react-native-paper';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import {useDispatch} from 'react-redux';
 import SwitchButton from 'switch-button-react-native';
 import BackButton from '../../components/BackButton';
@@ -106,12 +106,12 @@ const Register = ({navigation}) => {
           AsyncStorage.setItem('user_data', JSON.stringify(res.data.data.user));
           const fcm_token = await AsyncStorage.getItem('fcm_token');
           saveFcm(fcm_token);
-          RNToasty.Success({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -119,7 +119,7 @@ const Register = ({navigation}) => {
       })
       .catch(err => {
         setLoading(false);
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -153,7 +153,7 @@ const Register = ({navigation}) => {
             setPhone({...phone, error: res.data.message});
           }
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -161,7 +161,7 @@ const Register = ({navigation}) => {
       })
       .catch(err => {
         setLoading(false);
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -174,7 +174,7 @@ const Register = ({navigation}) => {
         if (res.data.success) {
           return true;
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -182,7 +182,7 @@ const Register = ({navigation}) => {
         }
       })
       .catch(err => {
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -222,12 +222,12 @@ const Register = ({navigation}) => {
           AsyncStorage.setItem('user_data', JSON.stringify(res.data.data.user));
           const fcm_token = await AsyncStorage.getItem('fcm_token');
           saveFcm(fcm_token);
-          RNToasty.Success({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -235,7 +235,7 @@ const Register = ({navigation}) => {
       })
       .catch(err => {
         setLoading(false);
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });

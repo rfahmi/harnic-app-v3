@@ -4,7 +4,7 @@ import qs from 'qs';
 import React, {memo, useState} from 'react';
 import {ScrollView, Text, View} from 'react-native';
 import {Button, Card, TextInput} from 'react-native-paper';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import HeaderBack from '../../../../components/HeaderBack';
 import {api} from '../../../../configs/api';
 import {currencyFormat} from '../../../../utils/formatter';
@@ -37,13 +37,13 @@ const PaymentCOD = ({trx}) => {
             screen: 'TransactionView',
             params: {trxno: trx.trxno},
           });
-          RNToasty.Success({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
           setLoading(false);
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -53,7 +53,7 @@ const PaymentCOD = ({trx}) => {
         setLoading(false);
 
         console.log(err);
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });

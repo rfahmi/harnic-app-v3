@@ -2115,6 +2115,11 @@
     "@typescript-eslint/types" "5.57.0"
     "eslint-visitor-keys" "^3.3.0"
 
+"@wu_rong_tai/react-native-toasty@^1.1.0":
+  "integrity" "sha512-XudRZmZ2PmETiox0ONrvLmxYpKh1NlV5Sl0/Tqyn/XFqd5pRImCrHxa8NTWr3hEKgt4sAJVU7y1/qHoyFwnroQ=="
+  "resolved" "https://registry.npmjs.org/@wu_rong_tai/react-native-toasty/-/react-native-toasty-1.1.0.tgz"
+  "version" "1.1.0"
+
 "abbrev@^1.0.0":
   "integrity" "sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q=="
   "resolved" "https://registry.npmjs.org/abbrev/-/abbrev-1.1.1.tgz"
@@ -7088,11 +7093,6 @@
   "integrity" "sha512-CrexymQd9ZN3ZDbpJdjslN2sKoJQNYp1zsqZhjCbDtzpCOurIKgjBcgxKahRX5VMq7MBkzEOmVCwcu0GueuCFw=="
   "resolved" "https://registry.npmjs.org/react-native-timeline-flatlist/-/react-native-timeline-flatlist-0.7.6.tgz"
   "version" "0.7.6"
-
-"react-native-toasty@^2.0.0":
-  "integrity" "sha512-AsmDNUJlJb6r7UYI5Wc+GF6Tp8eo0Ft1IujCKv47PavBrhXI8DHQol0/SDRN52hJ4ysxb9Q8tXAe2EBcYssf1w=="
-  "resolved" "https://registry.npmjs.org/react-native-toasty/-/react-native-toasty-2.0.0.tgz"
-  "version" "2.0.0"
 
 "react-native-vector-icons@*", "react-native-vector-icons@^9.2.0", "react-native-vector-icons@>= 6.0.0", "react-native-vector-icons@>= 6.x.x", "react-native-vector-icons@>= 7.1.0":
   "integrity" "sha512-wKYLaFuQST/chH3AJRjmOLoLy3JEs1JR6zMNgTaemFpNoXs0ztRnTxcxFD9xhX7cJe1/zoN5BpQYe7kL0m5yyA=="

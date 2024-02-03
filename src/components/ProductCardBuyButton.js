@@ -2,7 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import React, {memo, useEffect, useState} from 'react';
 import {Text, View} from 'react-native';
 import {Button, IconButton} from 'react-native-paper';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import {useDispatch, useSelector} from 'react-redux';
 import {setCart, setCount} from '../configs/redux/slice/cartSlice';
 import {colors} from '../constants/colors';
@@ -44,7 +44,7 @@ const ProductCardBuyButton = ({id, containerStyle, maxOrder, stock = 999}) => {
         setAdded(true);
       } else {
         navigation.navigate('Auth');
-        RNToasty.Error({
+        RNToasty.Show({
           title: 'Login Untuk Belanja',
           position: 'center',
         });
@@ -71,7 +71,7 @@ const ProductCardBuyButton = ({id, containerStyle, maxOrder, stock = 999}) => {
         }
       } else {
         navigation.navigate('Auth');
-        RNToasty.Error({
+        RNToasty.Show({
           title: 'Login Untuk Belanja',
           position: 'center',
         });
@@ -89,7 +89,7 @@ const ProductCardBuyButton = ({id, containerStyle, maxOrder, stock = 999}) => {
         setAdded(true);
       } else {
         navigation.navigate('Auth');
-        RNToasty.Error({
+        RNToasty.Show({
           title: 'Login Untuk Belanja',
           position: 'center',
         });
@@ -98,13 +98,13 @@ const ProductCardBuyButton = ({id, containerStyle, maxOrder, stock = 999}) => {
   };
 
   const toastMax = () => {
-    RNToasty.Error({
+    RNToasty.Show({
       title: `Batas Beli ${maxOrder}`,
       position: 'center',
     });
   };
   const toastStock = () => {
-    RNToasty.Error({
+    RNToasty.Show({
       title: `Sisa stok ${stock}`,
       position: 'center',
     });

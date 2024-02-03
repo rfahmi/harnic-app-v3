@@ -3,7 +3,7 @@ import qs from 'qs';
 import React, {useState} from 'react';
 import {RefreshControl, ScrollView, View} from 'react-native';
 import {TextInput} from 'react-native-paper';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import Button from '../../../components/Button';
 import HeaderBack from '../../../components/HeaderBack';
 import {api} from '../../../configs/api';
@@ -29,19 +29,19 @@ const UserPassword = ({navigation, route}) => {
       .then(res => {
         if (res.data.success) {
           navigation.goBack();
-          RNToasty.Success({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
         }
       })
       .catch(err => {
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });

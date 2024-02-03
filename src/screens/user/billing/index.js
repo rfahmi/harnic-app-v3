@@ -3,7 +3,7 @@ import {useIsFocused} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {FlatList, RefreshControl, View} from 'react-native';
 import {List} from 'react-native-paper';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import HeaderBack from '../../../components/HeaderBack';
 import {api} from '../../../configs/api';
 import Empty from '../../../organism/empty';
@@ -38,7 +38,7 @@ const UserBilling = ({navigation, route}) => {
             setHasMore(false);
           }
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -47,7 +47,7 @@ const UserBilling = ({navigation, route}) => {
       .catch(err => {
         console.log('false');
 
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });

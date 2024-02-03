@@ -16,7 +16,7 @@ import CartItem from './CartItem';
 import Empty from '../../organism/empty';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {api} from '../../configs/api';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import {useDispatch, useSelector} from 'react-redux';
 import {setCart} from '../../configs/redux/slice/cartSlice';
 import {useIsFocused} from '@react-navigation/native';
@@ -57,7 +57,7 @@ const Cart = ({navigation}) => {
           console.log(res.data.data.attribute);
           setAttr(res.data.data.attribute);
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -66,7 +66,7 @@ const Cart = ({navigation}) => {
       .catch(err => {
         console.log('false');
 
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });

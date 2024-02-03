@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useIsFocused} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {FlatList, RefreshControl, TouchableOpacity} from 'react-native';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import ScreenTitle from '../../components/ScreenTitle';
 import {api} from '../../configs/api';
 import Empty from '../../organism/empty';
@@ -27,7 +27,7 @@ const Shoplist = ({navigation}) => {
         if (res.data.success) {
           setData(res.data.data);
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -36,7 +36,7 @@ const Shoplist = ({navigation}) => {
       .catch(err => {
         console.log('false');
 
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
@@ -57,7 +57,7 @@ const Shoplist = ({navigation}) => {
         if (res.data.success) {
           _handleRefresh();
         } else {
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -66,7 +66,7 @@ const Shoplist = ({navigation}) => {
       .catch(err => {
         console.log('false');
 
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });

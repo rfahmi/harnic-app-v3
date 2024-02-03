@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import qs from 'qs';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import {api, app_version} from '../configs/api';
 
 export const addCart = async (item_id, qty, note, toast) => {
@@ -20,7 +20,7 @@ export const addCart = async (item_id, qty, note, toast) => {
     .then(res => {
       if (res.data.success) {
         toast &&
-          RNToasty.Success({
+          RNToasty.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -28,7 +28,7 @@ export const addCart = async (item_id, qty, note, toast) => {
         return res.data.data;
       } else {
         toast &&
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -38,7 +38,7 @@ export const addCart = async (item_id, qty, note, toast) => {
     .catch(err => {
       console.log('false');
 
-      RNToasty.Error({
+      RNToasty.Show({
         title: err.message,
         position: 'center',
       });
@@ -64,14 +64,14 @@ export const updateCart = async (item_id, qty, note, toast) => {
     .then(res => {
       if (res.data.success) {
         toast &&
-          RNToasty.Success({
+          RNToasty.Show({
             title: res.data.message,
             position: 'center',
           });
         return res.data.data;
       } else {
         toast &&
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -81,7 +81,7 @@ export const updateCart = async (item_id, qty, note, toast) => {
     .catch(err => {
       console.log('false');
 
-      RNToasty.Error({
+      RNToasty.Show({
         title: err.message,
         position: 'center',
       });
@@ -102,14 +102,14 @@ export const deleteCart = async (item_id, toast) => {
     .then(res => {
       if (res.data.success) {
         toast &&
-          RNToasty.Success({
+          RNToasty.Show({
             title: res.data.message,
             position: 'center',
           });
         return res.data.data;
       } else {
         toast &&
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -119,7 +119,7 @@ export const deleteCart = async (item_id, toast) => {
     .catch(err => {
       console.log('false');
 
-      RNToasty.Error({
+      RNToasty.Show({
         title: err.message,
         position: 'center',
       });

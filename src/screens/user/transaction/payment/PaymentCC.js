@@ -5,7 +5,7 @@ import React, {memo, useRef, useState} from 'react';
 import {ActivityIndicator, ScrollView, Text, View} from 'react-native';
 import {CreditCardInput} from 'react-native-credit-card-input';
 import {Button, Checkbox} from 'react-native-paper';
-import {RNToasty} from 'react-native-toasty';
+import {RNToasty} from '@wu_rong_tai/react-native-toasty';
 import {FacebookWebView} from '../../../../components/FacebookWebView';
 import HeaderBack from '../../../../components/HeaderBack';
 import {api} from '../../../../configs/api';
@@ -50,7 +50,7 @@ const PaymentCC = ({trx}) => {
           isSave && saveCard();
         } else {
           console.log(res.data);
-          RNToasty.Error({
+          RNToasty.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -58,7 +58,7 @@ const PaymentCC = ({trx}) => {
       })
       .catch(err => {
         setLoading(false);
-        RNToasty.Error({
+        RNToasty.Show({
           title: err.message,
           position: 'center',
         });
