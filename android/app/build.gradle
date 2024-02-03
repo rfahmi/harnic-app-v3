@@ -98,8 +98,8 @@ android {
         applicationId "id.harnic.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 200
-        versionName "3.9.5"
+        versionCode 201
+        versionName "3.9.6"
         missingDimensionStrategy 'react-native-camera', 'general'
     }
 
