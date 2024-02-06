@@ -17,7 +17,7 @@ import FastImage from 'react-native-fast-image';
 import {Modalize} from 'react-native-modalize';
 import {Button, Card, Divider, List, Title} from 'react-native-paper';
 import Timeline from 'react-native-timeline-flatlist';
-import {RNToasty} from '@wu_rong_tai/react-native-toasty';
+import HarnicToast from '@components/toast/HarnicToast';
 import HeaderBack from '../../../components/HeaderBack';
 import {api} from '../../../configs/api';
 import {colors} from '../../../constants/colors';
@@ -52,7 +52,7 @@ const TransactionView = ({navigation, route}) => {
         if (res.data.success) {
           setData(res.data.data);
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -60,7 +60,7 @@ const TransactionView = ({navigation, route}) => {
       })
       .catch(err => {
         setLoading(false);
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });
@@ -84,13 +84,13 @@ const TransactionView = ({navigation, route}) => {
         setLoading(false);
         if (res.data.success) {
           getData();
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
           setLoading(false);
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -99,7 +99,7 @@ const TransactionView = ({navigation, route}) => {
       .catch(err => {
         setLoading(false);
 
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });
@@ -125,13 +125,13 @@ const TransactionView = ({navigation, route}) => {
         setLoading(false);
         if (res.data.success) {
           getData();
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
           setLoading(false);
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -140,7 +140,7 @@ const TransactionView = ({navigation, route}) => {
       .catch(e => {
         setLoading(false);
 
-        RNToasty.Show({
+        HarnicToast.Show({
           title: e.message,
           position: 'center',
         });
@@ -169,7 +169,7 @@ const TransactionView = ({navigation, route}) => {
           });
         } else {
           setLoading(false);
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -178,7 +178,7 @@ const TransactionView = ({navigation, route}) => {
       .catch(err => {
         setLoading(false);
 
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });
@@ -205,13 +205,13 @@ const TransactionView = ({navigation, route}) => {
           navigation.replace('App', {
             screen: 'Cart',
           });
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
           setLoading(false);
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -220,7 +220,7 @@ const TransactionView = ({navigation, route}) => {
       .catch(err => {
         setLoading(false);
 
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });
@@ -417,7 +417,7 @@ const TransactionView = ({navigation, route}) => {
                           <TouchableOpacity
                             onPress={() => {
                               Clipboard.setString(payment && payment.rekno);
-                              RNToasty.Show({
+                              HarnicToast.Show({
                                 title: 'Disalin ke papan klip',
                                 position: 'center',
                               });
@@ -465,7 +465,7 @@ const TransactionView = ({navigation, route}) => {
                               Clipboard.setString(
                                 String(payment && payment.total),
                               );
-                              RNToasty.Show({
+                              HarnicToast.Show({
                                 title: 'Disalin ke papan klip',
                                 position: 'center',
                               });

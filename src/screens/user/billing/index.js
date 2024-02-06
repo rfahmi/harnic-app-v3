@@ -3,7 +3,7 @@ import {useIsFocused} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {FlatList, RefreshControl, View} from 'react-native';
 import {List} from 'react-native-paper';
-import {RNToasty} from '@wu_rong_tai/react-native-toasty';
+import HarnicToast from '@components/toast/HarnicToast';
 import HeaderBack from '../../../components/HeaderBack';
 import {api} from '../../../configs/api';
 import Empty from '../../../organism/empty';
@@ -38,7 +38,7 @@ const UserBilling = ({navigation, route}) => {
             setHasMore(false);
           }
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -47,7 +47,7 @@ const UserBilling = ({navigation, route}) => {
       .catch(err => {
         console.log('false');
 
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });

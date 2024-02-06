@@ -4,7 +4,7 @@ import qs from 'qs';
 import React, {memo, useState} from 'react';
 import {ScrollView, Text, View} from 'react-native';
 import {Button, Card, TextInput} from 'react-native-paper';
-import {RNToasty} from '@wu_rong_tai/react-native-toasty';
+import HarnicToast from '@components/toast/HarnicToast';
 import HeaderBack from '../../../../components/HeaderBack';
 import {api} from '../../../../configs/api';
 import {currencyFormat} from '../../../../utils/formatter';
@@ -37,13 +37,13 @@ const PaymentCOD = ({trx}) => {
             screen: 'TransactionView',
             params: {trxno: trx.trxno},
           });
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
           setLoading(false);
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -53,7 +53,7 @@ const PaymentCOD = ({trx}) => {
         setLoading(false);
 
         console.log(err);
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });

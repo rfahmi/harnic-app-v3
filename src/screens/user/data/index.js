@@ -10,7 +10,7 @@ import {
   Text,
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
-import {RNToasty} from '@wu_rong_tai/react-native-toasty';
+import HarnicToast from '@components/toast/HarnicToast';
 import Button from '../../../components/Button';
 import HeaderBack from '../../../components/HeaderBack';
 import {api, app_version_name} from '../../../configs/api';
@@ -38,7 +38,7 @@ const UserData = ({navigation, route}) => {
           setEmail({value: res.data.data.user_email, error: ''});
           setPhone({value: res.data.data.user_phone, error: ''});
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -47,7 +47,7 @@ const UserData = ({navigation, route}) => {
       })
       .catch(err => {
         console.log('false');
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });
@@ -65,19 +65,19 @@ const UserData = ({navigation, route}) => {
       .then(res => {
         if (res.data.success) {
           navigation.goBack();
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
         }
       })
       .catch(err => {
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });
@@ -110,7 +110,7 @@ const UserData = ({navigation, route}) => {
               .then(async res => {
                 if (res.data.success) {
                   navigation.goBack();
-                  RNToasty.Show({
+                  HarnicToast.Show({
                     title: res.data.message,
                     position: 'bottom',
                   });
@@ -121,14 +121,14 @@ const UserData = ({navigation, route}) => {
                     AsyncStorage.clear();
                   });
                 } else {
-                  RNToasty.Show({
+                  HarnicToast.Show({
                     title: res.data.message,
                     position: 'bottom',
                   });
                 }
               })
               .catch(err => {
-                RNToasty.Show({
+                HarnicToast.Show({
                   title: err.message,
                   position: 'center',
                 });

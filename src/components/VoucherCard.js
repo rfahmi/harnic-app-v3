@@ -2,7 +2,7 @@ import Clipboard from '@react-native-community/clipboard';
 import React, {memo} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {Caption, Title} from 'react-native-paper';
-import {RNToasty} from '@wu_rong_tai/react-native-toasty';
+import HarnicToast from '@components/toast/HarnicToast';
 import {colors} from '../constants/colors';
 import Dash from 'react-native-dash';
 
@@ -11,7 +11,7 @@ const VoucherCard = ({data}) => {
     <TouchableOpacity
       onPress={() => {
         Clipboard.setString(data.vc_code);
-        RNToasty.Show({
+        HarnicToast.Show({
           title: data.vc_code + ' Disalin ke papan klip',
           position: 'center',
         });

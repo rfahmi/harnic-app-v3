@@ -23,7 +23,7 @@ import {
   TextInput,
   Title,
 } from 'react-native-paper';
-import {RNToasty} from '@wu_rong_tai/react-native-toasty';
+import HarnicToast from '@components/toast/HarnicToast';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import FooterBuy from '../../components/FooterBuy';
@@ -102,7 +102,7 @@ const Product = ({navigation, route}) => {
       } else {
         setLoading(false);
         navigation.navigate('Auth');
-        RNToasty.Show({
+        HarnicToast.Show({
           title: 'Login Untuk Belanja',
           position: 'center',
         });

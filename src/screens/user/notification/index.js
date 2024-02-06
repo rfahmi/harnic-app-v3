@@ -4,7 +4,7 @@ import {Dimensions, FlatList, RefreshControl, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Modalize} from 'react-native-modalize';
 import {Button, Divider, FAB, List, Paragraph, Title} from 'react-native-paper';
-import {RNToasty} from '@wu_rong_tai/react-native-toasty';
+import HarnicToast from '@components/toast/HarnicToast';
 import HeaderBack from '../../../components/HeaderBack';
 import {api} from '../../../configs/api';
 import {colors} from '../../../constants/colors';
@@ -42,7 +42,7 @@ const UserNotification = ({navigation, route}) => {
             setHasMore(false);
           }
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -51,7 +51,7 @@ const UserNotification = ({navigation, route}) => {
       .catch(err => {
         setHasMore(false);
         console.log(err.message);
-        // RNToasty.Show({
+        // HarnicToast.Show({
         //   title: err.message,
         //   position: 'center',
         // });
@@ -70,14 +70,14 @@ const UserNotification = ({navigation, route}) => {
         if (res.data.success) {
           _handleRefresh();
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
         }
       })
       .catch(err => {
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });
@@ -99,7 +99,7 @@ const UserNotification = ({navigation, route}) => {
         if (res.data.success) {
           _handleRefresh();
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -107,7 +107,7 @@ const UserNotification = ({navigation, route}) => {
       })
       .catch(err => {
         console.log('err', err);
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });
@@ -130,7 +130,7 @@ const UserNotification = ({navigation, route}) => {
         if (res.data.success) {
           _handleRefresh();
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -138,7 +138,7 @@ const UserNotification = ({navigation, route}) => {
       })
       .catch(err => {
         console.log('err', err);
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });

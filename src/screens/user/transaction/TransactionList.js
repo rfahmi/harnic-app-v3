@@ -4,7 +4,7 @@ import React, {memo, useEffect, useState} from 'react';
 import {FlatList, Platform, RefreshControl, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Divider, List} from 'react-native-paper';
-import {RNToasty} from '@wu_rong_tai/react-native-toasty';
+import HarnicToast from '@components/toast/HarnicToast';
 import {api} from '../../../configs/api';
 import {colors} from '../../../constants/colors';
 import Empty from '../../../organism/empty';
@@ -42,14 +42,14 @@ const TransactionList = ({user, status}) => {
             setHasMore(false);
           }
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
         }
       })
       .catch(err => {
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });

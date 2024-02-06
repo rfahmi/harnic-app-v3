@@ -19,7 +19,7 @@ import {colors} from '../../constants/colors';
 import {Modalize} from 'react-native-modalize';
 import {NativeModules} from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
-import {RNToasty} from '@wu_rong_tai/react-native-toasty';
+import HarnicToast from '@components/toast/HarnicToast';
 
 const Developer = ({navigation}) => {
   const WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -27,6 +27,7 @@ const Developer = ({navigation}) => {
   const modalOTP = useRef(null);
   const webviewModal = useRef(null);
   const [fcm, setFcm] = useState(null);
+
   const [webviewUrl, setWebviewUrl] = useState('https://harnic.id');
   const [deeplink, setDeeplink] = useState('harnic://transaction/JL2202240006');
   useEffect(() => {
@@ -49,10 +50,7 @@ const Developer = ({navigation}) => {
             title="Clipboard and Toast"
             onPress={() => {
               Clipboard.setString('Hello World!');
-              RNToasty.Show({
-                title: 'success',
-                position: 'bottom',
-              });
+              HarnicToast.Show({title: 'Copied text', position: 'bottom'});
             }}
           />
           <List.Item

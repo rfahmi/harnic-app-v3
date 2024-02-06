@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import {Button, Card, Dialog, Paragraph} from 'react-native-paper';
-import {RNToasty} from '@wu_rong_tai/react-native-toasty';
+import HarnicToast from '@components/toast/HarnicToast';
 import * as assets from '../../../../assets/images/banks';
 import {FacebookWebView} from '../../../../components/FacebookWebView';
 import HeaderBack from '../../../../components/HeaderBack';
@@ -58,7 +58,7 @@ const PaymentDW = ({trx}) => {
               try {
                 Linking.openURL(res.data.data);
               } catch (err) {
-                RNToasty.Show({
+                HarnicToast.Show({
                   title: err.message,
                   position: 'bottom',
                 });
@@ -71,14 +71,14 @@ const PaymentDW = ({trx}) => {
             try {
               Linking.openURL(res.data.data);
             } catch (err) {
-              RNToasty.Show({
+              HarnicToast.Show({
                 title: err.message,
                 position: 'bottom',
               });
             }
           }
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -88,7 +88,7 @@ const PaymentDW = ({trx}) => {
       .catch(err => {
         console.log('catch');
         setLoading(false);
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });
@@ -111,14 +111,14 @@ const PaymentDW = ({trx}) => {
           console.log(res.data.data);
           setData(res.data.data);
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
         }
       })
       .catch(err => {
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });

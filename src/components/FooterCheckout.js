@@ -3,7 +3,7 @@ import qs from 'qs';
 import React, {memo, useEffect, useState} from 'react';
 import {Alert, Text, View} from 'react-native';
 import {Button, Switch} from 'react-native-paper';
-import {RNToasty} from '@wu_rong_tai/react-native-toasty';
+import HarnicToast from '@components/toast/HarnicToast';
 import {api} from '../configs/api';
 import {colors} from '../constants/colors';
 import {currencyFormat} from '../utils/formatter';
@@ -72,12 +72,12 @@ const FooterCheckout = ({
               },
             },
           });
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -88,7 +88,7 @@ const FooterCheckout = ({
       })
       .catch(err => {
         setLoading(false);
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });

@@ -13,7 +13,7 @@ import Button from '../../../components/Button';
 import HeaderBack from '../../../components/HeaderBack';
 import {Modalize} from 'react-native-modalize';
 import {api} from '../../../configs/api';
-import {RNToasty} from '@wu_rong_tai/react-native-toasty';
+import HarnicToast from '@components/toast/HarnicToast';
 import {colors} from '../../../constants/colors';
 import qs from 'qs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -49,7 +49,7 @@ const AddShipping = ({navigation, route}) => {
         if (res.data.success) {
           setAreas(res.data.data);
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -57,7 +57,7 @@ const AddShipping = ({navigation, route}) => {
         console.log(res.data);
       })
       .catch(err => {
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });
@@ -70,7 +70,7 @@ const AddShipping = ({navigation, route}) => {
         if (res.data.success) {
           setAreas(res.data.data);
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -78,7 +78,7 @@ const AddShipping = ({navigation, route}) => {
         console.log(res.data);
       })
       .catch(err => {
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });
@@ -93,7 +93,7 @@ const AddShipping = ({navigation, route}) => {
         if (res.data.success) {
           setAreas(res.data.data);
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -101,7 +101,7 @@ const AddShipping = ({navigation, route}) => {
         console.log(res.data);
       })
       .catch(err => {
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });
@@ -116,7 +116,7 @@ const AddShipping = ({navigation, route}) => {
         if (res.data.success) {
           setAreas(res.data.data);
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -124,7 +124,7 @@ const AddShipping = ({navigation, route}) => {
         console.log(res.data);
       })
       .catch(err => {
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });
@@ -139,7 +139,7 @@ const AddShipping = ({navigation, route}) => {
         if (res.data.success) {
           setAreas(res.data.data);
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -147,7 +147,7 @@ const AddShipping = ({navigation, route}) => {
         console.log(res.data);
       })
       .catch(err => {
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });
@@ -166,7 +166,7 @@ const AddShipping = ({navigation, route}) => {
         if (res.data.success) {
           setData(res.data.data);
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -174,7 +174,7 @@ const AddShipping = ({navigation, route}) => {
         console.log(res);
       })
       .catch(err => {
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });
@@ -190,13 +190,13 @@ const AddShipping = ({navigation, route}) => {
       })
       .then(res => {
         if (res.data.success) {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'center',
           });
           navigation.goBack();
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -204,7 +204,7 @@ const AddShipping = ({navigation, route}) => {
         console.log(res);
       })
       .catch(err => {
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });
@@ -220,13 +220,13 @@ const AddShipping = ({navigation, route}) => {
       })
       .then(res => {
         if (res.data.success) {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'center',
           });
           navigation.goBack();
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'center',
           });
@@ -234,7 +234,7 @@ const AddShipping = ({navigation, route}) => {
         console.log(res);
       })
       .catch(err => {
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });

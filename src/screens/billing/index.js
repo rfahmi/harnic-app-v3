@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Alert, Dimensions, RefreshControl, StatusBar, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
-import {RNToasty} from '@wu_rong_tai/react-native-toasty';
+import HarnicToast from '@components/toast/HarnicToast';
 import {useSelector} from 'react-redux';
 import HeaderBackSearch from '../../components/HeaderBackSearch';
 import {api} from '../../configs/api';
@@ -23,7 +23,7 @@ const Billing = ({navigation}) => {
         }
       })
       .catch((err) => {
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'bottom',
         });

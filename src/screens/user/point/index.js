@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState} from 'react';
 import {FlatList, RefreshControl} from 'react-native';
 import {List} from 'react-native-paper';
-import {RNToasty} from '@wu_rong_tai/react-native-toasty';
+import HarnicToast from '@components/toast/HarnicToast';
 import HeaderBack from '../../../components/HeaderBack';
 import {api} from '../../../configs/api';
 import Empty from '../../../organism/empty';
@@ -25,7 +25,7 @@ const UserPoint = ({navigation, route}) => {
         if (res.data.success) {
           setData(res.data.data);
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -35,7 +35,7 @@ const UserPoint = ({navigation, route}) => {
       .catch(err => {
         console.log('false');
 
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });

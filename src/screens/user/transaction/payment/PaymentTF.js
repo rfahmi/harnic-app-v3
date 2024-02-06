@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import {Button, Card} from 'react-native-paper';
-import {RNToasty} from '@wu_rong_tai/react-native-toasty';
+import HarnicToast from '@components/toast/HarnicToast';
 import HeaderBack from '../../../../components/HeaderBack';
 import {api} from '../../../../configs/api';
 import {colors} from '../../../../constants/colors';
@@ -40,12 +40,12 @@ const PaymentTF = ({trx}) => {
       .then(res => {
         setLoading(false);
         if (res.data.success) {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -54,7 +54,7 @@ const PaymentTF = ({trx}) => {
       .catch(err => {
         setLoading(false);
         console.log(err);
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });
@@ -109,7 +109,7 @@ const PaymentTF = ({trx}) => {
                 <TouchableOpacity
                   onPress={() => {
                     Clipboard.setString('3979789999');
-                    RNToasty.Show({
+                    HarnicToast.Show({
                       title: 'Disalin ke papan klip',
                       position: 'center',
                     });
@@ -149,7 +149,7 @@ const PaymentTF = ({trx}) => {
                 <TouchableOpacity
                   onPress={() => {
                     Clipboard.setString(String(trx.total));
-                    RNToasty.Show({
+                    HarnicToast.Show({
                       title: 'Disalin ke papan klip',
                       position: 'center',
                     });
@@ -203,7 +203,7 @@ const PaymentTF = ({trx}) => {
                 <TouchableOpacity
                   onPress={() => {
                     Clipboard.setString(trx.trxno);
-                    RNToasty.Show({
+                    HarnicToast.Show({
                       title: 'Disalin ke papan klip',
                       position: 'center',
                     });

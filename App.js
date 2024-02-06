@@ -14,6 +14,7 @@ import {saveFcm} from './src/utils/fcm';
 import * as RootNavigation from './src/utils/RootNavigation';
 import {Text} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {ToastProvider} from 'react-native-toast-notifications';
 
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
@@ -126,20 +127,22 @@ const App = () => {
     config,
   };
   return (
-    <ReduxProvider store={store}>
-      <PaperProvider
-        settings={{
-          icon: props => <MaterialCommunityIcons {...props} />,
-        }}
-        theme={theme}>
-        <NavigationContainer
-          ref={RootNavigation.navigationRef}
-          linking={linking}
-          fallback={<Text>Loading...</Text>}>
-          <RootStack />
-        </NavigationContainer>
-      </PaperProvider>
-    </ReduxProvider>
+    <ToastProvider>
+      <ReduxProvider store={store}>
+        <PaperProvider
+          settings={{
+            icon: props => <MaterialCommunityIcons {...props} />,
+          }}
+          theme={theme}>
+          <NavigationContainer
+            ref={RootNavigation.navigationRef}
+            linking={linking}
+            fallback={<Text>Loading...</Text>}>
+            <RootStack />
+          </NavigationContainer>
+        </PaperProvider>
+      </ReduxProvider>
+    </ToastProvider>
   );
 };
 

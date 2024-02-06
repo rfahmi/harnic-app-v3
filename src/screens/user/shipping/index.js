@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState, useEffect} from 'react';
 import {FlatList, RefreshControl, TouchableOpacity} from 'react-native';
 import {FAB} from 'react-native-paper';
-import {RNToasty} from '@wu_rong_tai/react-native-toasty';
+import HarnicToast from '@components/toast/HarnicToast';
 import HeaderBack from '../../../components/HeaderBack';
 import ShippingCard from '../../../components/ShippingCard';
 import {api} from '../../../configs/api';
@@ -27,7 +27,7 @@ const UserShipping = ({navigation, route}) => {
         if (res.data.success) {
           setData(res.data.data);
         } else {
-          RNToasty.Show({
+          HarnicToast.Show({
             title: res.data.message,
             position: 'bottom',
           });
@@ -37,7 +37,7 @@ const UserShipping = ({navigation, route}) => {
       .catch(err => {
         console.log('false');
 
-        RNToasty.Show({
+        HarnicToast.Show({
           title: err.message,
           position: 'center',
         });
