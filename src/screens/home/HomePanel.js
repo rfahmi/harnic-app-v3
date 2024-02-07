@@ -3,7 +3,7 @@ import {useScrollToTop} from '@react-navigation/native';
 import React, {useEffect, useRef, useState, useCallback} from 'react';
 import {ActivityIndicator, Animated, RefreshControl, View} from 'react-native';
 import {FAB} from 'react-native-paper';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import HeaderBackSearch from '../../components/HeaderBackSearch';
 import {api} from '../../configs/api';
 import Panels from '../../organism/home/panels';

@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState, useEffect} from 'react';
 import {FlatList, RefreshControl, TouchableOpacity} from 'react-native';
 import {FAB} from 'react-native-paper';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import HeaderBack from '../../../components/HeaderBack';
 import ShippingCard from '../../../components/ShippingCard';
 import {api} from '../../../configs/api';

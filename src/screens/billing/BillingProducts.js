@@ -13,7 +13,7 @@ import FastImage from 'react-native-fast-image';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import {Button, Text, TextInput} from 'react-native-paper';
 import {selectContactPhone} from 'react-native-select-contact';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import HeaderBackSearch from '../../components/HeaderBackSearch';
 import {api} from '../../configs/api';
 import {currencyFormat} from '../../utils/formatter';

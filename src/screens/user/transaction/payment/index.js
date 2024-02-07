@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {memo, useEffect, useState} from 'react';
 import {View, Alert, Text} from 'react-native';
 import {Divider, List, Title} from 'react-native-paper';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import HeaderBack from '../../../../components/HeaderBack';
 import {api} from '../../../../configs/api';
 import ListSkeleton from '../../../../organism/skeleton/ListSkeleton';

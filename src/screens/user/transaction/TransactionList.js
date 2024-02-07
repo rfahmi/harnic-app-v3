@@ -4,7 +4,7 @@ import React, {memo, useEffect, useState} from 'react';
 import {FlatList, Platform, RefreshControl, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Divider, List} from 'react-native-paper';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import {api} from '../../../configs/api';
 import {colors} from '../../../constants/colors';
 import Empty from '../../../organism/empty';

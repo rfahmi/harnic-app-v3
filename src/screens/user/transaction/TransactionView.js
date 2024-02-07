@@ -17,7 +17,7 @@ import FastImage from 'react-native-fast-image';
 import {Modalize} from 'react-native-modalize';
 import {Button, Card, Divider, List, Title} from 'react-native-paper';
 import Timeline from 'react-native-timeline-flatlist';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import HeaderBack from '../../../components/HeaderBack';
 import {api} from '../../../configs/api';
 import {colors} from '../../../constants/colors';

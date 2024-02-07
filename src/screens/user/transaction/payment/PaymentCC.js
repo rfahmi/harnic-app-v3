@@ -5,7 +5,7 @@ import React, {memo, useRef, useState} from 'react';
 import {ActivityIndicator, ScrollView, Text, View} from 'react-native';
 import {CreditCardInput} from 'react-native-credit-card-input';
 import {Button, Checkbox} from 'react-native-paper';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import {FacebookWebView} from '../../../../components/FacebookWebView';
 import HeaderBack from '../../../../components/HeaderBack';
 import {api} from '../../../../configs/api';

@@ -16,7 +16,7 @@ import CartItem from './CartItem';
 import Empty from '../../organism/empty';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {api} from '../../configs/api';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import {useDispatch, useSelector} from 'react-redux';
 import {setCart} from '../../configs/redux/slice/cartSlice';
 import {useIsFocused} from '@react-navigation/native';

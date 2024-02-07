@@ -3,7 +3,7 @@ import qs from 'qs';
 import React, {memo, useEffect, useState} from 'react';
 import {Alert, Text, View} from 'react-native';
 import {Button, Switch} from 'react-native-paper';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import {api} from '../configs/api';
 import {colors} from '../constants/colors';
 import {currencyFormat} from '../utils/formatter';

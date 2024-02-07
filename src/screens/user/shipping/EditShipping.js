@@ -13,7 +13,7 @@ import Button from '../../../components/Button';
 import HeaderBack from '../../../components/HeaderBack';
 import {Modalize} from 'react-native-modalize';
 import {api} from '../../../configs/api';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import {colors} from '../../../constants/colors';
 import qs from 'qs';
 import AsyncStorage from '@react-native-async-storage/async-storage';

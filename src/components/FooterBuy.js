@@ -2,7 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {ActivityIndicator, View, Linking} from 'react-native';
 import {Appbar, Button, IconButton} from 'react-native-paper';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import {useDispatch} from 'react-redux';
 import {setCart} from '../configs/redux/slice/cartSlice';
 import {colors} from '../constants/colors';

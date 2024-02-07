@@ -2,7 +2,7 @@ import qs from 'qs';
 import React, {memo, useState} from 'react';
 import {ActivityIndicator, View} from 'react-native';
 import {Button} from 'react-native-paper';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import BackButton from '../../components/BackButton';
 import Background from '../../components/Background';
 import Header from '../../components/Header';

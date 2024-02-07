@@ -3,7 +3,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, RefreshControl, TouchableOpacity} from 'react-native';
 import {Modalize} from 'react-native-modalize';
 import {Divider, List} from 'react-native-paper';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import CreditCard from '../../../components/CreditCard';
 import HeaderBack from '../../../components/HeaderBack';
 import {api} from '../../../configs/api';

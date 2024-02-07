@@ -17,7 +17,7 @@ import {
 import {Modalize} from 'react-native-modalize';
 import {Button, Card, Dialog, Paragraph, Title} from 'react-native-paper';
 import HTML from 'react-native-render-html';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import * as assets from '../../../../assets/images/banks';
 import HeaderBack from '../../../../components/HeaderBack';
 import {api} from '../../../../configs/api';

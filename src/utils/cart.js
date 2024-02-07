@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import qs from 'qs';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import {api, app_version} from '../configs/api';
 
 export const addCart = async (item_id, qty, note, toast) => {

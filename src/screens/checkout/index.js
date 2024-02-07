@@ -19,7 +19,7 @@ import {
   TextInput,
   Title,
 } from 'react-native-paper';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import FooterCheckout from '../../components/FooterCheckout';
 import {api} from '../../configs/api';
 import {colors} from '../../constants/colors';

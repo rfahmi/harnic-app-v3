@@ -19,7 +19,7 @@ import {colors} from '../../constants/colors';
 import {Modalize} from 'react-native-modalize';
 import {NativeModules} from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 
 const Developer = ({navigation}) => {
   const WINDOW_HEIGHT = Dimensions.get('window').height;

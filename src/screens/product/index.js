@@ -23,7 +23,7 @@ import {
   TextInput,
   Title,
 } from 'react-native-paper';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import FooterBuy from '../../components/FooterBuy';

@@ -4,7 +4,7 @@ import qs from 'qs';
 import React, {memo, useState} from 'react';
 import {ScrollView, Text, View} from 'react-native';
 import {Button, Card, TextInput} from 'react-native-paper';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import HeaderBack from '../../../../components/HeaderBack';
 import {api} from '../../../../configs/api';
 import {currencyFormat} from '../../../../utils/formatter';

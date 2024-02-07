@@ -16,7 +16,7 @@ import {
   Title,
 } from 'react-native-paper';
 import HTML from 'react-native-render-html';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import HeaderBack from '../../../components/HeaderBack';
 import {api} from '../../../configs/api';
 import {colors} from '../../../constants/colors';

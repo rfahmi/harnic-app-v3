@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import {Button, Card, Dialog, Paragraph} from 'react-native-paper';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import * as assets from '../../../../assets/images/banks';
 import {FacebookWebView} from '../../../../components/FacebookWebView';
 import HeaderBack from '../../../../components/HeaderBack';

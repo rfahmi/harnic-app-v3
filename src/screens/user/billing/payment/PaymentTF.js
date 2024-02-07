@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import {Button, Card} from 'react-native-paper';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import HeaderBack from '../../../../components/HeaderBack';
 import {api} from '../../../../configs/api';
 import {colors} from '../../../../constants/colors';

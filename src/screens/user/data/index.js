@@ -10,7 +10,7 @@ import {
   Text,
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import Button from '../../../components/Button';
 import HeaderBack from '../../../components/HeaderBack';
 import {api, app_version_name} from '../../../configs/api';

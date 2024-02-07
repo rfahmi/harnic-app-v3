@@ -27,7 +27,7 @@ import {
 } from 'react-native-paper';
 import HTML from 'react-native-render-html';
 import {getStatusBarHeight} from 'react-native-safearea-height';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {authentication} from '../../assets/images';

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {KeyboardAvoidingView, View} from 'react-native';
 import {RNCamera, Camera} from 'react-native-camera';
 import BarcodeMask from 'react-native-barcode-mask';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import {api} from '../../configs/api';
 import {useIsFocused} from '@react-navigation/native';
 

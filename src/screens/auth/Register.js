@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import {Modalize} from 'react-native-modalize';
 import {Button, IconButton} from 'react-native-paper';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import {useDispatch} from 'react-redux';
 import SwitchButton from 'switch-button-react-native';
 import BackButton from '../../components/BackButton';

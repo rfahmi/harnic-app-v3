@@ -2,7 +2,7 @@ import Clipboard from '@react-native-community/clipboard';
 import React, {memo} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {Caption, Title} from 'react-native-paper';
-import HarnicToast from '@components/toast/HarnicToast';
+import HarnicToast from '@components/HarnicToast';
 import {colors} from '../constants/colors';
 import Dash from 'react-native-dash';
 
