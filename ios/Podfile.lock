@@ -461,6 +461,9 @@ PODS:
     - ReactCommon/turbomodule/core
   - react-native-select-contact (1.6.3):
     - React-Core
+  - react-native-simple-toast (3.2.0):
+    - React-Core
+    - Toast (~> 4)
   - react-native-video (5.2.1):
     - React-Core
     - react-native-video/Video (= 5.2.1)
@@ -603,6 +606,7 @@ PODS:
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
   - SocketRocket (0.6.1)
+  - Toast (4.1.0)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -663,6 +667,7 @@ DEPENDENCIES:
   - react-native-restart (from `../node_modules/react-native-restart`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-select-contact (from `../node_modules/react-native-select-contact`)
+  - react-native-simple-toast (from `../node_modules/react-native-simple-toast`)
   - react-native-video (from `../node_modules/react-native-video`)
   - react-native-view-shot (from `../node_modules/react-native-view-shot`)
   - "react-native-viewpager (from `../node_modules/@react-native-community/viewpager`)"
@@ -728,6 +733,7 @@ SPEC REPOS:
     - SDWebImage
     - SDWebImageWebPCoder
     - SocketRocket
+    - Toast
     - YogaKit
     - YoutubePlayer-in-WKWebView
 
@@ -790,6 +796,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-select-contact:
     :path: "../node_modules/react-native-select-contact"
+  react-native-simple-toast:
+    :path: "../node_modules/react-native-simple-toast"
   react-native-video:
     :path: "../node_modules/react-native-video"
   react-native-view-shot:
@@ -913,6 +921,7 @@ SPEC CHECKSUMS:
   react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
   react-native-safe-area-context: 36cc67648134e89465663b8172336a19eeda493d
   react-native-select-contact: f88ccd9dbee6c4d1c32507291b431cf558a2ed42
+  react-native-simple-toast: 2079d417c52fc3ca295edba094d5632f7720e68d
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
   react-native-view-shot: f5507655f122e6b104888a11130f267a427f0d57
   react-native-viewpager: b99b53127d830885917ef84809c5065edd614a78
@@ -948,6 +957,7 @@ SPEC CHECKSUMS:
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
+  Toast: ec33c32b8688982cecc6348adeae667c1b9938da
   Yoga: cd7d7f509dbfac14ee7f31a6c750acb957cd5022
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
   YoutubePlayer-in-WKWebView: 4fca3b4f6f09940077bfbae7bddb771f2b43aacd
