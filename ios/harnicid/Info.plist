@@ -23,7 +23,7 @@
 	<key>CFBundleVersion</key>
 	<string>204</string>
 	<key>LSRequiresIPhoneOS</key>
-	<true />
+	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
@@ -31,7 +31,7 @@
 			<key>localhost</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true />
+				<true/>
 			</dict>
 		</dict>
 	</dict>
@@ -40,13 +40,18 @@
 	<key>NSContactsUsageDescription</key>
 	<string>This app uses your contacts to make user able to select number on their contact for billing transaction like mobile credit purchase</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string />
+	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To allow cashier users to save receipt as photos to library</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>MaterialIcons.ttf</string>
 		<string>MaterialCommunityIcons.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -61,6 +66,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false />
+	<false/>
 </dict>
 </plist>
