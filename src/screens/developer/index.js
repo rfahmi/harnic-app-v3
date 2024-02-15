@@ -8,11 +8,10 @@ import {
   Linking,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {List, TextInput} from 'react-native-paper';
+import {Button, List, TextInput} from 'react-native-paper';
 import {FacebookWebView} from '../../components/FacebookWebView';
 import HeaderBack from '../../components/HeaderBack';
 import {colors} from '../../constants/colors';
@@ -20,6 +19,8 @@ import {Modalize} from 'react-native-modalize';
 import {NativeModules} from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
 import HarnicToast from '@components/HarnicToast';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Developer = ({navigation}) => {
   const WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -37,15 +38,16 @@ const Developer = ({navigation}) => {
     getFcm();
   }, []);
   return (
-    <>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <HeaderBack search={false} title="Developer" />
       <FacebookWebView
         ref={webviewModal}
         uri={webviewUrl}
         onClose={() => console.log('closed')}
       />
-      <KeyboardAvoidingView behavior="height">
-        <ScrollView>
+      <KeyboardAvoidingView behavior="height" style={{flex: 1}}>
+        <ScrollView
+          style={{flex: 1, flexDirection: 'column', paddingHorizontal: 16}}>
           <List.Item
             title="Clipboard and Toast"
             onPress={() => {
@@ -74,37 +76,47 @@ const Developer = ({navigation}) => {
             }
           />
           <Text>Your FCM Token</Text>
-          <TextInput
-            style={{marginTop: 4}}
-            value={fcm}
-            mode="outlined"
-            selectTextOnFocus
-          />
+          <TextInput value={fcm} multiline mode="outlined" selectTextOnFocus />
+          <Button
+            mode="contained"
+            style={{
+              backgroundColor: '#aaa',
+              color: '#fff',
+              borderRadius: 8,
+            }}
+            onPress={() => {
+              PushNotificationIOS.addNotificationRequest({
+                id: 'test_notification',
+                title: 'Test Notification',
+                body: 'This is a test local notification',
+              });
+            }}>
+            <Text>Trigger IOS LocalNotification</Text>
+          </Button>
+
+          <View style={{height: 16}} />
           <Text>Test Webview</Text>
           <TextInput
-            style={{marginVertical: 4}}
             value={webviewUrl}
             onChangeText={e => setWebviewUrl(e)}
             mode="outlined"
             returnKeyLabel="Go"
             selectTextOnFocus
           />
-          <TouchableOpacity
+          <Button
+            mode="contained"
             style={{
               backgroundColor: '#aaa',
-              padding: 16,
-              margin: 4,
               color: '#fff',
               borderRadius: 8,
             }}
             onPress={() => webviewModal.current?.open()}>
             <Text>Open PopUp Webview</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+          </Button>
+          <Button
+            mode="contained"
             style={{
               backgroundColor: '#aaa',
-              padding: 16,
-              margin: 4,
               color: '#fff',
               borderRadius: 8,
             }}
@@ -118,12 +130,11 @@ const Developer = ({navigation}) => {
               })
             }>
             <Text>Open Normal Webview</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+          </Button>
+          <Button
+            mode="contained"
             style={{
               backgroundColor: '#aaa',
-              padding: 16,
-              margin: 4,
               color: '#fff',
               borderRadius: 8,
             }}
@@ -134,20 +145,18 @@ const Developer = ({navigation}) => {
               })
             }>
             <Text>Open Product ID:1</Text>
-          </TouchableOpacity>
+          </Button>
           <TextInput
-            style={{marginVertical: 4}}
             value={deeplink}
             onChangeText={e => setDeeplink(e)}
             mode="outlined"
             returnKeyLabel="Go"
             selectTextOnFocus
           />
-          <TouchableOpacity
+          <Button
+            mode="contained"
             style={{
               backgroundColor: '#aaa',
-              padding: 16,
-              margin: 4,
               color: '#fff',
               borderRadius: 8,
             }}
@@ -159,20 +168,18 @@ const Developer = ({navigation}) => {
               }
             }}>
             <Text>Open Deeplink</Text>
-          </TouchableOpacity>
+          </Button>
           <TextInput
-            style={{marginVertical: 4}}
             value=""
             onChangeText={e => modalOTP.current?.open()}
             mode="outlined"
             returnKeyLabel="Go"
             selectTextOnFocus
           />
-          <TouchableOpacity
+          <Button
+            mode="contained"
             style={{
               backgroundColor: '#aaa',
-              padding: 16,
-              margin: 4,
               color: '#fff',
               borderRadius: 8,
             }}
@@ -181,7 +188,7 @@ const Developer = ({navigation}) => {
               modalOTP.current?.open();
             }}>
             <Text>Open OTP</Text>
-          </TouchableOpacity>
+          </Button>
         </ScrollView>
         <Modalize
           ref={modalOTP}
@@ -190,7 +197,6 @@ const Developer = ({navigation}) => {
           <View style={{flex: 1, padding: 16}}>
             <Text
               style={{
-                marginTop: 16,
                 fontWeight: 'bold',
                 fontSize: 24,
                 width: WINDOW_WIDTH * 0.6,
@@ -212,33 +218,10 @@ const Developer = ({navigation}) => {
           </View>
         </Modalize>
       </KeyboardAvoidingView>
-    </>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
-  forgotPassword: {
-    width: '100%',
-    alignItems: 'flex-end',
-    marginBottom: 24,
-  },
-  row: {
-    flexDirection: 'row',
-    marginTop: 4,
-  },
-  label: {
-    color: colors.grayDark,
-  },
-  link: {
-    fontWeight: 'bold',
-    color: colors.primary,
-  },
-  borderStyleBase: {
-    width: 30,
-    height: 45,
-  },
-  borderStyleHighLighted: {
-    borderColor: '#03DAC6',
-  },
   underlineStyleBase: {
     width: 40,
     height: 45,

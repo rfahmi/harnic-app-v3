@@ -1,20 +1,19 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {NavigationContainer} from '@react-navigation/native';
-import React from 'react';
-import {Platform} from 'react-native';
+import React, {useEffect} from 'react';
+import {Platform, Text} from 'react-native';
 import 'react-native-gesture-handler';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import PushNotification from 'react-native-push-notification';
+import {ToastProvider} from 'react-native-toast-notifications';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Provider as ReduxProvider} from 'react-redux';
 import RootStack from './src/configs/navigation';
 import {store} from './src/configs/redux';
 import {colors} from './src/constants/colors';
-import {saveFcm} from './src/utils/fcm';
 import * as RootNavigation from './src/utils/RootNavigation';
-import {Text} from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {ToastProvider} from 'react-native-toast-notifications';
+import {saveFcm} from './src/utils/fcm';
 
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
@@ -92,6 +91,31 @@ PushNotification.channelExists('general', function (exists) {
 });
 
 const App = () => {
+  // IOS Notification Handler
+  useEffect(() => {
+    const type = 'notification';
+    PushNotificationIOS.addEventListener(type, onRemoteNotification);
+    return () => {
+      PushNotificationIOS.removeEventListener(type);
+    };
+  });
+
+  const onRemoteNotification = notification => {
+    alert('onRemoteNotification: ' + JSON.stringify(notification));
+    const isClicked = notification.getData().userInteraction === 1;
+
+    if (isClicked) {
+      // Navigate user to another screen
+      alert('clicked');
+    } else {
+      // Do something else with push notification
+      alert('else');
+    }
+    // Use the appropriate result based on what you needed to do for this notification
+    const result = PushNotificationIOS.FetchResult.NoData;
+    notification.finish(result);
+  };
+
   const theme = {
     ...DefaultTheme,
     colors: {

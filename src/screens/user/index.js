@@ -3,6 +3,7 @@ import {useIsFocused} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
+  Alert,
   Dimensions,
   Image,
   Linking,
@@ -500,9 +501,15 @@ const User = ({navigation}) => {
                   <>
                     <Divider />
                     <List.Item
-                      title="Developer Menu"
+                      title="More"
                       left={() => <List.Icon icon="lightbulb-outline" />}
-                      onPress={() => navigation.navigate('Developer')}
+                      onLongPress={() => navigation.navigate('Developer')}
+                      delayLongPress={3000}
+                      onPress={() =>
+                        Alert.alert(
+                          'Menu unavailable, you have no permission. Contact our developer to get access',
+                        )
+                      }
                     />
                   </>
                 )}
