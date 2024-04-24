@@ -229,14 +229,15 @@ const PaymentVA = ({trx}) => {
                 </Text>
                 <View
                   style={{
-                    flexDirection: 'row',
+                    // flexDirection: 'row',
+                    gap: 4,
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}>
                   <Text
                     style={{
                       textAlign: 'center',
-                      fontSize: 24,
+                      fontSize: 22,
                       fontWeight: 'bold',
                     }}>
                     {payment.rekno}
@@ -269,17 +270,18 @@ const PaymentVA = ({trx}) => {
                 </Text>
                 <View
                   style={{
-                    flexDirection: 'row',
+                    // flexDirection: 'row',
+                    gap: 4,
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}>
                   <Text
                     style={{
                       textAlign: 'center',
-                      fontSize: 24,
+                      fontSize: 22,
                       fontWeight: 'bold',
                     }}>
-                    Rp{currencyFormat(payment.netsales)}
+                    Rp {currencyFormat(payment.netsales)}
                   </Text>
                   <TouchableOpacity
                     onPress={() => {

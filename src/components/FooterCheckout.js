@@ -194,13 +194,13 @@ const FooterCheckout = ({
             'Produk tidak dapat diubah dan keranjang akan dibersihkan setelah lanjut',
             [
               {
+                text: 'Lanjut dan Bayar',
+                onPress: () => _handleCheckout(),
+              },
+              {
                 text: 'Batal',
                 style: 'destructive',
                 onPress: () => {},
-              },
-              {
-                text: 'Lanjut dan Bayar',
-                onPress: () => _handleCheckout(),
               },
             ],
           );
