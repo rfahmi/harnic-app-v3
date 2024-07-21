@@ -1,7 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import qs from 'qs';
 import React, {memo, useEffect, useState} from 'react';
-import {Alert, Text, View} from 'react-native';
+import {Alert, Platform, Text, View} from 'react-native';
 import {Button, Switch} from 'react-native-paper';
 import HarnicToast from '@components/HarnicToast';
 import {api} from '../configs/api';
@@ -192,17 +192,29 @@ const FooterCheckout = ({
           Alert.alert(
             'Yakin sudah semua?',
             'Produk tidak dapat diubah dan keranjang akan dibersihkan setelah lanjut',
-            [
-              {
-                text: 'Lanjut dan Bayar',
-                onPress: () => _handleCheckout(),
-              },
-              {
-                text: 'Batal',
-                style: 'destructive',
-                onPress: () => {},
-              },
-            ],
+            Platform.OS === 'android'
+              ? [
+                  {
+                    text: 'Batal',
+                    style: 'destructive',
+                    onPress: () => {},
+                  },
+                  {
+                    text: 'Lanjut dan Bayar',
+                    onPress: () => _handleCheckout(),
+                  },
+                ]
+              : [
+                  {
+                    text: 'Lanjut dan Bayar',
+                    onPress: () => _handleCheckout(),
+                  },
+                  {
+                    text: 'Batal',
+                    style: 'destructive',
+                    onPress: () => {},
+                  },
+                ],
           );
         }}
         style={{width: '100%', marginVertical: 10, zIndex: 0}}
